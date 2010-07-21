@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<!-- written by Voov (www.voov.hu), copyright 2010 -->
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Voov</title>
+		<meta name="title" content="Voov" />
+		<meta name="Keywords" lang="HU" content="" />
+		<meta name="Description" lang="HU" content="" />
+		<meta name="Revisit-After" content="6 days" />
+		<meta name="Expires" content="6 days"/>
+		<meta http-equiv="Content-Language" content="HU" />
+		<meta http-equiv="Cache-Control" content="no-cache"/>
+		<meta http-equiv="Pragma" content="no-cache"/>
+		<meta name="Robots" content="index,follow" />
+		<meta http-equiv="Imagetoolbar" content="no" />
+		<meta name="Owner" content="Voov (www.voov.hu)" />
+		<meta name="Copyright" content="Copyright (c) 2010 Voov, All Rights Reserved" />
+		<meta name="Author" content="Voov (www.voov.hu)" />
+		<meta name="Designer" content="Voov (www.voov.hu)" />
+
+		<link rel="shortcut icon" href="favicon.ico"/>
+
+		<style type="text/css">
+			body {
+				margin: 0;
+				padding: 0;
+				font-family: "Segoe Ui", Arial, Tahoma;
+				font-size: 12px;
+				line-height: 16px;
+				color: #333;
+			}
+
+			pre {
+				display: block;
+				/*margin: 5px 0 10px 0;*/
+				margin: 0;
+				white-space: pre;
+				overflow: auto;
+				width: 902px;
+				line-height: 1.4;
+				border: 1px solid #ccc;
+				background: #f5f5f5;
+				padding: 8px;
+			}
+
+			#container {
+				width: 960px;
+				margin: 20px auto 0 auto;
+				padding: 0 0 0 0;
+				border: 1px solid #ccc;
+			}
+
+			
+
+			#header {
+				width: 960px;
+				margin: 0 0 0 0;
+				padding: 20px 0;
+				border-bottom: 1px solid #ccc;
+				text-align: center;
+				background: #ffffca;
+			}
+
+			#header h1 {
+				font-family: "Segoe Ui", Arial, Tahoma;
+				font-size: 22px;
+				line-height: 26px;
+				margin: 0 0 10px 0;
+				padding: 0 0 0 0;
+				color: #333;
+			}
+
+			#post_data {
+				width: 920px;
+				margin: 0 0 0 0;
+				padding: 20px;
+				border-bottom: 1px solid #ccc;
+				/*text-align: center;*/
+				background: #E1E6FA;
+			}
+
+			#post_data h2 {
+				font-family: "Segoe Ui", Arial, Tahoma;
+				font-size: 18px;
+				line-height: 24px;
+				margin: 0 0 0 0;
+				padding: 0 0 0 0;
+				color: #333;
+			}
+
+			#main {
+				width: 920px;
+				margin: 0 0 0 0;
+				padding: 20px;
+				background: #f0f0f0;
+			}
+
+			.pre_holder {
+				width: 920px;
+				margin: 20px 0 10px 0;
+			}
+
+			.error_box {
+				width: 920px;
+				margin: 0 0 20px 0;
+				padding: 0 0 20px 0;
+				border-bottom: 1px dotted #ccc;
+			}
+
+			.error_title {
+				width: 920px;
+				margin: 0 0 20px 0;
+				padding: 0 0 0 0;
+				text-decoration: underline;
+				font-size: 15px;
+			}
+
+			.error_number {
+				font-weight: bold;
+				color: #222;
+			}
+
+			.error_code {
+				color: #bb0000;
+			}
+
+			.error_description {
+				width: 920px;
+				margin: 0 0 0 0;
+				padding: 0 0 0 0;
+				font-size: 13px;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div id="container">
+			<div id="header">
+				<h1>Server Error</h1>
+				<b>Request:</b> http://<?= $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"] ?><br />
+				<b>Time:</b> <?= date("Y-m-d H:i:s", $_SERVER["REQUEST_TIME"]) ?><br />
+			</div>
+
+			<div id="post_data">
+				<h2>POST Data</h2>
+				<? foreach($_POST as $key=>$value): ?>
+					<b><?= $key ?></b>: <?= $value ?><br />
+				<? endforeach; ?>
+			</div>
+
+			<div id="main">
+				<? foreach($errors as $error): ?>
+				<!-- ismételd ezt a dobozt merazjó -->
+				<div class="error_box">
+					<div class="error_title">
+						<span class="error_number">#<?= $error["errno"] ?>:</span> <span class="error_code"><?= $error["errtype"] ?></span>
+					</div>
+
+					<div class="error_description">
+						<?= $error["errstr"] ?>
+						<div class="pre_holder">
+							<small style="color: #7E7E7E;"><?= $error["errfile"] ?>:</small>
+							<pre><? foreach($error["fault"] as $line=>$fault): ?><? if($line+1==$error["errline"]): ?><span style="display:block;width:100%;background-color:#FFBABA;"><?=$line ?>: <?= $fault ?></span><? else: ?><?=$line ?>: <?= $fault ?><? endif; ?><? endforeach; ?></pre>
+						</div>
+					</div>
+				</div>
+				<!-- eof ismételd ezt a dobozt merazjó -->
+				<? endforeach; ?>
+			</div>
+		</div>
+
+	</body>
+</html>
