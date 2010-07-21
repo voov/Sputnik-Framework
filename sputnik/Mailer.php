@@ -7,7 +7,7 @@
  * @copyright 2007-2010
  */
 
-require_once "sp-config.php";
+require_once "config/config.php";
 require_once "simple_html_dom.php";
 
 class Mailer {

@@ -9,7 +9,7 @@
 
 define("TEMPLATE_LOADED", 1);
 
-require_once "sp-config.php";
+require_once "config/config.php";
 require_once "simple_html_dom.php";
 require_once "HtmlBuilder.php";
 

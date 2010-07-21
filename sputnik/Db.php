@@ -8,7 +8,7 @@
 
 require_once "DbResult.php";
 require_once "DbRow.php";
-require_once "sp-config.php";
+require_once "config/config.php";
 
 class Db {
 	/**
