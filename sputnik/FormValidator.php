@@ -2,7 +2,8 @@
 /**
  * FormValidator class
  * Sputnik Framework r3
- * Written by Daniel Fekete
+ * @version 3.0
+ * @author Daniel Fekete - Voov Ltd.
  */
 class FormValidator {
 

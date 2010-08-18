@@ -1,7 +1,7 @@
 <?php
 /**
  * Sputnik Session Class
- * @version 2.0
+ * @version 3.0
  * @author Daniel Fekete - Voov Ltd.
  * 
  */
@@ -25,7 +25,11 @@ class Sessions {
 	 * @param $var Object Session v�ltoz�
 	 */
 	function __get($var) {
-		return $this->session_adapter->Get($var);
+		$value = $this->session_adapter->Get($var);
+		if ($value != null)
+			return $value;
+		else
+			return false;
 	}
 
 
@@ -54,6 +58,21 @@ class Sessions {
 
 	function ClearSession($name) {
 		$this->session_adapter->Clear($name);
+	}
+
+	
+	function SetFlashdata($var, $value) {
+		$this->session_adapter->Set("_flash:" . $var, $value);
+	}
+
+	function GetFlashdata($var) {
+		$value = $this->session_adapter->Get($var);
+		if ($value != null) {
+			$this->session_adapter->Clear("_flash:" . $var);
+			return $value;
+		} else {
+			return false;
+		}
 	}
 
 	/**
