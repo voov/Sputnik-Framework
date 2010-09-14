@@ -161,6 +161,16 @@ class FormValidator {
 	}
 
 	/**
+	 * Gets the error string for the given variable
+	 * @param <type> $field
+	 * @return <type>
+	 */
+	public function IsValid() {
+		if($this->has_errors) return false;
+		return true;
+	}
+
+	/**
 	 * Returns the error message
 	 * @return <type> 
 	 */

@@ -180,7 +180,7 @@ class Db {
 		if ($send_in_utf8 == true) {
 			$this->Switch_Utf8();
 		}
-
+		
 		if ($this->is_prepared) $query = $this->PrepareQuery($query);
 		$result = mysql_query($query, $this->conn) or
 			   trigger_error("SQL Hiba: " . mysql_error() . "<br /><b>" . $query . "</b>", E_USER_ERROR);

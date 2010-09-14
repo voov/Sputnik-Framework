@@ -7,10 +7,11 @@
     Localization:SetLocale("de_DE");
     echo _("Register Now");
     </code>
-    @version 3.0
-    
-    
+    @version 3.0 
     @author Daniel Fekete                          */
+
+require_once "config/localization.php";
+
 class Localization {
 
 	private static $loc;

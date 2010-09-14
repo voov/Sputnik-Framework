@@ -12,11 +12,19 @@ class Sessions {
 
 	static $instance = false;
 	private $session_adapter = null;
+	private $deleteable_flash_data = array();
 
 	function  __construct() {
 		global $config;
 		require_once "session_adapters/" . $config["session_adapter"] . ".php";
 		$this->session_adapter = new $config["session_adapter"]();
+	}
+
+	function  __destruct() {
+		// clear all flash data
+		foreach($this->deleteable_flash_data as $flash_name) {
+			$this->session_adapter->Clear($flash_name);
+		}
 	}
 	
 	/**
@@ -66,9 +74,10 @@ class Sessions {
 	}
 
 	function GetFlashdata($var) {
-		$value = $this->session_adapter->Get($var);
+		$value = $this->session_adapter->Get("_flash:" . $var);
 		if ($value != null) {
-			$this->session_adapter->Clear("_flash:" . $var);
+			//$this->session_adapter->Clear("_flash:" . $var);
+			$this->deleteable_flash_data[] = "_flash:" . $var;
 			return $value;
 		} else {
 			return false;

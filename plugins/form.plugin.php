@@ -4,7 +4,7 @@
      * @version 2.2
      * @author Daniel Fekete - Voov Ltd.
      */   
-	require_once "sputnik/sp-plugin.php";
+	require_once "sputnik/IPlugin.php";
 	include_once "class.inputfilter.php";
 	
 	if(!defined("FORMPLUGIN")) {
@@ -176,7 +176,7 @@
 			if ($this->enableXssClean == true) {
 				try {
 					$filter = new InputFilter();
-					if (!isset($this->post[$var])) return null;
+					if (!isset($this->post[$var])) return new FormElement("", $this, $var);
 					if (is_array($this->post[$var])) return $this->post[$var];
 					return new FormElement($filter->process($this->post[$var]), $this, $var);
 				} catch(Exception $e) {

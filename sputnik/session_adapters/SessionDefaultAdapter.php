@@ -1,11 +1,12 @@
 <?php
 require_once "sputnik/ISessionAdapter.php";
+ini_set('session.use_trans_sid', false);
 
 class SessionDefaultAdapter implements ISessionAdapter {
 
 	function  __construct() {
 		// Setup default PHP session
-		ini_set('session.use_trans_sid', false);
+		
 		session_start();
 		header("Cache-control: private");
 		
@@ -15,7 +16,7 @@ class SessionDefaultAdapter implements ISessionAdapter {
 		return $_SESSION[$var];
 	}
 
-	function Set($var, $value, $ttl) {
+	function Set($var, $value, $ttl=0) {
 		
 		if (!session_is_registered($var)) {
 			// We don't have the session registered yet

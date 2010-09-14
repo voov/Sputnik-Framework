@@ -13,6 +13,8 @@ require_once "config/config.php";
 require_once "simple_html_dom.php";
 require_once "HtmlBuilder.php";
 
+ini_set('memory_limit', '128M');
+
 class Template {
 
 	var $_variables = array();
@@ -140,7 +142,8 @@ class Template {
 		//$file = $this->_templateDir . "/$file";
 		//$buffer = file_get_contents($file); // Get contents of the file, setup temp buffer
 		global $config;
-		$html = file_get_html($this->_templateDir . "/$file");
+		//$html = file_get_contents($this->_templateDir . "/$file");
+		/*$html = file_get_html($this->_templateDir . "/$file");
 		$blocks = $html->find("div[src]");
 		foreach($blocks as $key=>$block) {
 			// Fordítsuk le a blokkokat
@@ -150,12 +153,26 @@ class Template {
 		}
 		$this->_compileBlocks($html); // Compile the root node
 		$e = $html->find("body");
-
+		*/
 		//echo "Outertext" . $e[1]->outertext;
 		/*if ($config["load_jquery_version"])
 			$e->outertext = $e->outertext . "<script type=\"script/javascript\" src=\"http://ajax.googleapis.com/ajax/libs/jquery/" . $config["load_jquery_version"] . "/jquery.min.js\"></script>";
 		*/
-		return $html;
+//		return $html;
+		$file = $this->_templateDir . "/$file";
+		$buffer = file_get_contents($file); // Get contents of the file, setup temp buffer
+
+		if ($this->_absolutePath != "") {
+			// TODO: preg_replace_callback!
+			$buffer = preg_replace('/href=[\\"\\\'](?!(mailto:|javascript:|href:|http:))(.+?)[\\"\\\']/', 'href="' . $this->_absolutePath . '$2"', $buffer);
+			$buffer = preg_replace('/src=[\\"\\\'](?!(mailto:|javascript:|href:|http:))(.+?)[\\"\\\']/', 'src="' . $this->_absolutePath . '$2"', $buffer);
+			$buffer = preg_replace('/action=[\\"\\\'](?!(mailto:|javascript:|href:|http:))(.+?)[\\"\\\']/', 'action="' . $this->_absolutePath . '$2"', $buffer);
+
+			//$buffer = preg_replace("/href[ ]=[\"\' ](?!(mailto:|javascript:|href:|http:))(.+?)[\"\']/", "href=\"" . $this->absolutePath . "$2\"", $buffer);
+			//$buffer = preg_replace("/src[ ]=[\"\' ](?!(mailto:|javascript:|href:|http:))(.+?)[\"\']/", "src=\"" . $this->absolutePath . "$2\"", $buffer);
+			$buffer = preg_replace('/\\$([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*?)\\.([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]+)/', '\\$$1["$2"]', $buffer);
+		}
+		return $buffer;
 	}
 
 	function _getOutput($file, $template=true) {
@@ -163,6 +180,13 @@ class Template {
 		// embed HTML builder to template
 		$this->_variables["html"] = $this->html;
 		
+		// set controller vars
+		if (($front_instance = Sputnik::GetInstance()) != false) {
+			$vars = get_object_vars($front_instance);
+			foreach($vars as $var_key => $var_value) {
+				if (!isset($this->$var_key)) $this->$var_key =& $var_value;
+			}
+		}
 
 		extract($this->_variables);
 		if ($template == true)
@@ -270,127 +294,6 @@ class Template {
 	}
 
 
-	/**
-	 * Egyszerű email küldés
-	 */
-
-	private function html2text($html) {
-		$tags = array (
-			   0 => '~<h[123][^>]+>~si',
-			   1 => '~<h[456][^>]+>~si',
-			   2 => '~<table[^>]+>~si',
-			   3 => '~<tr[^>]+>~si',
-			   4 => '~<li[^>]+>~si',
-			   5 => '~<br[^>]+>~si',
-			   6 => '~<p[^>]+>~si',
-			   7 => '~<div[^>]+>~si',
-		);
-		$html = preg_replace($tags,"\n",$html);
-		$html = preg_replace('~</t(d|h)>\s*<t(d|h)[^>]+>~si',' - ',$html);
-		$html = preg_replace('~<[^>]+>~s','',$html);
-		// reducing spaces
-		$html = preg_replace('~ +~s',' ',$html);
-		$html = preg_replace('~^\s+~m','',$html);
-		$html = preg_replace('~\s+$~m','',$html);
-		// reducing newlines
-		$html = preg_replace('~\n+~s',"\n",$html);
-		return $html;
-	}
-
-	function SMTPMail($to, $from, $subject, $body, $smtp_id=0) {
-		global $config;
-		$newLine = "\r\n";
-		$serverName = preg_replace('/www/', '', $_SERVER["HTTP_HOST"]);
-		//connect to the host and port
-		$conn = fsockopen($config["smtp_server"][$smtp_id], $config["smtp_port"][$smtp_id], $errno, $errstr, 45);
-		$smtpResponse = fgets($conn, 4096);
-
-		if(empty($conn)) {
-			$output = "Failed to connect: $smtpResponse";
-			echo $output;
-			return;
-		}
-
-
-		//you have to say HELO again after TLS is started
-		fputs($conn, "HELO $serverName". $newLine);
-		$smtpResponse = fgets($conn, 4096);
-
-		//request for auth login
-		fputs($conn,"AUTH LOGIN" . $newLine);
-		$smtpResponse = fgets($conn, 4096);
-
-		//send the username
-		fputs($conn, base64_encode($username) . $newLine);
-		$smtpResponse = fgets($conn, 4096);
-
-		//send the password
-		fputs($conn, base64_encode($password) . $newLine);
-		$smtpResponse = fgets($conn, 4096);
-
-		//email from
-		fputs($conn, "MAIL FROM: <$from>" . $newLine);
-		$smtpResponse = fgets($conn, 4096);
-
-		//email to
-		fputs($conn, "RCPT TO: <$to>" . $newLine);
-		$smtpResponse = fgets($conn, 4096);
-
-		//the email
-		fputs($conn, "DATA" . $newLine);
-		$smtpResponse = fgets($conn, 4096);
-
-		//construct headers
-		$headers = "MIME-Version: 1.0" . $newLine;
-		$headers .= $body;
-
-		//observe the . after the newline, it signals the end of message
-		fputs($conn, "To: $to\r\nFrom: $from\r\nSubject: $subject\r\n$headers\r\n.\r\n");
-		$smtpResponse = fgets($conn, 4096);
-
-		// say goodbye
-		fputs($conn,"QUIT" . $newLine);
-		$smtpResponse = fgets($conn, 4096);
-
-
-		fclose($conn);
-	}
-
-	function SendHTMLMail($file, $to, $from, $subject) {
-		$random_hash = md5(uniqid());
-		$string = $this->fetch($file);
-
-		$headers = "From: $from";
-		$headers .= "\r\nContent-Type: multipart/alternative; boundary=\"VOOV-temp-".$random_hash."\"";
-
-		$message = "--VOOV-temp-" . $random_hash . "\r\n";
-		$message .= "Content-Type: text/plain; charset=\"utf8\" \r\n";
-		$message .= "Content-Transfer-Encoding: 7bit\r\n\r\n";
-
-		//$message .= "A levelező program nem támogatja a HTML alapú levelek megjelenítését.";
-
-		$string_nl = eregi_replace('<br[[:space:]]*/?[[:space:]]*>',chr(13).chr(10),$string);
-
-		//$message .= strip_tags($string_nl);
-		$message .= $this->html2text($string);
-		$message .= "\r\n\r\n";
-
-		$message .= "--VOOV-temp-" . $random_hash . "\r\n";
-		$message .= "Content-Type: text/html; charset=\"utf8\" \r\n";
-		$message .= "Content-Transfer-Encoding: 7bit\r\n\r\n";
-
-		$message .= $string;
-		$message .= "\r\n--VOOV-temp-" . $random_hash . "--";
-
-		if (is_array($to)) {
-			foreach($to as $to_item)
-				$mail = mail($to_item, $subject, $message, $headers);
-		} else {
-			//$mail = mail($to, $subject, $message, $headers);
-			$this->SMTPMail($to, $from, $subject, $headers.$message);
-		}
-		if (!$mail) error_log("Nem sikerült elküldeni a levelet!");
-	}
 }
 
 

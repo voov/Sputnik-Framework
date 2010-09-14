@@ -11,7 +11,7 @@ class SessionMySQLAdapter implements ISessionAdapter {
 		
 	}
 
-	function Set($var, $value, $ttl) {
+	function Set($var, $value, $ttl=0) {
 
 	}
 

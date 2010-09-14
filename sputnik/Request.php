@@ -42,7 +42,7 @@ class Request {
 
 	function getInstance() {
 		if (!Request::$instance) {
-			Request::$instance = new Sessions;
+			Request::$instance = new Request;
 		}
 		return Request::$instance;
 	}

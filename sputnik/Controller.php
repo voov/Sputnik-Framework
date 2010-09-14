@@ -142,12 +142,12 @@ abstract class Controller {
 		$controller = new $this->uri_helper->class_name();
 
 		$parameters_index = 1; //calc in class
-
-		if (method_exists($controller, $this->uri_helper->uri_array[$parameters_index])) {
-			$action = $this->uri_helper->uri_array[$parameters_index];
+		$action_buffer = $this->GetURIPart($parameters_index);
+		if (method_exists($controller, $action_buffer)) {
+			$action = $action_buffer;
 			$parameters_index+=1;
 		}
-
+		
 		if (!method_exists($controller, $action))
 			trigger_error("There is no '$action' in '$controller'!", E_USER_ERROR);
 		
@@ -159,7 +159,7 @@ abstract class Controller {
 
 		if ($classActionMethod->getNumberOfParameters() > 0) {
 			$actionParameters = $classActionMethod->getParameters();
-			$paramCounter = -1;
+			$paramCounter = 0;
 			$parameters = array();
 			foreach($actionParameters as $param) {
 				$val = $this->GetURIPart($paramCounter+$parameters_index);
@@ -167,8 +167,6 @@ abstract class Controller {
 				$paramCounter++;
 			}
 		}
-
-		
 
 		// Call the _autorun method if it exists
 		if (method_exists($controller, "_autorun"))
@@ -180,16 +178,16 @@ abstract class Controller {
 }
 
 
-class FrontController extends Controller {
+class Sputnik extends Controller {
 
 	static $instance = false;
 	static $start_from = 0;
 
 	function GetInstance() {
-		if (!FrontController::$instance) {
-			FrontController::$instance = new self();
+		if (!Sputnik::$instance) {
+			Sputnik::$instance = new self();
 		}
-		return FrontController::$instance;
+		return Sputnik::$instance;
 	}
 
 	function Dispatch() {

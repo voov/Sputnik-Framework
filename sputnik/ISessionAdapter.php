@@ -6,7 +6,7 @@
  */
 interface ISessionAdapter {
 	public function Get($var);
-	public function Set($var, $value, $ttl);
+	public function Set($var, $value, $ttl=0);
 	public function Clear($var);
 	public function Is_set($var);
 	

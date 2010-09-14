@@ -4,5 +4,5 @@ require_once "sputnik/Db.php";
 require_once "sputnik/ErrorHandler.php";
 require_once "sputnik/Mailer.php";
 
-FrontController::GetInstance()->Dispatch();
+Sputnik::GetInstance()->Dispatch();
 ?>

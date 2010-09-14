@@ -4,7 +4,7 @@
      * @version 2.0
      * @author Daniel Fekete - Voov Ltd.
      */ 
-	require_once "sputnik/sp-plugin.php";
+	require_once "sputnik/IPlugin.php";
 	
 	class AuthPlugin implements IPlugin {
 		private $baseObject;
