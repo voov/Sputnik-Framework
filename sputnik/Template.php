@@ -55,11 +55,11 @@ class Template {
 	}
 
 	function fetch($file, $id = false) {
-
-		if ($this->_caching == true) {
+		
+		/*if ($this->_caching == true) {
 			$output = $this->_getCache($file);
-		} else
-			$output = $this->_getOutput($file);
+		} else*/
+		$output = $this->_getOutput($file);
 		return isset($output) ? $output:false;
 
 	}
@@ -179,6 +179,15 @@ class Template {
 
 		// embed HTML builder to template
 		$this->_variables["html"] = $this->html;
+		
+		
+		if (strpos($file, ".") === FALSE) {
+			// Find the extension
+			$extensions = array("html", "php", "htm");
+			foreach($extensions as $ext) {
+				if (is_file($this->_templateDir . "/$file." . $ext)) $file .= "." . $ext;
+			}
+		}
 		
 		// set controller vars
 		if (($front_instance = Sputnik::GetInstance()) != false) {
