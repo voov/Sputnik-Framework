@@ -30,6 +30,8 @@ class Db {
 	private $is_prepared = false;
 	private $prep_vars = array();
 
+	private $last_query = "";
+
 	/**
 	 * Constructor
 	 * @param string server
@@ -166,7 +168,7 @@ class Db {
 	/**
 	 * Run a query against the database and return
 	 * a resultset iterator object
-	 * @return object DB_Result
+	 * @return object DbResult
 	 */
 	public function Query($query, $send_in_utf8 = false) {
 		$uselimit = false;
@@ -182,6 +184,7 @@ class Db {
 		}
 		
 		if ($this->is_prepared) $query = $this->PrepareQuery($query);
+		$this->last_query = $query;
 		$result = mysql_query($query, $this->conn) or
 			   trigger_error("SQL Hiba: " . mysql_error() . "<br /><b>" . $query . "</b>", E_USER_ERROR);
 
@@ -197,6 +200,14 @@ class Db {
 				return mysql_insert_id($this->conn);
 		}
 		return mysql_affected_rows($this->conn);
+	}
+
+
+	/**
+	 *
+	 */
+	public function DumpLastQuery() {
+		echo $this->last_query;
 	}
 
 	/**
@@ -276,7 +287,7 @@ class Db {
 			}
 			$count++;
 		}
-		if ($id instanceof sp_db_row)
+		if ($id instanceof DbRow)
 			$where = $id;
 
 		if ($where != null) {
@@ -286,7 +297,7 @@ class Db {
 			foreach($where as $key => $value) {
 				$value = mysql_real_escape_string($value);
 				if ($w_count > 0) {
-					$where_list .= ", `$key`='$value'";
+					$where_list .= "AND `$key`='$value'";
 				} else {
 					$where_list .= "`$key`='$value'";
 				}
