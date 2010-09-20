@@ -9,7 +9,7 @@
 
 define("TEMPLATE_LOADED", 1);
 
-require_once "config/config.php";
+
 require_once "simple_html_dom.php";
 require_once "HtmlBuilder.php";
 
@@ -187,16 +187,19 @@ class Template {
 			foreach($extensions as $ext) {
 				if (is_file($this->_templateDir . "/$file." . $ext)) $file .= "." . $ext;
 			}
+			
 		}
 		
 		// set controller vars
 		if (($front_instance = Sputnik::GetInstance()) != false) {
 			$vars = get_object_vars($front_instance);
 			foreach($vars as $var_key => $var_value) {
-				if (!isset($this->$var_key)) $this->$var_key =& $var_value;
+				if (!isset($this->$var_key)) {
+					$this->$var_key = null;
+					$this->$var_key = &$vars[$var_key];
+				}
 			}
 		}
-
 		extract($this->_variables);
 		if ($template == true)
 			$file = $this->_templateDir . "/$file";
