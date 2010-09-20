@@ -40,7 +40,7 @@ class HtmlBuilder {
 	}
 
 	public function value($val, $set_value="") {
-		if ($this->type == "input")
+		if ($this->type == "input" || $this->type == "option")
 			$this->attr("value", $val);
 		else
 			$this->innerHTML = $val;
