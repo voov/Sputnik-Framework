@@ -6,87 +6,35 @@
  * @copyright VOOV Ltd.
  */
 
+require_once("config/config.php");
+require_once("config/localization.php");
+require_once("config/uri_mappings.php");
+require_once ("Hooks.php");
+require_once("URI.php");
 require_once("Helper.php");
 require_once("Template.php");
 require_once("Sessions.php");
 require_once("Request.php");
 require_once("Db.php");
 require_once("PluginLoader.php");
-require_once("config/uri_mappings.php");
+require_once("Localization.php");
 
 
 /**
- * URI Helper class
- * @author Daniel Fekete
- * @copyright 2010(c) VOOV Ltd.
- */
-class URIHelper {
-	var $class_name = "";
-	var $class_path = array();
-	var $uri_array = array();
-	var $path_length = 0;
-	var $dir_path = "";
-
-	function  __construct() {
-		global $uri_mappings;
-		$uri_array = explode("/", $_SERVER["REQUEST_URI"]);
-		$uri_filtered = array_filter($uri_array, array($this, "remove_index"));
-		$uri = implode("/", $uri_filtered);
-		
-		foreach($uri_mappings as $map_regex => $map_replace) {
-			$uri = preg_replace("/^" . str_replace("/", "\/", $map_regex) . "$/", $map_replace, $uri); // Replace the URI using the mappings
-		}
-		
-		$this->uri_array = explode("/", $uri);
-		$this->get_class_path($this->uri_array);
-		$this->path_length = count($this->class_path);
-		$this->class_name = $this->uri_array[$this->path_length];
-		
-		$this->dir_path = implode("/", $this->class_path);
-	}
-	
-	private function remove_index($var) {
-		// strip out leading php controller files if present
-		if (strpos($var, ".php") !== false) return false;
-		else {
-			// do a quick standard URI check
-			// Framework 3 is VERY restrictive about URIs
-			if (preg_match('/^[a-zA-Z0-9_-][a-zA-Z0-9_-]*$/', $var)) {
-				return true;
-			}
-			return false;
-		}
-	}
-
-	private function get_class_path($uri_array, $index=0) {
-		global $config;
-		$dir = $config["app_directory"] . implode("/", $this->class_path) . "/" .  $uri_array[$index];
-		if (is_dir($dir)) {
-			// Add to the class path
-			$this->class_path[] = $uri_array[$index];
-			// If the URI is longer
-			if (count($uri_array) > $index) {
-				$this->get_class_path($uri_array, $index+1); // Go one further
-			}
-		}
-	}
-
-}
-
-/**
- * 
+ *
  */
 abstract class Controller {
 
 	public $view = null;
 	public $db = null;
+	public $session = null;
 	public $uri_helper;
-	
+
 
 	function __construct() {
 		$this->view = Template::getInstance();
 		$this->db = Db::getInstance();
-
+		$this->session = Sessions::getInstance();
 		$this->uri_helper = new URIHelper();
 	}
 
@@ -94,7 +42,7 @@ abstract class Controller {
 		return $this->uri_helper->uri_array[$this->uri_helper->path_length+$index];
 	}
 
-	
+
 	public function GetRequest() {
 		return Request::getInstance();
 	}
@@ -123,8 +71,8 @@ abstract class Controller {
 
 	/**
 	 * Forward
-	 * protected f�ggv�ny, csak �r�k�lt oszt�lyokban haszn�lhat�, tov�bb�tja a k�r�seket
-	 * a megfelel� class f�jlba
+	 *
+	 * 
 	 * @return
 	 * @param $method Object melyik oszt�lyt kell megh�vnia
 	 * @param $action Object[optional] melyik f�ggv�nyt h�vja meg az oszt�lyon bel�l
@@ -147,10 +95,10 @@ abstract class Controller {
 			$action = $action_buffer;
 			$parameters_index+=1;
 		}
-		
+
 		if (!method_exists($controller, $action))
 			trigger_error("There is no '$action' in '$controller'!", E_USER_ERROR);
-		
+
 		$classReflect = new ReflectionClass($controller);
 		$classActionMethod = $classReflect->getMethod($action);
 
@@ -171,7 +119,7 @@ abstract class Controller {
 		// Call the _autorun method if it exists
 		if (method_exists($controller, "_autorun"))
 			$controller->_autorun();
-		
+
 		call_user_func_array(array($controller, $action), $parameters);
 	}
 
