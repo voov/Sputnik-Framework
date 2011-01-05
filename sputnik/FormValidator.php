@@ -106,14 +106,19 @@ class FormValidator {
 
 	public function __call($method, $args) {
 		// Dynamically load validators
-		include "validators/defaults.php";
+		include_once "validators/defaults.php";
+
+		// check if the running instance have this function
+		if(method_exists(Sputnik::GetRunningInstance(), $method)) {
+			return call_user_func_array(array(Sputnik::GetRunningInstance(), $method), $args);
+		}
 		// check if we already have the function
 		if (function_exists($method))
 			return call_user_func_array($method, $args);
 		else {
 			// we still don't have the needed function, no panic!
 			if (is_file("validators/" . $method . ".php")) {
-				include "validators/" . $method . ".php";
+				include_once "validators/" . $method . ".php";
 				if (function_exists($method)) return call_user_func_array($method, $args);
 			}
 		}
@@ -124,9 +129,10 @@ class FormValidator {
 	/**
 	 * Sets the error string for a given function
 	 * @param <type> $func
-	 * @param <type> $err_string 
+	 * @param <type> $err_string
 	 */
-	public function SetErrorString($func, $err_string) {
+	public function SetErrorString($func, $err_string, $force=true) {
+		if($force == false && array_key_exists($func, $this->error_strings)) return;
 		$this->error_strings[$func] = $err_string;
 	}
 
@@ -137,7 +143,7 @@ class FormValidator {
 	 */
 	public static function SetMessage($func, $err_string) {
 		if (FormValidator::$currentInstance != null)
-			FormValidator::$currentInstance->error_strings[$func] = $err_string;
+			FormValidator::$currentInstance->SetErrorString($func, $err_string, false);
 	}
 
 	/**
@@ -201,7 +207,7 @@ class FormValidator {
 			$field_final = strtr($field_string, $wildcards);
 
 		foreach($this->arr as $key=>$value) {
-			if(preg_match("/$field_final/i", $key)) $field_buffer[] = $key;
+			if(preg_match("/^$field_final$/i", $key)) $field_buffer[] = $key;
 		}
 		return $field_buffer;
 	}
@@ -243,6 +249,20 @@ class FormValidator {
 
 	}
 
+	public function RepostAll() {
+		$instance = Sputnik::GetInstance();
+		$instance->session->SetFlashdata("repost_validator", serialize($_POST));
+	}
+
+	public static function RenderRepost($prefix="repost_") {
+		$instance = Sputnik::GetInstance();
+		if (!$instance->session->GetFlashdata("repost_validator")) return;
+		$repost_data = unserialize($instance->session->GetFlashdata("repost_validator"));
+		foreach($repost_data as $repost_key=>$repost_value) {
+			$instance->view->{$prefix . $repost_key} = $repost_value;
+		}
+	}
+
 	/*
 	 * Include the most common validator function(s) so that it doesn't need to be
 	 * dynamically loaded
@@ -250,7 +270,7 @@ class FormValidator {
 
 	public function required($str) {
 		if ($str == "") {
-			$this->SetErrorString("required", "The field %s is required!");
+			$this->SetErrorString("required", "The field %s is required!", false);
 			return false;
 		}
 		return true;

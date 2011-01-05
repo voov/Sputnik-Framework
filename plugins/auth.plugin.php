@@ -28,7 +28,8 @@
 		public function RunOnEnter() {
 			if (!$this->CheckUser($this->minimumLevel)) {
 				// Show GateKeeper
-				$this->baseObject->view->display("gatekeeper.html");
+				Sputnik::GetRunningInstance()->view->display("gatekeeper");
+				//$this->baseObject->view->display("gatekeeper");
 				exit;
 			}			
 		}		

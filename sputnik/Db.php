@@ -8,6 +8,7 @@
 
 require_once "DbResult.php";
 require_once "DbRow.php";
+require_once 'QueryBuilder.php';
 require_once "config/config.php";
 
 class Db {
@@ -171,6 +172,9 @@ class Db {
 	 * @return object DbResult
 	 */
 	public function Query($query, $send_in_utf8 = false) {
+		if($query instanceof QueryBuilder)
+			$query = $query->Render();
+		
 		$uselimit = false;
 		// Engedélyezzük az SQL_CALC_FOUND_ROWS -t ha van benne LIMIT rész
 		$tokens = explode(' ', strtolower($query));

@@ -111,6 +111,23 @@ class DbResult implements Iterator {
 			return false;
 	}
 
+	public function GetArray() {
+		$buffer = array();
+		if(count($this->rows) == 1) {
+			// Only one row
+			return $this->rows[0]->GetFields();
+		}
+		foreach($this->rows as $row) {
+			$buffer[] = $row->GetFields();
+		}
+		return $buffer;
+	}
+
+	public function GetJSON() {
+		$buffer = $this->GetArray();
+		return json_encode($buffer);
+	}
+
 
 	/**
 	 * Size of the resultset

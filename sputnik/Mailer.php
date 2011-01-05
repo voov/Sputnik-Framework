@@ -23,7 +23,7 @@ class Mailer {
 
 	function Mailer($template_name) {
 		$this->_templateName = $template_name;
-		//$this->_cachedTemplate = $this->fetch($template_name);
+		
 	}
 
 	function assign($name, $value) {
@@ -35,100 +35,10 @@ class Mailer {
 		$this->assign($var, $val);
 	}
 
-	function resolve_href ($base, $href) {
-
-		// href="" ==> current url.
-		if (!$href) {
-			return $base;
-		}
-
-		// href="http://..." ==> href isn't relative
-		$rel_parsed = parse_url($href);
-		if (array_key_exists('scheme', $rel_parsed)) {
-			return $href;
-		}
-
-		// add an extra character so that, if it ends in a /, we don't lose the last piece.
-		$base_parsed = parse_url("$base ");
-		// if it's just server.com and no path, then put a / there.
-		if (!array_key_exists('path', $base_parsed)) {
-			$base_parsed = parse_url("$base/ ");
-		}
-
-		// href="/ ==> throw away current path.
-		if ($href{0} === "/") {
-			$path = $href;
-		} else {
-			$path = dirname($base_parsed['path']) . "/$href";
-		}
-
-		// bla/./bloo ==> bla/bloo
-		$path = preg_replace('~/\./~', '/', $path);
-
-		// resolve /../
-		// loop through all the parts, popping whenever there's a .., pushing otherwise.
-		$parts = array();
-		foreach (
-		explode('/', preg_replace('~/+~', '/', $path)) as $part
-		) if ($part === "..") {
-				array_pop($parts);
-			} elseif ($part!="") {
-				$parts[] = $part;
-			}
-
-		return (
-			   (array_key_exists('scheme', $base_parsed)) ?
-			   $base_parsed['scheme'] . '://' . $base_parsed['host'] : ""
-			   ) . "/" . implode("/", $parts);
-
-	}
-
-	function setRewrite($origHref) {
-		if ($this->_absolutePath == "" || strpos($origHref, "http:") ||
-			   strpos($origHref, "mailto:") || strpos($origHref, "javascript:") ||
-			   strpos($origHref, "href:")) return $origHref;
-		$origHref = $this->resolve_href($this->_absolutePath, $origHref);
-		return $origHref;
-	}
-
-	function _compileBlocks($html_node) {
-		foreach($html_node->find("[href],[src],[action]") as $elem) {
-			if ($elem->rel == "norewrite") {
-				$elem->rel = preg_replace("/norewrite/", "", $elem->rel); // töröljük a rel-ből a norewrite-ot
-				if ($elem->rel == "") $elem->rel = null; // ha ez volt az egyetlen, szedjük ki a attr-t
-				continue;
-			}
-			if(isset($elem->src)) $elem->src = $this->setRewrite($elem->src);
-			if(isset($elem->href)) $elem->href = $this->setRewrite($elem->href);
-			if(isset($elem->action)) $elem->action = $this->setRewrite($elem->action);
-		}
-		//$html_node->find("comment")
-	}
-
-	function _compileScript($file) {
-		//$file = $this->_templateDir . "/$file";
-		//$buffer = file_get_contents($file); // Get contents of the file, setup temp buffer
-		global $config;
-		$html = file_get_html($this->_templateDir . "/$file");
-		$blocks = $html->find("div[src]");
-		foreach($blocks as $key=>$block) {
-			// Fordítsuk le a blokkokat
-			$replaceHtml = file_get_html($this->_templateDir . "/" . $block->src);
-			$this->_compileBlocks($replaceHtml); // Compile all child blocks
-			$block->outertext = $replaceHtml;
-		}
-		$this->_compileBlocks($html); // Compile the root node
-		$e = $html->find("body");
-		return $html;
-	}
-
 	function _getOutput($file, $template=true) {
-		extract($this->_variables);
-		if ($template == true)
-			$file = $this->_templateDir . "/$file";
-
 		if (file_exists($file)) {
 			ob_start();
+			extract($this->_variables);
 			include ($file);
 			$output = ob_get_contents();
 			ob_end_clean();
@@ -234,12 +144,12 @@ class Mailer {
 		return $type;
 	}
 
-	function SendHTMLMail($to, $from, $subject) {
+	function Send($to, $from, $subject) {
 		$random_hash = md5(uniqid());
 		$string = $this->_getOutput($this->_templateName, false);
 
 		$message = "From: $from";
-		$message .= "\r\nContent-Type: multipart/alternative; boundary=\"VOOV-Sputnik-".$random_hash."\"";
+		$message .= "\r\nContent-Type: multipart/alternative; boundary=\"VOOV-Sputnik-".$random_hash."\"\r\n";
 
 		/* PLAIN TEXT */
 		$message .= "--VOOV-Sputnik-" . $random_hash . "\r\n";
@@ -258,7 +168,7 @@ class Mailer {
 
 		$message .= $string;
 		$message .= "\r\n\r\n";
-		
+
 		/* CSATOLMÁNYOK */
 		foreach($this->_attachments as $fname=>$attachment) {
 			// adjuk hozzá a csatolmányokat
@@ -269,7 +179,7 @@ class Mailer {
 			$message .= base64_encode(file_get_contents($attachment));
 			$message .= "\r\n\r\n";
 		}
-		$message .= "--VOOV-temp-" . $random_hash . "--";
+		$message .= "--VOOV-Sputnik-" . $random_hash . "--";
 
 		if (is_array($to)) {
 			foreach($to as $to_item)
@@ -279,6 +189,10 @@ class Mailer {
 		}
 		$this->_attachments = array(); // clear the attachement array
 		$this->_variables = array(); // clear variables
+	}
+
+	function SendHTMLMail($to, $from, $subject) {
+		$this->Send($to, $from, $subject);
 	}
 }
 ?>

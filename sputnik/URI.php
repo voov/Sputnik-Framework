@@ -5,6 +5,7 @@
  * @author Daniel Fekete
  * @copyright 2010(c) VOOV Ltd.
  */
+
 class URIHelper {
 	var $class_name = "";
 	var $class_path = array();
@@ -43,7 +44,7 @@ class URIHelper {
 		else {
 			// do a quick standard URI check
 			// Framework 3 is VERY restrictive about URIs
-			if (preg_match('/^[a-zA-Z0-9_-][a-zA-Z0-9_-]*$/', $var)) {
+			if (preg_match('/^[a-zA-Z0-9_-][a-zA-Z0-9_-]*(?:\.[a-z]{1,4})?$/', $var)) {
 				return true;
 			}
 			return false;

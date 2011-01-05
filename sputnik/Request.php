@@ -40,6 +40,10 @@ class Request {
 		return $this->CleanString($_REQUEST[$name]);
 	}
 
+	public function __isset($name) {
+		return false;
+	}
+
 	function getInstance() {
 		if (!Request::$instance) {
 			Request::$instance = new Request;

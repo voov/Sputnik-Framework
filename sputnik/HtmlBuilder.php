@@ -10,8 +10,13 @@ class HtmlBuilder {
 	//var $innerText = "";
 
 	/* constructor */
-	public function  __construct($self_closers = array('input','img','hr','br','meta','link')) {
-		$this->self_closers = $self_closers;
+	public function  __construct($elem_name="") {
+		if($elem_name != "") $this->elem($elem_name);
+		$this->self_closers = array('input','img','hr','br','meta','link');
+	}
+
+	public static function HtmlBuilder($elem_name) {
+		return new HtmlBuilder($elem_name);
 	}
 
 	public function elem($type, $set_value="") {
@@ -54,6 +59,10 @@ class HtmlBuilder {
 		return $this;
 	}
 
+	public function html($text) {
+		return $this->innerHTML($text);
+	}
+
 	public function innerHTML($text) {
 		$this->innerHTML = $text;
 		return $this;
@@ -94,9 +103,12 @@ class HtmlBuilder {
 		if (empty($this->innerHTML)) $this->innerHTML = $this->attributes['text'];
 
 		// check for selected values
-		if(in_array($this->set_value, $this->attributes)) {
-			if ($this->type == "option") $this->attr("selected", "selected");
-			if ($this->type == "input") $this->attr("checked", "checked");
+		if(!is_array($this->set_value)) $this->set_value = array($this->set_value);
+		foreach($this->set_value as $set_value) {
+			if(in_array($set_value, $this->attributes)) {
+				if ($this->type == "option") $this->attr("selected", "selected");
+				if ($this->type == "input") $this->attr("checked", "checked");
+			}
 		}
 
 		//add attributes
