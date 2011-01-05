@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Documentation produced by the Html generator of Bouml (http://bouml.free.fr) -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Class Sessions</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<div class = "title">Class Sessions</div>
+<p></p>
+
+<!-- ============================================================= -->
+
+<a name="ref4_130306"></a>
+<p>Sputnik Session Class<br />@version 3.0<br />@author Daniel Fekete - Voov Ltd.<br /><br /><br /></p>
+<p>Declaration :</p><ul>
+<li>Php : class Sessions </li></ul><p>Artifact : Sessions</p>
+<div class="sub">
+<a name="ref1_134658"></a>
+<table><tr><td><div class="element">Attribute <b>instance</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : static, ~ instance :  =  false</li><li>Php :  static $instance</li></ul><a name="ref1_134786"></a>
+<table><tr><td><div class="element">Attribute <b>session_adapter</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - session_adapter :  =  null</li><li>Php : private $session_adapter</li></ul><a name="ref1_134914"></a>
+<table><tr><td><div class="element">Attribute <b>deleteable_flash_data</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - deleteable_flash_data :  =  array()</li><li>Php : private $deleteable_flash_data</li></ul><a name="ref2_143234"></a>
+<table><tr><td><div class="element">Operation <b>__construct</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ __construct() : void</li><li>Php :  function __construct() </li></ul><a name="ref2_143362"></a>
+<table><tr><td><div class="element">Operation <b>__destruct</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ __destruct() : void</li><li>Php :  function __destruct() </li></ul><a name="ref2_143490"></a>
+<table><tr><td><div class="element">Operation <b>__get</b></div></td></tr></table><p>Ezzel kapunk meg egy Session v�ltoz�t<br />@return<br />@param $var Object Session v�ltoz�<br /><br /></p><p>Declaration :</p><ul><li>Uml : ~ __get(inout var : $var) : void</li><li>Php :  function __get($var) </li></ul><a name="ref2_143618"></a>
+<table><tr><td><div class="element">Operation <b>__set</b></div></td></tr></table><p>Be�ll�t egy session v�ltoz�t<br />Amennyiben null-t adunk meg neki, akkor kit�rli a session-t<br />@return<br />@param $var Object melyik session v�ltoz�<br />@param $val Object v�ltoz� �rt�ke<br /><br /></p><p>Declaration :</p><ul><li>Uml : ~ __set(inout var : $var, inout val : $val) : void</li><li>Php :  function __set($var, $val) </li></ul><a name="ref2_143746"></a>
+<table><tr><td><div class="element">Operation <b>__isset</b></div></td></tr></table><p>Visszaadja, hogy az adott param�ter l�tezik-e<br />isset() magic method<br />@return ${type} param�ter l�tezik?<br />@param $var Object<br /><br /></p><p>Declaration :</p><ul><li>Uml : ~ __isset(inout var : $var) : bool</li><li>Php :  function __isset($var) </li></ul><a name="ref2_143874"></a>
+<table><tr><td><div class="element">Operation <b>ClearSession</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ ClearSession(inout name : ) : void</li><li>Php :  function ClearSession($name) </li></ul><a name="ref2_144002"></a>
+<table><tr><td><div class="element">Operation <b>SetFlashdata</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ SetFlashdata(inout var : , inout value : ) : void</li><li>Php :  function SetFlashdata($var, $value) </li></ul><a name="ref2_144130"></a>
+<table><tr><td><div class="element">Operation <b>GetFlashdata</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ GetFlashdata(inout var : ) : void</li><li>Php :  function GetFlashdata($var) </li></ul><a name="ref2_144258"></a>
+<table><tr><td><div class="element">Operation <b>getInstance</b></div></td></tr></table><p>Visszaadja a session oszt�ly egy statikus instance-j�t<br />@return<br /><br /></p><p>Declaration :</p><ul><li>Uml : ~ getInstance() : void</li><li>Php :  function getInstance() </li></ul></div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Documentation produced by the Html generator of Bouml (http://bouml.free.fr) -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Class CSVReader</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<div class = "title">Class CSVReader</div>
+<p></p>
+
+<!-- ============================================================= -->
+
+<a name="ref4_130818"></a>
+<p>@name CSV Reader<br />VOOV Ltd.<br />@author Daniel Fekete<br />@copyright 2008<br /><br /></p>
+<p>Declaration :</p><ul>
+<li>Php : class CSVReader </li></ul><p>Artifact : sp-csvread</p>
+<div class="sub">
+<a name="ref1_138626"></a>
+<table><tr><td><div class="element">Attribute <b>has_header</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : ~ has_header :  =  true</li><li>Php :  var $has_header</li></ul><a name="ref1_138754"></a>
+<table><tr><td><div class="element">Attribute <b>lines</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : ~ lines :  =  array()</li><li>Php :  var $lines</li></ul><a name="ref1_138882"></a>
+<table><tr><td><div class="element">Attribute <b>delim_char</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : ~ delim_char : </li><li>Php :  var $delim_char</li></ul><a name="ref1_139010"></a>
+<table><tr><td><div class="element">Attribute <b>array_pointer</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : ~ array_pointer :  = 0</li><li>Php :  var $array_pointer</li></ul><a name="ref1_139138"></a>
+<table><tr><td><div class="element">Attribute <b>startSeparatorPosition</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : ~ startSeparatorPosition : </li><li>Php :  var $startSeparatorPosition</li></ul><a name="ref2_153986"></a>
+<table><tr><td><div class="element">Operation <b>setDelimChar</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ setDelimChar(inout d_char : ) : void</li><li>Php :  function setDelimChar($d_char) </li></ul><a name="ref2_154114"></a>
+<table><tr><td><div class="element">Operation <b>GetCSVField</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ GetCSVField(inout data : ) : void</li><li>Php :  function GetCSVField($data) </li></ul><a name="ref2_154242"></a>
+<table><tr><td><div class="element">Operation <b>getFields</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ getFields(inout line : ) : void</li><li>Php :  function getFields($line) </li></ul><a name="ref2_154370"></a>
+<table><tr><td><div class="element">Operation <b>currentLine</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ currentLine() : void</li><li>Php :  function currentLine() </li></ul><a name="ref2_154498"></a>
+<table><tr><td><div class="element">Operation <b>next</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ next() : void</li><li>Php :  function next() </li></ul><a name="ref2_154626"></a>
+<table><tr><td><div class="element">Operation <b>FindSingleQuote</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ FindSingleQuote(inout data : , inout startFrom : ) : void</li><li>Php :  function FindSingleQuote($data, $startFrom) </li></ul><a name="ref2_154754"></a>
+<table><tr><td><div class="element">Operation <b>CSVReader</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ CSVReader(inout fname : , inout delim_char :  = null) : void</li><li>Php :  function CSVReader($fname, $delim_char = null) </li></ul></div>
+</body>
+</html>

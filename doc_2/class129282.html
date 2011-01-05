@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Documentation produced by the Html generator of Bouml (http://bouml.free.fr) -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Class HtmlBuilder</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<div class = "title">Class HtmlBuilder</div>
+<p></p>
+
+<!-- ============================================================= -->
+
+<a name="ref4_129282"></a>
+<p>creates an html element, like in js <br /></p>
+<p>Declaration :</p><ul>
+<li>Php : class HtmlBuilder </li></ul><p>Artifact : HtmlBuilder</p>
+<div class="sub">
+<a name="ref1_132610"></a>
+<table><tr><td><div class="element">Attribute <b>type</b></div></td></tr></table>
+<p>vars <br /></p><p>Declaration :</p><ul><li>Uml : ~ type : </li><li>Php :  var $type</li></ul><a name="ref1_132738"></a>
+<table><tr><td><div class="element">Attribute <b>attributes</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : ~ attributes : </li><li>Php :  var $attributes</li></ul><a name="ref1_132866"></a>
+<table><tr><td><div class="element">Attribute <b>self_closers</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : ~ self_closers : </li><li>Php :  var $self_closers</li></ul><a name="ref1_132994"></a>
+<table><tr><td><div class="element">Attribute <b>innerHTML</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : ~ innerHTML :  =  ""</li><li>Php :  var $innerHTML</li></ul><a name="ref1_133122"></a>
+<table><tr><td><div class="element">Attribute <b>set_value</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : ~ set_value :  =  ""</li><li>Php :  var $set_value</li></ul><a name="ref2_137474"></a>
+<table><tr><td><div class="element">Operation <b>__construct</b></div></td></tr></table><p>var $innerText = "";<br /> constructor <br /></p><p>Declaration :</p><ul><li>Uml : + __construct(inout self_closers :  = array('input','img','hr','br','meta','link')) : void</li><li>Php : public function __construct($self_closers = array('input','img','hr','br','meta','link')) </li></ul><a name="ref2_137602"></a>
+<table><tr><td><div class="element">Operation <b>elem</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + elem(inout type : , inout set_value :  = "") : void</li><li>Php : public function elem($type, $set_value = "") </li></ul><a name="ref2_137730"></a>
+<table><tr><td><div class="element">Operation <b>get</b></div></td></tr></table><p>get <br /></p><p>Declaration :</p><ul><li>Uml : + get(inout attribute : ) : void</li><li>Php : public function get($attribute) </li></ul><a name="ref2_137858"></a>
+<table><tr><td><div class="element">Operation <b>attr</b></div></td></tr></table><p>set -- array or key,value <br /></p><p>Declaration :</p><ul><li>Uml : + attr(inout attribute : , inout value :  = '') : void</li><li>Php : public function attr($attribute, $value = '') </li></ul><a name="ref2_137986"></a>
+<table><tr><td><div class="element">Operation <b>value</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + value(inout val : , inout set_value :  = "") : void</li><li>Php : public function value($val, $set_value = "") </li></ul><a name="ref2_138114"></a>
+<table><tr><td><div class="element">Operation <b>disabled</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + disabled(inout disabled :  = true) : void</li><li>Php : public function disabled($disabled = true) </li></ul><a name="ref2_138242"></a>
+<table><tr><td><div class="element">Operation <b>innerHTML</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + innerHTML(inout text : ) : void</li><li>Php : public function innerHTML($text) </li></ul><a name="ref2_138370"></a>
+<table><tr><td><div class="element">Operation <b>__call</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + __call(inout method : , inout args : ) : void</li><li>Php : public function __call($method, $args) </li></ul><a name="ref2_138498"></a>
+<table><tr><td><div class="element">Operation <b>remove</b></div></td></tr></table><p>remove an attribute <br /></p><p>Declaration :</p><ul><li>Uml : ~ remove(inout att : ) : void</li><li>Php :  function remove($att) </li></ul><a name="ref2_138626"></a>
+<table><tr><td><div class="element">Operation <b>clear</b></div></td></tr></table><p>clear <br /></p><p>Declaration :</p><ul><li>Uml : ~ clear() : void</li><li>Php :  function clear() </li></ul><a name="ref2_138754"></a>
+<table><tr><td><div class="element">Operation <b>inject</b></div></td></tr></table><p>inject <br /></p><p>Declaration :</p><ul><li>Uml : ~ inject(inout object : ) : void</li><li>Php :  function inject($object) </li></ul><a name="ref2_138882"></a>
+<table><tr><td><div class="element">Operation <b>build</b></div></td></tr></table><p>build <br /></p><p>Declaration :</p><ul><li>Uml : - build() : void</li><li>Php : private function build() </li></ul><a name="ref2_139010"></a>
+<table><tr><td><div class="element">Operation <b>render</b></div></td></tr></table><p>spit it out <br /></p><p>Declaration :</p><ul><li>Uml : + render() : void</li><li>Php : public function render() </li></ul><a name="ref2_139138"></a>
+<table><tr><td><div class="element">Operation <b>__toString</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + __toString() : void</li><li>Php : public function __toString() </li></ul></div>
+<p>All public operations : <a href="class129282.html#ref2_138370"><b>__call</b></a> , <a href="class129282.html#ref2_137474"><b>__construct</b></a> , <a href="class129282.html#ref2_139138"><b>__toString</b></a> , <a href="class129282.html#ref2_137858"><b>attr</b></a> , <a href="class129282.html#ref2_138114"><b>disabled</b></a> , <a href="class129282.html#ref2_137602"><b>elem</b></a> , <a href="class129282.html#ref2_137730"><b>get</b></a> , <a href="class129282.html#ref2_138242"><b>innerHTML</b></a> , <a href="class129282.html#ref2_139010"><b>render</b></a> , <a href="class129282.html#ref2_137986"><b>value</b></a> </p>
+</body>
+</html>

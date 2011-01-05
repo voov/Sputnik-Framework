@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Documentation produced by the Html generator of Bouml (http://bouml.free.fr) -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Class simple_html_dom_node</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<div class = "title">Class simple_html_dom_node</div>
+<p></p>
+
+<!-- ============================================================= -->
+
+<a name="ref4_130434"></a>
+<p>simple html dom node<br /> -----------------------------------------------------------------------------<br /></p>
+<p>Declaration :</p><ul>
+<li>Php : class simple_html_dom_node </li></ul><p>Artifact : simple_html_dom</p>
+<div class="sub">
+<a name="ref1_135042"></a>
+<table><tr><td><div class="element">Attribute <b>nodetype</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : + nodetype :  =  HDOM_TYPE_TEXT</li><li>Php : public $nodetype</li></ul><a name="ref1_135170"></a>
+<table><tr><td><div class="element">Attribute <b>tag</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : + tag :  =  'text'</li><li>Php : public $tag</li></ul><a name="ref1_135298"></a>
+<table><tr><td><div class="element">Attribute <b>attr</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : + attr :  =  array()</li><li>Php : public $attr</li></ul><a name="ref1_135426"></a>
+<table><tr><td><div class="element">Attribute <b>children</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : + children :  =  array()</li><li>Php : public $children</li></ul><a name="ref1_135554"></a>
+<table><tr><td><div class="element">Attribute <b>nodes</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : + nodes :  =  array()</li><li>Php : public $nodes</li></ul><a name="ref1_135682"></a>
+<table><tr><td><div class="element">Attribute <b>parent</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : + parent :  =  null</li><li>Php : public $parent</li></ul><a name="ref1_135810"></a>
+<table><tr><td><div class="element">Attribute <b>_</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : + _ :  =  array()</li><li>Php : public $_</li></ul><a name="ref1_135938"></a>
+<table><tr><td><div class="element">Attribute <b>dom</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - dom :  =  null</li><li>Php : private $dom</li></ul><a name="ref2_144386"></a>
+<table><tr><td><div class="element">Operation <b>__construct</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ __construct(inout dom : ) : void</li><li>Php :  function __construct($dom) </li></ul><a name="ref2_144514"></a>
+<table><tr><td><div class="element">Operation <b>__destruct</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ __destruct() : void</li><li>Php :  function __destruct() </li></ul><a name="ref2_144642"></a>
+<table><tr><td><div class="element">Operation <b>__toString</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ __toString() : void</li><li>Php :  function __toString() </li></ul><a name="ref2_144770"></a>
+<table><tr><td><div class="element">Operation <b>clear</b></div></td></tr></table><p>clean up memory due to php5 circular references memory leak...<br /></p><p>Declaration :</p><ul><li>Uml : ~ clear() : void</li><li>Php :  function clear() </li></ul><a name="ref2_144898"></a>
+<table><tr><td><div class="element">Operation <b>dump</b></div></td></tr></table><p>dump node's tree<br /></p><p>Declaration :</p><ul><li>Uml : ~ dump(inout show_attr :  = true) : void</li><li>Php :  function dump($show_attr = true) </li></ul><a name="ref2_145026"></a>
+<table><tr><td><div class="element">Operation <b>parent</b></div></td></tr></table><p>returns the parent of node<br /></p><p>Declaration :</p><ul><li>Uml : ~ parent() : void</li><li>Php :  function parent() </li></ul><a name="ref2_145154"></a>
+<table><tr><td><div class="element">Operation <b>children</b></div></td></tr></table><p>returns children of node<br /></p><p>Declaration :</p><ul><li>Uml : ~ children(inout idx :  = -1) : void</li><li>Php :  function children($idx = -1) </li></ul><a name="ref2_145282"></a>
+<table><tr><td><div class="element">Operation <b>first_child</b></div></td></tr></table><p>returns the first child of node<br /></p><p>Declaration :</p><ul><li>Uml : ~ first_child() : void</li><li>Php :  function first_child() </li></ul><a name="ref2_145410"></a>
+<table><tr><td><div class="element">Operation <b>last_child</b></div></td></tr></table><p>returns the last child of node<br /></p><p>Declaration :</p><ul><li>Uml : ~ last_child() : void</li><li>Php :  function last_child() </li></ul><a name="ref2_145538"></a>
+<table><tr><td><div class="element">Operation <b>next_sibling</b></div></td></tr></table><p>returns the next sibling of node    <br /></p><p>Declaration :</p><ul><li>Uml : ~ next_sibling() : void</li><li>Php :  function next_sibling() </li></ul><a name="ref2_145666"></a>
+<table><tr><td><div class="element">Operation <b>prev_sibling</b></div></td></tr></table><p>returns the previous sibling of node<br /></p><p>Declaration :</p><ul><li>Uml : ~ prev_sibling() : void</li><li>Php :  function prev_sibling() </li></ul><a name="ref2_145794"></a>
+<table><tr><td><div class="element">Operation <b>innertext</b></div></td></tr></table><p>get dom node's inner html<br /></p><p>Declaration :</p><ul><li>Uml : ~ innertext() : void</li><li>Php :  function innertext() </li></ul><a name="ref2_145922"></a>
+<table><tr><td><div class="element">Operation <b>outertext</b></div></td></tr></table><p>get dom node's outer text (with tag)<br /></p><p>Declaration :</p><ul><li>Uml : ~ outertext() : void</li><li>Php :  function outertext() </li></ul><a name="ref2_146050"></a>
+<table><tr><td><div class="element">Operation <b>text</b></div></td></tr></table><p>get dom node's plain text<br /></p><p>Declaration :</p><ul><li>Uml : ~ text() : void</li><li>Php :  function text() </li></ul><a name="ref2_146178"></a>
+<table><tr><td><div class="element">Operation <b>xmltext</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ xmltext() : void</li><li>Php :  function xmltext() </li></ul><a name="ref2_146306"></a>
+<table><tr><td><div class="element">Operation <b>makeup</b></div></td></tr></table><p>build node's text with tag<br /></p><p>Declaration :</p><ul><li>Uml : ~ makeup() : void</li><li>Php :  function makeup() </li></ul><a name="ref2_146434"></a>
+<table><tr><td><div class="element">Operation <b>find</b></div></td></tr></table><p>find elements by css selector<br /></p><p>Declaration :</p><ul><li>Uml : ~ find(inout selector : , inout idx :  = null) : void</li><li>Php :  function find($selector, $idx = null) </li></ul><a name="ref2_146562"></a>
+<table><tr><td><div class="element">Operation <b>seek</b></div></td></tr></table><p>seek for given conditions<br /></p><p>Declaration :</p><ul><li>Uml : # seek(inout selector : , inout ret : ) : void</li><li>Php : protected function seek($selector, $ret) </li></ul><a name="ref2_146690"></a>
+<table><tr><td><div class="element">Operation <b>match</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : # match(inout exp : , inout pattern : , inout value : ) : void</li><li>Php : protected function match($exp, $pattern, $value) </li></ul><a name="ref2_146818"></a>
+<table><tr><td><div class="element">Operation <b>parse_selector</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : # parse_selector(inout selector_string : ) : void</li><li>Php : protected function parse_selector($selector_string) </li></ul><a name="ref2_146946"></a>
+<table><tr><td><div class="element">Operation <b>__get</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ __get(inout name : ) : void</li><li>Php :  function __get($name) </li></ul><a name="ref2_147074"></a>
+<table><tr><td><div class="element">Operation <b>__set</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ __set(inout name : , inout value : ) : void</li><li>Php :  function __set($name, $value) </li></ul><a name="ref2_147202"></a>
+<table><tr><td><div class="element">Operation <b>__isset</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ __isset(inout name : ) : void</li><li>Php :  function __isset($name) </li></ul><a name="ref2_147330"></a>
+<table><tr><td><div class="element">Operation <b>__unset</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ __unset(inout name : ) : void</li><li>Php :  function __unset($name) </li></ul><a name="ref2_147458"></a>
+<table><tr><td><div class="element">Operation <b>getAllAttributes</b></div></td></tr></table><p>camel naming conventions<br /></p><p>Declaration :</p><ul><li>Uml : ~ getAllAttributes() : void</li><li>Php :  function getAllAttributes() </li></ul><a name="ref2_147586"></a>
+<table><tr><td><div class="element">Operation <b>getAttribute</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ getAttribute(inout name : ) : void</li><li>Php :  function getAttribute($name) </li></ul><a name="ref2_147714"></a>
+<table><tr><td><div class="element">Operation <b>setAttribute</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ setAttribute(inout name : , inout value : ) : void</li><li>Php :  function setAttribute($name, $value) </li></ul><a name="ref2_147842"></a>
+<table><tr><td><div class="element">Operation <b>hasAttribute</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ hasAttribute(inout name : ) : void</li><li>Php :  function hasAttribute($name) </li></ul><a name="ref2_147970"></a>
+<table><tr><td><div class="element">Operation <b>removeAttribute</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ removeAttribute(inout name : ) : void</li><li>Php :  function removeAttribute($name) </li></ul><a name="ref2_148098"></a>
+<table><tr><td><div class="element">Operation <b>getElementById</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ getElementById(inout id : ) : void</li><li>Php :  function getElementById($id) </li></ul><a name="ref2_148226"></a>
+<table><tr><td><div class="element">Operation <b>getElementsById</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ getElementsById(inout id : , inout idx :  = null) : void</li><li>Php :  function getElementsById($id, $idx = null) </li></ul><a name="ref2_148354"></a>
+<table><tr><td><div class="element">Operation <b>getElementByTagName</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ getElementByTagName(inout name : ) : void</li><li>Php :  function getElementByTagName($name) </li></ul><a name="ref2_148482"></a>
+<table><tr><td><div class="element">Operation <b>getElementsByTagName</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ getElementsByTagName(inout name : , inout idx :  = null) : void</li><li>Php :  function getElementsByTagName($name, $idx = null) </li></ul><a name="ref2_148610"></a>
+<table><tr><td><div class="element">Operation <b>parentNode</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ parentNode() : void</li><li>Php :  function parentNode() </li></ul><a name="ref2_148738"></a>
+<table><tr><td><div class="element">Operation <b>childNodes</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ childNodes(inout idx :  = -1) : void</li><li>Php :  function childNodes($idx = -1) </li></ul><a name="ref2_148866"></a>
+<table><tr><td><div class="element">Operation <b>firstChild</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ firstChild() : void</li><li>Php :  function firstChild() </li></ul><a name="ref2_148994"></a>
+<table><tr><td><div class="element">Operation <b>lastChild</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ lastChild() : void</li><li>Php :  function lastChild() </li></ul><a name="ref2_149122"></a>
+<table><tr><td><div class="element">Operation <b>nextSibling</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ nextSibling() : void</li><li>Php :  function nextSibling() </li></ul><a name="ref2_149250"></a>
+<table><tr><td><div class="element">Operation <b>previousSibling</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ previousSibling() : void</li><li>Php :  function previousSibling() </li></ul></div>
+</body>
+</html>

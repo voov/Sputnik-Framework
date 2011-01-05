@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Documentation produced by the Html generator of Bouml (http://bouml.free.fr) -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Class simple_html_dom</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<div class = "title">Class simple_html_dom</div>
+<p></p>
+
+<!-- ============================================================= -->
+
+<a name="ref4_130562"></a>
+<p>simple html dom parser<br /> -----------------------------------------------------------------------------<br /></p>
+<p>Declaration :</p><ul>
+<li>Php : class simple_html_dom </li></ul><p>Artifact : simple_html_dom</p>
+<div class="sub">
+<a name="ref1_136066"></a>
+<table><tr><td><div class="element">Attribute <b>root</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : + root :  =  null</li><li>Php : public $root</li></ul><a name="ref1_136194"></a>
+<table><tr><td><div class="element">Attribute <b>nodes</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : + nodes :  =  array()</li><li>Php : public $nodes</li></ul><a name="ref1_136322"></a>
+<table><tr><td><div class="element">Attribute <b>callback</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : + callback :  =  null</li><li>Php : public $callback</li></ul><a name="ref1_136450"></a>
+<table><tr><td><div class="element">Attribute <b>lowercase</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : + lowercase :  =  false</li><li>Php : public $lowercase</li></ul><a name="ref1_136578"></a>
+<table><tr><td><div class="element">Attribute <b>pos</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : # pos : </li><li>Php : protected $pos</li></ul><a name="ref1_136706"></a>
+<table><tr><td><div class="element">Attribute <b>doc</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : # doc : </li><li>Php : protected $doc</li></ul><a name="ref1_136834"></a>
+<table><tr><td><div class="element">Attribute <b>char</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : # char : </li><li>Php : protected $char</li></ul><a name="ref1_136962"></a>
+<table><tr><td><div class="element">Attribute <b>size</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : # size : </li><li>Php : protected $size</li></ul><a name="ref1_137090"></a>
+<table><tr><td><div class="element">Attribute <b>cursor</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : # cursor : </li><li>Php : protected $cursor</li></ul><a name="ref1_137218"></a>
+<table><tr><td><div class="element">Attribute <b>parent</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : # parent : </li><li>Php : protected $parent</li></ul><a name="ref1_137346"></a>
+<table><tr><td><div class="element">Attribute <b>noise</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : # noise :  =  array()</li><li>Php : protected $noise</li></ul><a name="ref1_137474"></a>
+<table><tr><td><div class="element">Attribute <b>token_blank</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : # token_blank :  =  " \t\r\n"</li><li>Php : protected $token_blank</li></ul><a name="ref1_137602"></a>
+<table><tr><td><div class="element">Attribute <b>token_equal</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : # token_equal :  =  ' =/&gt;'</li><li>Php : protected $token_equal</li></ul><a name="ref1_137730"></a>
+<table><tr><td><div class="element">Attribute <b>token_slash</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : # token_slash :  =  " /&gt;\r\n\t"</li><li>Php : protected $token_slash</li></ul><a name="ref1_137858"></a>
+<table><tr><td><div class="element">Attribute <b>token_attr</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : # token_attr :  =  ' &gt;'</li><li>Php : protected $token_attr</li></ul><a name="ref1_137986"></a>
+<table><tr><td><div class="element">Attribute <b>self_closing_tags</b></div></td></tr></table>
+<p>use isset instead of in_array, performance boost about 30%...<br /></p><p>Declaration :</p><ul><li>Uml : # self_closing_tags :  =  array('img'=&gt;1, 'br'=&gt;1, 'input'=&gt;1, 'meta'=&gt;1, 'link'=&gt;1, 'hr'=&gt;1, 'base'=&gt;1, 'embed'=&gt;1, 'spacer'=&gt;1)</li><li>Php : protected $self_closing_tags</li></ul><a name="ref1_138114"></a>
+<table><tr><td><div class="element">Attribute <b>block_tags</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : # block_tags :  =  array('root'=&gt;1, 'body'=&gt;1, 'form'=&gt;1, 'div'=&gt;1, 'span'=&gt;1, 'table'=&gt;1)</li><li>Php : protected $block_tags</li></ul><a name="ref1_138242"></a>
+<table><tr><td><div class="element">Attribute <b>optional_closing_tags</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : # optional_closing_tags :  =  array(<br />        'tr'=&gt;array('tr'=&gt;1, 'td'=&gt;1, 'th'=&gt;1),<br />        'th'=&gt;array('th'=&gt;1),<br />        'td'=&gt;array('td'=&gt;1),<br />        'li'=&gt;array('li'=&gt;1),<br />        'dt'=&gt;array('dt'=&gt;1, 'dd'=&gt;1),<br />        'dd'=&gt;array('dd'=&gt;1, 'dt'=&gt;1),<br />        'dl'=&gt;array('dd'=&gt;1, 'dt'=&gt;1),<br />        'p'=&gt;array('p'=&gt;1),<br />        'nobr'=&gt;array('nobr'=&gt;1),<br />    )</li><li>Php : protected $optional_closing_tags</li></ul><a name="ref2_149378"></a>
+<table><tr><td><div class="element">Operation <b>__construct</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ __construct(inout str :  = null) : void</li><li>Php :  function __construct($str = null) </li></ul><a name="ref2_149506"></a>
+<table><tr><td><div class="element">Operation <b>__destruct</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ __destruct() : void</li><li>Php :  function __destruct() </li></ul><a name="ref2_149634"></a>
+<table><tr><td><div class="element">Operation <b>load</b></div></td></tr></table><p>load html from string<br /></p><p>Declaration :</p><ul><li>Uml : ~ load(inout str : , inout lowercase :  = true) : void</li><li>Php :  function load($str, $lowercase = true) </li></ul><a name="ref2_149762"></a>
+<table><tr><td><div class="element">Operation <b>load_file</b></div></td></tr></table><p>load html from file<br /></p><p>Declaration :</p><ul><li>Uml : ~ load_file() : void</li><li>Php :  function load_file() </li></ul><a name="ref2_149890"></a>
+<table><tr><td><div class="element">Operation <b>set_callback</b></div></td></tr></table><p>set callback function<br /></p><p>Declaration :</p><ul><li>Uml : ~ set_callback(inout function_name : ) : void</li><li>Php :  function set_callback($function_name) </li></ul><a name="ref2_150018"></a>
+<table><tr><td><div class="element">Operation <b>remove_callback</b></div></td></tr></table><p>remove callback function<br /></p><p>Declaration :</p><ul><li>Uml : ~ remove_callback() : void</li><li>Php :  function remove_callback() </li></ul><a name="ref2_150146"></a>
+<table><tr><td><div class="element">Operation <b>save</b></div></td></tr></table><p>save dom as string<br /></p><p>Declaration :</p><ul><li>Uml : ~ save(inout filepath :  = '') : void</li><li>Php :  function save($filepath = '') </li></ul><a name="ref2_150274"></a>
+<table><tr><td><div class="element">Operation <b>find</b></div></td></tr></table><p>find dom node by css selector<br /></p><p>Declaration :</p><ul><li>Uml : ~ find(inout selector : , inout idx :  = null) : void</li><li>Php :  function find($selector, $idx = null) </li></ul><a name="ref2_150402"></a>
+<table><tr><td><div class="element">Operation <b>clear</b></div></td></tr></table><p>clean up memory due to php5 circular references memory leak...<br /></p><p>Declaration :</p><ul><li>Uml : ~ clear() : void</li><li>Php :  function clear() </li></ul><a name="ref2_150530"></a>
+<table><tr><td><div class="element">Operation <b>dump</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ dump(inout show_attr :  = true) : void</li><li>Php :  function dump($show_attr = true) </li></ul><a name="ref2_150658"></a>
+<table><tr><td><div class="element">Operation <b>prepare</b></div></td></tr></table><p>prepare HTML data and init everything<br /></p><p>Declaration :</p><ul><li>Uml : # prepare(inout str : , inout lowercase :  = true) : void</li><li>Php : protected function prepare($str, $lowercase = true) </li></ul><a name="ref2_150786"></a>
+<table><tr><td><div class="element">Operation <b>parse</b></div></td></tr></table><p>parse html content<br /></p><p>Declaration :</p><ul><li>Uml : # parse() : void</li><li>Php : protected function parse() </li></ul><a name="ref2_150914"></a>
+<table><tr><td><div class="element">Operation <b>read_tag</b></div></td></tr></table><p>read tag info<br /></p><p>Declaration :</p><ul><li>Uml : # read_tag() : void</li><li>Php : protected function read_tag() </li></ul><a name="ref2_151042"></a>
+<table><tr><td><div class="element">Operation <b>parse_attr</b></div></td></tr></table><p>parse attributes<br /></p><p>Declaration :</p><ul><li>Uml : # parse_attr(inout node : , inout name : , inout space : ) : void</li><li>Php : protected function parse_attr($node, $name, $space) </li></ul><a name="ref2_151170"></a>
+<table><tr><td><div class="element">Operation <b>link_nodes</b></div></td></tr></table><p>link node's parent<br /></p><p>Declaration :</p><ul><li>Uml : # link_nodes(inout node : , inout is_child : ) : void</li><li>Php : protected function link_nodes($node, $is_child) </li></ul><a name="ref2_151298"></a>
+<table><tr><td><div class="element">Operation <b>as_text_node</b></div></td></tr></table><p>as a text node<br /></p><p>Declaration :</p><ul><li>Uml : # as_text_node(inout tag : ) : void</li><li>Php : protected function as_text_node($tag) </li></ul><a name="ref2_151426"></a>
+<table><tr><td><div class="element">Operation <b>skip</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : # skip(inout chars : ) : void</li><li>Php : protected function skip($chars) </li></ul><a name="ref2_151554"></a>
+<table><tr><td><div class="element">Operation <b>copy_skip</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : # copy_skip(inout chars : ) : void</li><li>Php : protected function copy_skip($chars) </li></ul><a name="ref2_151682"></a>
+<table><tr><td><div class="element">Operation <b>copy_until</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : # copy_until(inout chars : ) : void</li><li>Php : protected function copy_until($chars) </li></ul><a name="ref2_151810"></a>
+<table><tr><td><div class="element">Operation <b>copy_until_char</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : # copy_until_char(inout char : ) : void</li><li>Php : protected function copy_until_char($char) </li></ul><a name="ref2_151938"></a>
+<table><tr><td><div class="element">Operation <b>copy_until_char_escape</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : # copy_until_char_escape(inout char : ) : void</li><li>Php : protected function copy_until_char_escape($char) </li></ul><a name="ref2_152066"></a>
+<table><tr><td><div class="element">Operation <b>remove_noise</b></div></td></tr></table><p>remove noise from html content<br /></p><p>Declaration :</p><ul><li>Uml : # remove_noise(inout pattern : , inout remove_tag :  = false) : void</li><li>Php : protected function remove_noise($pattern, $remove_tag = false) </li></ul><a name="ref2_152194"></a>
+<table><tr><td><div class="element">Operation <b>restore_noise</b></div></td></tr></table><p>restore noise to html content<br /></p><p>Declaration :</p><ul><li>Uml : ~ restore_noise(inout text : ) : void</li><li>Php :  function restore_noise($text) </li></ul><a name="ref2_152322"></a>
+<table><tr><td><div class="element">Operation <b>__toString</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ __toString() : void</li><li>Php :  function __toString() </li></ul><a name="ref2_152450"></a>
+<table><tr><td><div class="element">Operation <b>__get</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ __get(inout name : ) : void</li><li>Php :  function __get($name) </li></ul><a name="ref2_152578"></a>
+<table><tr><td><div class="element">Operation <b>childNodes</b></div></td></tr></table><p>camel naming conventions<br /></p><p>Declaration :</p><ul><li>Uml : ~ childNodes(inout idx :  = -1) : void</li><li>Php :  function childNodes($idx = -1) </li></ul><a name="ref2_152706"></a>
+<table><tr><td><div class="element">Operation <b>firstChild</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ firstChild() : void</li><li>Php :  function firstChild() </li></ul><a name="ref2_152834"></a>
+<table><tr><td><div class="element">Operation <b>lastChild</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ lastChild() : void</li><li>Php :  function lastChild() </li></ul><a name="ref2_152962"></a>
+<table><tr><td><div class="element">Operation <b>getElementById</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ getElementById(inout id : ) : void</li><li>Php :  function getElementById($id) </li></ul><a name="ref2_153090"></a>
+<table><tr><td><div class="element">Operation <b>getElementsById</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ getElementsById(inout id : , inout idx :  = null) : void</li><li>Php :  function getElementsById($id, $idx = null) </li></ul><a name="ref2_153218"></a>
+<table><tr><td><div class="element">Operation <b>getElementByTagName</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ getElementByTagName(inout name : ) : void</li><li>Php :  function getElementByTagName($name) </li></ul><a name="ref2_153346"></a>
+<table><tr><td><div class="element">Operation <b>getElementsByTagName</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ getElementsByTagName(inout name : , inout idx :  = -1) : void</li><li>Php :  function getElementsByTagName($name, $idx = -1) </li></ul><a name="ref2_153474"></a>
+<table><tr><td><div class="element">Operation <b>loadFile</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ loadFile() : void</li><li>Php :  function loadFile() </li></ul></div>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Documentation produced by the Html generator of Bouml (http://bouml.free.fr) -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Class FormValidator</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<div class = "title">Class FormValidator</div>
+<p></p>
+
+<!-- ============================================================= -->
+
+<a name="ref4_128898"></a>
+<p>FormValidator class<br />Sputnik Framework r3<br />@version 3.0<br />@author Daniel Fekete - Voov Ltd.<br /><br /></p>
+<p>Declaration :</p><ul>
+<li>Php : class FormValidator </li></ul><p>Artifact : FormValidator</p>
+<div class="sub">
+<a name="ref1_130818"></a>
+<table><tr><td><div class="element">Attribute <b>arr</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - arr :  =  array()</li><li>Php : private $arr</li></ul><a name="ref1_130946"></a>
+<table><tr><td><div class="element">Attribute <b>rules</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - rules :  =  array()</li><li>Php : private $rules</li></ul><a name="ref1_131074"></a>
+<table><tr><td><div class="element">Attribute <b>filter_chain</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - filter_chain :  =  array()</li><li>Php : private $filter_chain</li></ul><a name="ref1_131202"></a>
+<table><tr><td><div class="element">Attribute <b>use_regex</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - use_regex :  =  false</li><li>Php : private $use_regex</li></ul><a name="ref1_131330"></a>
+<table><tr><td><div class="element">Attribute <b>error_strings</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - error_strings :  =  array()</li><li>Php : private $error_strings</li></ul><a name="ref1_131458"></a>
+<table><tr><td><div class="element">Attribute <b>error_wrap</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - error_wrap :  =  "&lt;p&gt;%s&lt;/p&gt;"</li><li>Php : private $error_wrap</li></ul><a name="ref1_131586"></a>
+<table><tr><td><div class="element">Attribute <b>error_list</b></div></td></tr></table>
+<p>error reporting members<br /></p><p>Declaration :</p><ul><li>Uml : - error_list :  =  array()</li><li>Php : private $error_list</li></ul><a name="ref1_131714"></a>
+<table><tr><td><div class="element">Attribute <b>num_of_errors</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - num_of_errors :  =  0</li><li>Php : private $num_of_errors</li></ul><a name="ref1_131842"></a>
+<table><tr><td><div class="element">Attribute <b>has_errors</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - has_errors :  =  false</li><li>Php : private $has_errors</li></ul><a name="ref1_131970"></a>
+<table><tr><td><div class="element">Attribute <b>error_message</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - error_message :  =  ""</li><li>Php : private $error_message</li></ul><a name="ref1_132098"></a>
+<table><tr><td><div class="element">Attribute <b>currentRunningFunction</b></div></td></tr></table>
+<p>--<br /></p><p>Declaration :</p><ul><li>Uml : - currentRunningFunction :  =  ""</li><li>Php : private $currentRunningFunction</li></ul><a name="ref1_132226"></a>
+<table><tr><td><div class="element">Attribute <b>currentInstance</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : static, - currentInstance :  =  null</li><li>Php : private static $currentInstance</li></ul><a name="ref2_134786"></a>
+<table><tr><td><div class="element">Operation <b>__construct</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + __construct(inout arr :  = null, inout use_regex :  = false) : void</li><li>Php : public function __construct($arr = null, $use_regex = false) </li></ul><a name="ref2_134914"></a>
+<table><tr><td><div class="element">Operation <b>Validate</b></div></td></tr></table><p>Validate the user input<br /><br /></p><p>Declaration :</p><ul><li>Uml : + Validate() : void</li><li>Php : public function Validate() </li></ul><a name="ref2_135042"></a>
+<table><tr><td><div class="element">Operation <b>AddFilter</b></div></td></tr></table><p>Add filter before (pre) or after (post) the validator<br />@param &lt;type&gt; $position<br />@param &lt;type&gt; $field<br />@param &lt;type&gt; $expr<br /><br /></p><p>Declaration :</p><ul><li>Uml : + AddFilter(inout position : &lt;type&gt; = "pre", inout field : &lt;type&gt; = "*", inout expr : &lt;type&gt; = "trim") : void</li><li>Php : public function AddFilter($position = "pre", $field = "*", $expr = "trim") </li></ul><a name="ref2_135170"></a>
+<table><tr><td><div class="element">Operation <b>AddRule</b></div></td></tr></table><p>Add validation rule<br />@param &lt;type&gt; $field<br />@param &lt;type&gt; $expr<br /><br /></p><p>Declaration :</p><ul><li>Uml : + AddRule(inout field : &lt;type&gt;, inout expr : &lt;type&gt;) : void</li><li>Php : public function AddRule($field, $expr) </li></ul><a name="ref2_135298"></a>
+<table><tr><td><div class="element">Operation <b>__call</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + __call(inout method : , inout args : ) : void</li><li>Php : public function __call($method, $args) </li></ul><a name="ref2_135426"></a>
+<table><tr><td><div class="element">Operation <b>SetErrorString</b></div></td></tr></table><p>Sets the error string for a given function<br />@param &lt;type&gt; $func<br />@param &lt;type&gt; $err_string <br /><br /></p><p>Declaration :</p><ul><li>Uml : + SetErrorString(inout func : &lt;type&gt;, inout err_string : &lt;type&gt;) : void</li><li>Php : public function SetErrorString($func, $err_string) </li></ul><a name="ref2_135554"></a>
+<table><tr><td><div class="element">Operation <b>SetMessage</b></div></td></tr></table><p>Sets the error string for a given function<br />@param &lt;type&gt; $func<br />@param &lt;type&gt; $err_string<br /><br /></p><p>Declaration :</p><ul><li>Uml : static, + SetMessage(inout func : &lt;type&gt;, inout err_string : &lt;type&gt;) : void</li><li>Php : public static function SetMessage($func, $err_string) </li></ul><a name="ref2_135682"></a>
+<table><tr><td><div class="element">Operation <b>SetErrorWrap</b></div></td></tr></table><p>Set the string wrapping the error message<br />It uses the sprintf library<br />Default is: &lt;p&gt;%s&lt;/p&gt;<br />@param &lt;type&gt; $wrap_str<br /><br /></p><p>Declaration :</p><ul><li>Uml : + SetErrorWrap(inout wrap_str : &lt;type&gt;) : void</li><li>Php : public function SetErrorWrap($wrap_str) </li></ul><a name="ref2_135810"></a>
+<table><tr><td><div class="element">Operation <b>GetError</b></div></td></tr></table><p>Gets the error string for the given variable<br />@param &lt;type&gt; $field<br />@return ${type}<br /><br /></p><p>Declaration :</p><ul><li>Uml : + GetError(inout field : &lt;type&gt;) : &lt;type&gt;</li><li>Php : public function GetError($field) </li></ul><a name="ref2_135938"></a>
+<table><tr><td><div class="element">Operation <b>IsValid</b></div></td></tr></table><p>Gets the error string for the given variable<br />@param &lt;type&gt; $field<br />@return ${type}<br /><br /></p><p>Declaration :</p><ul><li>Uml : + IsValid() : &lt;type&gt;</li><li>Php : public function IsValid() </li></ul><a name="ref2_136066"></a>
+<table><tr><td><div class="element">Operation <b>GetErrorMessage</b></div></td></tr></table><p>Returns the error message<br />@return ${type} <br /><br /></p><p>Declaration :</p><ul><li>Uml : + GetErrorMessage() : &lt;type&gt;</li><li>Php : public function GetErrorMessage() </li></ul><a name="ref2_136194"></a>
+<table><tr><td><div class="element">Operation <b>GetArray</b></div></td></tr></table><p>Returns the working array<br />@return ${type} <br /><br /></p><p>Declaration :</p><ul><li>Uml : + GetArray() : &lt;type&gt;</li><li>Php : public function GetArray() </li></ul><a name="ref2_136322"></a>
+<table><tr><td><div class="element">Operation <b>_ParseFields</b></div></td></tr></table><p>Gives back the list of fields on which the field expression matches<br />@param &lt;type&gt; $field_string<br /><br /></p><p>Declaration :</p><ul><li>Uml : - _ParseFields(inout field_string : &lt;type&gt;) : void</li><li>Php : private function _ParseFields($field_string) </li></ul><a name="ref2_136450"></a>
+<table><tr><td><div class="element">Operation <b>_RunAction</b></div></td></tr></table><p>@param &lt;type&gt; $field<br />@param &lt;type&gt; $expr<br />@return ${type}<br /><br /></p><p>Declaration :</p><ul><li>Uml : - _RunAction(inout field : &lt;type&gt;, inout expr : &lt;type&gt;) : &lt;type&gt;</li><li>Php : private function _RunAction($field, $expr) </li></ul><a name="ref2_136578"></a>
+<table><tr><td><div class="element">Operation <b>required</b></div></td></tr></table><p>Include the most common validator function(s) so that it doesn't need to be<br />dynamically loaded<br /><br /></p><p>Declaration :</p><ul><li>Uml : + required(inout str : ) : void</li><li>Php : public function required($str) </li></ul></div>
+<p>All public operations : <a href="class128898.html#ref2_135298"><b>__call</b></a> , <a href="class128898.html#ref2_134786"><b>__construct</b></a> , <a href="class128898.html#ref2_135042"><b>AddFilter</b></a> , <a href="class128898.html#ref2_135170"><b>AddRule</b></a> , <a href="class128898.html#ref2_136194"><b>GetArray</b></a> , <a href="class128898.html#ref2_135810"><b>GetError</b></a> , <a href="class128898.html#ref2_136066"><b>GetErrorMessage</b></a> , <a href="class128898.html#ref2_135938"><b>IsValid</b></a> , <a href="class128898.html#ref2_136578"><b>required</b></a> , <a href="class128898.html#ref2_135426"><b>SetErrorString</b></a> , <a href="class128898.html#ref2_135682"><b>SetErrorWrap</b></a> , <a href="class128898.html#ref2_135554"><b>SetMessage</b></a> , <a href="class128898.html#ref2_134914"><b>Validate</b></a> </p>
+</body>
+</html>

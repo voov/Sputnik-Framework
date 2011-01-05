@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Documentation produced by the Html generator of Bouml (http://bouml.free.fr) -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Class sp_auth</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<div class = "title">Class sp_auth</div>
+<p></p>
+
+<!-- ============================================================= -->
+
+<a name="ref4_130690"></a>
+<p>Declaration :</p><ul>
+<li>Php : class sp_auth </li></ul><p>Artifact : sp-auth</p>
+<div class="sub">
+<a name="ref1_138370"></a>
+<table><tr><td><div class="element">Attribute <b>session</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - session :  =  null</li><li>Php : private $session</li></ul><a name="ref1_138498"></a>
+<table><tr><td><div class="element">Attribute <b>db</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - db :  =  null</li><li>Php : private $db</li></ul><a name="ref2_153602"></a>
+<table><tr><td><div class="element">Operation <b>__construct</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ __construct() : void</li><li>Php :  function __construct() </li></ul><a name="ref2_153730"></a>
+<table><tr><td><div class="element">Operation <b>LoginUser</b></div></td></tr></table><p>LoginUser<br />Belépteti a felhasználót, ha talál ilyen felhasználónévvel, és jelszóval felhasználót<br />Ha belép, akkor beállítja a "userid" session-t a felhasználó ID-jára<br />@return <br />@param $username Object<br />@param $password Object<br /><br /></p><p>Declaration :</p><ul><li>Uml : ~ LoginUser(inout username : $username, inout password : $password) : void</li><li>Php :  function LoginUser($username, $password) </li></ul><a name="ref2_153858"></a>
+<table><tr><td><div class="element">Operation <b>CheckUser</b></div></td></tr></table><p>CheckUser<br />@return ${type} igaz, ha a felhasználónak megvan a minimum szintje<br />@param $minimum_level int az a minimum szint, amivel a felhasználó authentikálható az oldalra<br />@param $inherit bool ha igaz, akkor a megadott szint felett álló felhasználók is authentikálhatóak<br /><br /></p><p>Declaration :</p><ul><li>Uml : ~ CheckUser(inout minimum_level : $minimum_level, inout inherit : $inherit = true) : bool</li><li>Php :  function CheckUser($minimum_level, $inherit = true) </li></ul></div>
+</body>
+</html>

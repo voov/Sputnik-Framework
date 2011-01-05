@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Documentation produced by the Html generator of Bouml (http://bouml.free.fr) -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Class Db</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<div class = "title">Class Db</div>
+<p></p>
+
+<!-- ============================================================= -->
+
+<a name="ref4_128258"></a>
+<p>Declaration :</p><ul>
+<li>Php : class Db </li></ul><p>Artifact : Db</p>
+<div class="sub">
+<a name="ref1_128770"></a>
+<table><tr><td><div class="element">Attribute <b>conn</b></div></td></tr></table>
+<p>The database connection resource<br />@var resource db<br /><br /></p><p>Declaration :</p><ul><li>Uml : - conn : resource</li><li>Php : private $conn</li></ul><a name="ref1_128898"></a>
+<table><tr><td><div class="element">Attribute <b>db</b></div></td></tr></table>
+<p>The database name itself<br />@var string database<br /><br /></p><p>Declaration :</p><ul><li>Uml : - db : string</li><li>Php : private $db</li></ul><a name="ref1_129026"></a>
+<table><tr><td><div class="element">Attribute <b>instance</b></div></td></tr></table>
+<p>An instance of a singleton<br />@var object DB<br /><br /></p><p>Declaration :</p><ul><li>Uml : static, - instance : object =  null</li><li>Php : private static $instance</li></ul><a name="ref1_129154"></a>
+<table><tr><td><div class="element">Attribute <b>is_prepared</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - is_prepared :  =  false</li><li>Php : private $is_prepared</li></ul><a name="ref1_129282"></a>
+<table><tr><td><div class="element">Attribute <b>prep_vars</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - prep_vars :  =  array()</li><li>Php : private $prep_vars</li></ul><a name="ref1_129410"></a>
+<table><tr><td><div class="element">Attribute <b>last_query</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - last_query :  =  ""</li><li>Php : private $last_query</li></ul><a name="ref2_129026"></a>
+<table><tr><td><div class="element">Operation <b>__construct</b></div></td></tr></table><p>Constructor<br />@param string server<br />@param string username<br />@param string password<br />@param string db name<br /><br /></p><p>Declaration :</p><ul><li>Uml : + __construct(inout host : string, inout user : string, inout pass : string, inout db : string = false) : void</li><li>Php : public function __construct($host, $user, $pass, $db = false) </li></ul><a name="ref2_129154"></a>
+<table><tr><td><div class="element">Operation <b>__set</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + __set(inout name : , inout value : ) : void</li><li>Php : public function __set($name, $value) </li></ul><a name="ref2_129282"></a>
+<table><tr><td><div class="element">Operation <b>__destruct</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + __destruct() : void</li><li>Php : public function __destruct() </li></ul><a name="ref2_129410"></a>
+<table><tr><td><div class="element">Operation <b>GetInstance</b></div></td></tr></table><p>Used for retreiving an instance of a singleton if wanted<br />@deprecated since version 3.0 in favor for GetInstance<br />@return ${type} DB<br /><br />public static function getInstance($host=null, $user=null, $pass=null, $db=null) {<br />return Db::GetInstance($host, $user, $pass, $db);<br />}<br /><br />Used for retreiving an instance of a singleton if wanted<br />@global &lt;type&gt; $config<br />@param &lt;type&gt; $host<br />@param &lt;type&gt; $user<br />@param &lt;type&gt; $pass<br />@param &lt;type&gt; $db<br />@return &lt;type&gt; <br /><br /></p><p>Declaration :</p><ul><li>Uml : static, + GetInstance(inout host : &lt;type&gt; = null, inout user : &lt;type&gt; = null, inout pass : &lt;type&gt; = null, inout db : &lt;type&gt; = null) : object</li><li>Php : public static function GetInstance($host = null, $user = null, $pass = null, $db = null) </li></ul><a name="ref2_129538"></a>
+<table><tr><td><div class="element">Operation <b>ConnectTo</b></div></td></tr></table><p>Connect to database (stored internally)<br />@param string server<br />@param string username<br />@param string password<br /><br /></p><p>Declaration :</p><ul><li>Uml : + ConnectTo(inout host : string, inout user : string, inout pass : string) : void</li><li>Php : public function ConnectTo($host, $user, $pass) </li></ul><a name="ref2_129666"></a>
+<table><tr><td><div class="element">Operation <b>SelectDatabase</b></div></td></tr></table><p>Change databases<br />@param string database<br /><br /></p><p>Declaration :</p><ul><li>Uml : + SelectDatabase(inout db : string) : void</li><li>Php : public function SelectDatabase($db) </li></ul><a name="ref2_129794"></a>
+<table><tr><td><div class="element">Operation <b>Switch_Utf8</b></div></td></tr></table><p>Switch To Utf-8 encoding<br />@param string database<br /><br /></p><p>Declaration :</p><ul><li>Uml : + Switch_Utf8() : void</li><li>Php : public function Switch_Utf8() </li></ul><a name="ref2_129922"></a>
+<table><tr><td><div class="element">Operation <b>GetDbName</b></div></td></tr></table><p>Check which db is currently used<br />@return ${type} database<br /><br /></p><p>Declaration :</p><ul><li>Uml : + GetDbName() : string</li><li>Php : public function GetDbName() </li></ul><a name="ref2_130050"></a>
+<table><tr><td><div class="element">Operation <b>IsConnected</b></div></td></tr></table><p>Check if the connection is successful<br />@return ${type}<br /><br /></p><p>Declaration :</p><ul><li>Uml : + IsConnected() : boolean</li><li>Php : public function IsConnected() </li></ul><a name="ref2_130178"></a>
+<table><tr><td><div class="element">Operation <b>Disconnect</b></div></td></tr></table><p>Close the connection<br /><br /></p><p>Declaration :</p><ul><li>Uml : + Disconnect() : void</li><li>Php : public function Disconnect() </li></ul><a name="ref2_130306"></a>
+<table><tr><td><div class="element">Operation <b>GetError</b></div></td></tr></table><p>Fetch the last error<br />@return ${type} error<br /><br /></p><p>Declaration :</p><ul><li>Uml : + GetError() : string</li><li>Php : public function GetError() </li></ul><a name="ref2_130434"></a>
+<table><tr><td><div class="element">Operation <b>ReplaceCallback</b></div></td></tr></table><p>@param &lt;type&gt; $groups<br />@return ${type}<br /><br /></p><p>Declaration :</p><ul><li>Uml : - ReplaceCallback(inout groups : &lt;type&gt;) : &lt;type&gt;</li><li>Php : private function ReplaceCallback($groups) </li></ul><a name="ref2_130562"></a>
+<table><tr><td><div class="element">Operation <b>PrepareQuery</b></div></td></tr></table><p>@param &lt;type&gt; $query<br />@return ${type} <br /><br /></p><p>Declaration :</p><ul><li>Uml : - PrepareQuery(inout query : &lt;type&gt;) : &lt;type&gt;</li><li>Php : private function PrepareQuery($query) </li></ul><a name="ref2_130690"></a>
+<table><tr><td><div class="element">Operation <b>Query</b></div></td></tr></table><p>Run a query against the database and return<br />a resultset iterator object<br />@return ${type} DbResult<br /><br /></p><p>Declaration :</p><ul><li>Uml : + Query(inout query : , inout send_in_utf8 :  = false) : object</li><li>Php : public function Query($query, $send_in_utf8 = false) </li></ul><a name="ref2_130818"></a>
+<table><tr><td><div class="element">Operation <b>DumpLastQuery</b></div></td></tr></table><p><br /></p><p>Declaration :</p><ul><li>Uml : + DumpLastQuery() : void</li><li>Php : public function DumpLastQuery() </li></ul><a name="ref2_130946"></a>
+<table><tr><td><div class="element">Operation <b>Insert</b></div></td></tr></table><p>@param &lt;type&gt; $tablename<br />@param sp_db_row $row<br />@return ${type}<br /><br /></p><p>Declaration :</p><ul><li>Uml : + Insert(inout tablename : &lt;type&gt;, inout row : sp_db_row) : &lt;type&gt;</li><li>Php : public function Insert($tablename, $row) </li></ul><a name="ref2_131074"></a>
+<table><tr><td><div class="element">Operation <b>Replace</b></div></td></tr></table><p>@param &lt;type&gt; $tablename<br />@param sp_db_row $row<br />@return ${type}<br /><br /></p><p>Declaration :</p><ul><li>Uml : + Replace(inout tablename : &lt;type&gt;, inout row : sp_db_row) : &lt;type&gt;</li><li>Php : public function Replace($tablename, $row) </li></ul><a name="ref2_131202"></a>
+<table><tr><td><div class="element">Operation <b>Update</b></div></td></tr></table><p>@param &lt;type&gt; $tablename<br />@param &lt;type&gt; $id<br />@param sp_db_row $row<br />@param sp_db_row $where<br />@return ${type}<br /><br /></p><p>Declaration :</p><ul><li>Uml : + Update(inout tablename : &lt;type&gt;, inout id : &lt;type&gt;, inout row : sp_db_row, inout where : sp_db_row = null) : &lt;type&gt;</li><li>Php : public function Update($tablename, $id, $row, $where = null) </li></ul><a name="ref2_131330"></a>
+<table><tr><td><div class="element">Operation <b>Delete</b></div></td></tr></table><p>@param &lt;type&gt; $tablename<br />@param &lt;type&gt; $row<br />@param &lt;type&gt; $or_operator<br />@return ${type}<br /><br /></p><p>Declaration :</p><ul><li>Uml : + Delete(inout tablename : &lt;type&gt;, inout row : &lt;type&gt;, inout or_operator : &lt;type&gt; = NULL) : &lt;type&gt;</li><li>Php : public function Delete($tablename, $row, $or_operator = NULL) </li></ul><a name="ref2_131458"></a>
+<table><tr><td><div class="element">Operation <b>ServerInfo</b></div></td></tr></table><p>Retreive info about the server<br />@return ${type} info<br /><br /></p><p>Declaration :</p><ul><li>Uml : + ServerInfo() : string</li><li>Php : public function ServerInfo() </li></ul><a name="ref2_131586"></a>
+<table><tr><td><div class="element">Operation <b>Status</b></div></td></tr></table><p>Get details about the current system status<br />@return ${type} details<br /><br /></p><p>Declaration :</p><ul><li>Uml : + Status() : array</li><li>Php : public function Status() </li></ul><a name="ref2_131714"></a>
+<table><tr><td><div class="element">Operation <b>Escape</b></div></td></tr></table><p>Escape a string to make it safe for mysql<br />@param &lt;type&gt; $string<br />@return ${type}<br /><br /></p><p>Declaration :</p><ul><li>Uml : + Escape(inout string : &lt;type&gt;) : &lt;type&gt;</li><li>Php : public function Escape($string) </li></ul></div>
+<p>All public operations : <a href="class128258.html#ref2_129026"><b>__construct</b></a> , <a href="class128258.html#ref2_129282"><b>__destruct</b></a> , <a href="class128258.html#ref2_129154"><b>__set</b></a> , <a href="class128258.html#ref2_129538"><b>ConnectTo</b></a> , <a href="class128258.html#ref2_131330"><b>Delete</b></a> , <a href="class128258.html#ref2_130178"><b>Disconnect</b></a> , <a href="class128258.html#ref2_130818"><b>DumpLastQuery</b></a> , <a href="class128258.html#ref2_131714"><b>Escape</b></a> , <a href="class128258.html#ref2_129922"><b>GetDbName</b></a> , <a href="class128258.html#ref2_130306"><b>GetError</b></a> , <a href="class128258.html#ref2_129410"><b>GetInstance</b></a> , <a href="class128258.html#ref2_130946"><b>Insert</b></a> , <a href="class128258.html#ref2_130050"><b>IsConnected</b></a> , <a href="class128258.html#ref2_130690"><b>Query</b></a> , <a href="class128258.html#ref2_131074"><b>Replace</b></a> , <a href="class128258.html#ref2_129666"><b>SelectDatabase</b></a> , <a href="class128258.html#ref2_131458"><b>ServerInfo</b></a> , <a href="class128258.html#ref2_131586"><b>Status</b></a> , <a href="class128258.html#ref2_129794"><b>Switch_Utf8</b></a> , <a href="class128258.html#ref2_131202"><b>Update</b></a> </p>
+</body>
+</html>

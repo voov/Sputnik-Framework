@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Documentation produced by the Html generator of Bouml (http://bouml.free.fr) -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Class Controller</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<div class = "title">Class Controller</div>
+<p></p>
+
+<!-- ============================================================= -->
+
+<a name="ref4_128002"></a>
+<p><br /></p>
+<p>Declaration :</p><ul>
+<li>Php : abstract class Controller </li></ul><p>Directly inherited by : <a href="class128130.html#refclass128130"><b>Sputnik</b></a> </p>
+<p>Artifact : Controller</p>
+<div class="sub">
+<a name="ref1_128002"></a>
+<table><tr><td><div class="element">Attribute <b>view</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : + view :  =  null</li><li>Php : public $view</li></ul><a name="ref1_128130"></a>
+<table><tr><td><div class="element">Attribute <b>db</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : + db :  =  null</li><li>Php : public $db</li></ul><a name="ref1_128258"></a>
+<table><tr><td><div class="element">Attribute <b>session</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : + session :  =  null</li><li>Php : public $session</li></ul><a name="ref1_128386"></a>
+<table><tr><td><div class="element">Attribute <b>uri_helper</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : + uri_helper : </li><li>Php : public $uri_helper</li></ul><a name="ref2_128002"></a>
+<table><tr><td><div class="element">Operation <b>__construct</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ __construct() : void</li><li>Php :  function __construct() </li></ul><a name="ref2_128130"></a>
+<table><tr><td><div class="element">Operation <b>GetURIPart</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + GetURIPart(inout index : ) : void</li><li>Php : public function GetURIPart($index) </li></ul><a name="ref2_128258"></a>
+<table><tr><td><div class="element">Operation <b>GetRequest</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + GetRequest() : void</li><li>Php : public function GetRequest() </li></ul><a name="ref2_128386"></a>
+<table><tr><td><div class="element">Operation <b>LoadPlugin</b></div></td></tr></table><p>Loads an external plugin<br />@return ${type} object<br />@param $name the name of the plugin to load<br />@param $args optional arguments<br /><br /></p><p>Declaration :</p><ul><li>Uml : + LoadPlugin(inout name : $name, inout args : $args = array()) : plugin</li><li>Php : public function LoadPlugin($name, $args = array()) </li></ul><a name="ref2_128514"></a>
+<table><tr><td><div class="element">Operation <b>GetSession</b></div></td></tr></table><p>Returns the session singelton object<br />@return ${type} object<br /><br /></p><p>Declaration :</p><ul><li>Uml : + GetSession() : session</li><li>Php : public function GetSession() </li></ul><a name="ref2_128642"></a>
+<table><tr><td><div class="element">Operation <b>Forward</b></div></td></tr></table><p>Forward<br /><br /><br />@return<br />@param $method Object melyik oszt�lyt kell megh�vnia<br />@param $action Object[optional] melyik f�ggv�nyt h�vja meg az oszt�lyon bel�l<br /><br /></p><p>Declaration :</p><ul><li>Uml : # Forward(inout method : $method = "", inout action : $action = "main") : void</li><li>Php : protected function Forward($method = "", $action = "main") </li></ul></div>
+<p>All public operations : <a href="class128002.html#ref2_128258"><b>GetRequest</b></a> , <a href="class128002.html#ref2_128514"><b>GetSession</b></a> , <a href="class128002.html#ref2_128130"><b>GetURIPart</b></a> , <a href="class128002.html#ref2_128386"><b>LoadPlugin</b></a> </p>
+</body>
+</html>

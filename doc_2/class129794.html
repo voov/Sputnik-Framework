@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Documentation produced by the Html generator of Bouml (http://bouml.free.fr) -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Class Localization</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<div class = "title">Class Localization</div>
+<p></p>
+
+<!-- ============================================================= -->
+
+<a name="ref4_129794"></a>
+<p>&lt;title Localization&gt;<br /><br />Localization support for Sputnik Framework 3.0<br />&lt;code lang="php"&gt;<br />Localization:SetLocale("de_DE");<br />echo _("Register Now");<br />&lt;/code&gt;<br />@version 3.0 <br />@author Daniel Fekete                          <br /></p>
+<p>Declaration :</p><ul>
+<li>Php : class Localization </li></ul><p>Artifact : Localization</p>
+<div class="sub">
+<a name="ref1_133250"></a>
+<table><tr><td><div class="element">Attribute <b>loc</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - loc : </li><li>Php : private $loc</li></ul><a name="ref1_133378"></a>
+<table><tr><td><div class="element">Attribute <b>instance</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : static, ~ instance :  =  null</li><li>Php :  static $instance</li></ul><a name="ref2_140290"></a>
+<table><tr><td><div class="element">Operation <b>GetInstance</b></div></td></tr></table><p>@return ${type} <br /><br /></p><p>Declaration :</p><ul><li>Uml : static, + GetInstance() : &lt;type&gt;</li><li>Php : public static function GetInstance() </li></ul><a name="ref2_140418"></a>
+<table><tr><td><div class="element">Operation <b>_</b></div></td></tr></table><p>&lt;autolink on&gt;<br />&lt;aliasof TranslateText&gt;<br /><br />Shortcut function to TranslateText <br /></p><p>Declaration :</p><ul><li>Uml : static, + _(inout str : , inout args : ) : void</li><li>Php : public static function _($str, $args) </li></ul><a name="ref2_140546"></a>
+<table><tr><td><div class="element">Operation <b>TranslateText</b></div></td></tr></table><p>Translate text $str to currently set locale<br />@param str   The string to translate<br />@param args  optional arguments             <br /></p><p>Declaration :</p><ul><li>Uml : + TranslateText(inout str : str, inout args : args) : void</li><li>Php : public function TranslateText($str, $args) </li></ul><a name="ref2_140674"></a>
+<table><tr><td><div class="element">Operation <b>SetLocale</b></div></td></tr></table><p>Set the current locale<br /><br /></p><p>Declaration :</p><ul><li>Uml : + SetLocale(inout loc : ) : void</li><li>Php : public function SetLocale($loc) </li></ul><a name="ref2_140802"></a>
+<table><tr><td><div class="element">Operation <b>RewriteHook</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + RewriteHook(inout response : , inout host : , inout uri : ) : void</li><li>Php : public function RewriteHook($response, $host, $uri) </li></ul><a name="ref2_140930"></a>
+<table><tr><td><div class="element">Operation <b>SetLocaleFromURI</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : static, + SetLocaleFromURI(inout regex : , inout uri : ) : void</li><li>Php : public static function SetLocaleFromURI($regex, $uri) </li></ul></div>
+<p>All public operations : <a href="class129794.html#ref2_140418"><b>_</b></a> , <a href="class129794.html#ref2_140290"><b>GetInstance</b></a> , <a href="class129794.html#ref2_140802"><b>RewriteHook</b></a> , <a href="class129794.html#ref2_140674"><b>SetLocale</b></a> , <a href="class129794.html#ref2_140930"><b>SetLocaleFromURI</b></a> , <a href="class129794.html#ref2_140546"><b>TranslateText</b></a> </p>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Documentation produced by the Html generator of Bouml (http://bouml.free.fr) -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Class DbResult</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<div class = "title">Class DbResult</div>
+<p></p>
+
+<!-- ============================================================= -->
+
+<a name="ref4_128514"></a>
+<p>DB_Result class.  Provides an iterator wrapper<br />for working with a MySQL result.<br />@author d11wtq<br /><br /></p>
+<p>Declaration :</p><ul>
+<li>Php : class DbResult extends Iterator </li></ul><p>Artifact : DbResult</p>
+<div class="sub">
+<a name="ref1_129538"></a>
+<table><tr><td><div class="element">Attribute <b>id</b></div></td></tr></table>
+<p>The ID that was created as a result<br />of inserting a row<br />@var int id<br /><br /></p><p>Declaration :</p><ul><li>Uml : - id : int</li><li>Php : private $id</li></ul><a name="ref1_129666"></a>
+<table><tr><td><div class="element">Attribute <b>length</b></div></td></tr></table>
+<p>The size of the resultset<br />@var int length (num rows)<br /><br /></p><p>Declaration :</p><ul><li>Uml : - length : int =  0</li><li>Php : private $length</li></ul><a name="ref1_129794"></a>
+<table><tr><td><div class="element">Attribute <b>found_rows</b></div></td></tr></table>
+<p>The size of the resultset without using LIMIT<br />@var int length (num rows)<br /><br /></p><p>Declaration :</p><ul><li>Uml : - found_rows : int =  0</li><li>Php : private $found_rows</li></ul><a name="ref1_129922"></a>
+<table><tr><td><div class="element">Attribute <b>result</b></div></td></tr></table>
+<p>The result itself<br />@var result result<br /><br /></p><p>Declaration :</p><ul><li>Uml : - result : result</li><li>Php : private $result</li></ul><a name="ref1_130050"></a>
+<table><tr><td><div class="element">Attribute <b>rows</b></div></td></tr></table>
+<p>DbRow Row<br />resultset<br />@var array row<br /><br /></p><p>Declaration :</p><ul><li>Uml : - rows : array =  array()</li><li>Php : private $rows</li></ul><a name="ref1_130178"></a>
+<table><tr><td><div class="element">Attribute <b>position</b></div></td></tr></table>
+<p>Current position<br />@var int position<br /><br /></p><p>Declaration :</p><ul><li>Uml : - position : int =  0</li><li>Php : private $position</li></ul><a name="ref1_130306"></a>
+<table><tr><td><div class="element">Attribute <b>lastPosition</b></div></td></tr></table>
+<p>The last position we were at when we read from the resultset<br />@var int last position<br /><br /></p><p>Declaration :</p><ul><li>Uml : - lastPosition : int =  0</li><li>Php : private $lastPosition</li></ul><a name="ref1_130434"></a>
+<table><tr><td><div class="element">Attribute <b>gotResult</b></div></td></tr></table>
+<p>If we have pulled out any rows or not yet<br />@var boolean Got rows<br /><br /></p><p>Declaration :</p><ul><li>Uml : - gotResult : boolean =  false</li><li>Php : private $gotResult</li></ul><a name="ref1_130562"></a>
+<table><tr><td><div class="element">Attribute <b>affectedRows</b></div></td></tr></table>
+<p>The affected number of rows from the query<br />@var int num rows<br /><br /></p><p>Declaration :</p><ul><li>Uml : - affectedRows : int =  -1</li><li>Php : private $affectedRows</li></ul><a name="ref2_131842"></a>
+<table><tr><td><div class="element">Operation <b>__construct</b></div></td></tr></table><p>Constructor<br />@param result result<br />@param resource connection<br />@param boolean insert query<br /><br /></p><p>Declaration :</p><ul><li>Uml : + __construct(inout result : result, inout conn : resource, inout insert : boolean = false, inout uselimit :  = false) : void</li><li>Php : public function __construct($result, $conn, $insert = false, $uselimit = false) </li></ul><a name="ref2_131970"></a>
+<table><tr><td><div class="element">Operation <b>__get</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + __get(inout n : ) : void</li><li>Php : public function __get($n) </li></ul><a name="ref2_132098"></a>
+<table><tr><td><div class="element">Operation <b>GetIDs</b></div></td></tr></table><p>@param &lt;type&gt; $n<br />@return ${type}<br /><br /></p><p>Declaration :</p><ul><li>Uml : + GetIDs(inout n : &lt;type&gt; = "id") : &lt;type&gt;</li><li>Php : public function GetIDs($n = "id") </li></ul><a name="ref2_132226"></a>
+<table><tr><td><div class="element">Operation <b>Length</b></div></td></tr></table><p>Size of the resultset<br />@deprecated since version 3.0 use Length() instead<br />@return ${type} Size of the resultset<br /><br />public function length() {<br />return $this-&gt;Length();<br />}<br /><br />Size of the resultset<br />@return &lt;int&gt; Size of the resultset<br /><br /></p><p>Declaration :</p><ul><li>Uml : + Length() : &lt;int&gt;</li><li>Php : public function Length() </li></ul><a name="ref2_132354"></a>
+<table><tr><td><div class="element">Operation <b>found_rows</b></div></td></tr></table><p>Size of the resultset without LIMIT<br />@deprecated since version 3.0 use FoundRows() instead<br />@return ${type} Size of the resultset without LIMIT<br /><br /></p><p>Declaration :</p><ul><li>Uml : + found_rows() : &lt;int&gt;</li><li>Php : public function found_rows() </li></ul><a name="ref2_132482"></a>
+<table><tr><td><div class="element">Operation <b>FoundRows</b></div></td></tr></table><p>Size of the resultset without LIMIT<br />@return ${type} Size of the resultset without LIMIT<br /><br /></p><p>Declaration :</p><ul><li>Uml : + FoundRows() : &lt;int&gt;</li><li>Php : public function FoundRows() </li></ul><a name="ref2_132610"></a>
+<table><tr><td><div class="element">Operation <b>rewind</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + rewind() : void</li><li>Php : public function rewind() </li></ul><a name="ref2_132738"></a>
+<table><tr><td><div class="element">Operation <b>current</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + current() : void</li><li>Php : public function current() </li></ul><a name="ref2_132866"></a>
+<table><tr><td><div class="element">Operation <b>key</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + key() : void</li><li>Php : public function key() </li></ul><a name="ref2_132994"></a>
+<table><tr><td><div class="element">Operation <b>next</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + next() : void</li><li>Php : public function next() </li></ul><a name="ref2_133122"></a>
+<table><tr><td><div class="element">Operation <b>valid</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + valid() : void</li><li>Php : public function valid() </li></ul><a name="ref2_133250"></a>
+<table><tr><td><div class="element">Operation <b>AffectedRows</b></div></td></tr></table><p>Get the affected number of rows<br />@deprecated since version 3.0 use AffectedRows instead<br />@return ${type} affected number of rows<br /><br />public function affectedRows() {<br />return $this-&gt;AffectedRows();<br />}<br /><br />Get the affected number of rows<br />@return &lt;int&gt; affected number of rows<br /><br /></p><p>Declaration :</p><ul><li>Uml : + AffectedRows() : &lt;int&gt;</li><li>Php : public function AffectedRows() </li></ul><a name="ref2_133378"></a>
+<table><tr><td><div class="element">Operation <b>get</b></div></td></tr></table><p>Get the result resource itself<br /><br /></p><p>Declaration :</p><ul><li>Uml : + get() : void</li><li>Php : public function get() </li></ul><a name="ref2_133506"></a>
+<table><tr><td><div class="element">Operation <b>position</b></div></td></tr></table><p>Get the current position<br /><br /></p><p>Declaration :</p><ul><li>Uml : + position() : void</li><li>Php : public function position() </li></ul></div>
+<p>All public operations : <a href="class128514.html#ref2_131842"><b>__construct</b></a> , <a href="class128514.html#ref2_131970"><b>__get</b></a> , <a href="class128514.html#ref2_133250"><b>AffectedRows</b></a> , <a href="class128514.html#ref2_132738"><b>current</b></a> , <a href="class128514.html#ref2_132354"><b>found_rows</b></a> , <a href="class128514.html#ref2_132482"><b>FoundRows</b></a> , <a href="class128514.html#ref2_133378"><b>get</b></a> , <a href="class128514.html#ref2_132098"><b>GetIDs</b></a> , <a href="class128514.html#ref2_132866"><b>key</b></a> , <a href="class128514.html#ref2_132226"><b>Length</b></a> , <a href="class128514.html#ref2_132994"><b>next</b></a> , <a href="class128514.html#ref2_133506"><b>position</b></a> , <a href="class128514.html#ref2_132610"><b>rewind</b></a> , <a href="class128514.html#ref2_133122"><b>valid</b></a> </p>
+</body>
+</html>

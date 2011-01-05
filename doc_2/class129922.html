@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Documentation produced by the Html generator of Bouml (http://bouml.free.fr) -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Class Mailer</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<div class = "title">Class Mailer</div>
+<p></p>
+
+<!-- ============================================================= -->
+
+<a name="ref4_129922"></a>
+<p>Declaration :</p><ul>
+<li>Php : class Mailer </li></ul><p>Artifact : Mailer</p>
+<div class="sub">
+<a name="ref1_133506"></a>
+<table><tr><td><div class="element">Attribute <b>_variables</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : ~ _variables :  =  array()</li><li>Php :  var $_variables</li></ul><a name="ref1_133634"></a>
+<table><tr><td><div class="element">Attribute <b>_templateDir</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : ~ _templateDir :  =  ""</li><li>Php :  var $_templateDir</li></ul><a name="ref1_133762"></a>
+<table><tr><td><div class="element">Attribute <b>_absolutePath</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : ~ _absolutePath :  =  ""</li><li>Php :  var $_absolutePath</li></ul><a name="ref1_133890"></a>
+<table><tr><td><div class="element">Attribute <b>_attachments</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : ~ _attachments :  =  array()</li><li>Php :  var $_attachments</li></ul><a name="ref1_134018"></a>
+<table><tr><td><div class="element">Attribute <b>_cachedTemplate</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : ~ _cachedTemplate :  =  ""</li><li>Php :  var $_cachedTemplate</li></ul><a name="ref1_134146"></a>
+<table><tr><td><div class="element">Attribute <b>_templateName</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : ~ _templateName :  =  ""</li><li>Php :  var $_templateName</li></ul><a name="ref1_134274"></a>
+<table><tr><td><div class="element">Attribute <b>sendCount</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : ~ sendCount :  =  0</li><li>Php :  var $sendCount</li></ul><a name="ref2_141058"></a>
+<table><tr><td><div class="element">Operation <b>Mailer</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ Mailer(inout template_name : ) : void</li><li>Php :  function Mailer($template_name) </li></ul><a name="ref2_141186"></a>
+<table><tr><td><div class="element">Operation <b>assign</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ assign(inout name : , inout value : ) : void</li><li>Php :  function assign($name, $value) </li></ul><a name="ref2_141314"></a>
+<table><tr><td><div class="element">Operation <b>__set</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ __set(inout var : , inout val : ) : void</li><li>Php :  function __set($var, $val) </li></ul><a name="ref2_141442"></a>
+<table><tr><td><div class="element">Operation <b>resolve_href</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ resolve_href(inout base : , inout href : ) : void</li><li>Php :  function resolve_href($base, $href) </li></ul><a name="ref2_141570"></a>
+<table><tr><td><div class="element">Operation <b>setRewrite</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ setRewrite(inout origHref : ) : void</li><li>Php :  function setRewrite($origHref) </li></ul><a name="ref2_141698"></a>
+<table><tr><td><div class="element">Operation <b>_compileBlocks</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ _compileBlocks(inout html_node : ) : void</li><li>Php :  function _compileBlocks($html_node) </li></ul><a name="ref2_141826"></a>
+<table><tr><td><div class="element">Operation <b>_compileScript</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ _compileScript(inout file : ) : void</li><li>Php :  function _compileScript($file) </li></ul><a name="ref2_141954"></a>
+<table><tr><td><div class="element">Operation <b>_getOutput</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ _getOutput(inout file : , inout template :  = true) : void</li><li>Php :  function _getOutput($file, $template = true) </li></ul><a name="ref2_142082"></a>
+<table><tr><td><div class="element">Operation <b>html2text</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : - html2text(inout html : ) : void</li><li>Php : private function html2text($html) </li></ul><a name="ref2_142210"></a>
+<table><tr><td><div class="element">Operation <b>SMTPMail</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : - SMTPMail(inout to : , inout from : , inout subject : , inout body : , inout smtp_id :  = 0) : void</li><li>Php : private function SMTPMail($to, $from, $subject, $body, $smtp_id = 0) </li></ul><a name="ref2_142338"></a>
+<table><tr><td><div class="element">Operation <b>AddAttachment</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ AddAttachment(inout file : , inout imaginary_filename :  = "") : void</li><li>Php :  function AddAttachment($file, $imaginary_filename = "") </li></ul><a name="ref2_142466"></a>
+<table><tr><td><div class="element">Operation <b>GetFileMIME</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : - GetFileMIME(inout file : ) : void</li><li>Php : private function GetFileMIME($file) </li></ul><a name="ref2_142594"></a>
+<table><tr><td><div class="element">Operation <b>SendHTMLMail</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ SendHTMLMail(inout to : , inout from : , inout subject : ) : void</li><li>Php :  function SendHTMLMail($to, $from, $subject) </li></ul></div>
+</body>
+</html>

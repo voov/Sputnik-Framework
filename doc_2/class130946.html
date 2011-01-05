@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Documentation produced by the Html generator of Bouml (http://bouml.free.fr) -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Class Template</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<div class = "title">Class Template</div>
+<p></p>
+
+<!-- ============================================================= -->
+
+<a name="ref4_130946"></a>
+<p>Declaration :</p><ul>
+<li>Php : class Template </li></ul><p>Artifact : Template</p>
+<div class="sub">
+<a name="ref1_139266"></a>
+<table><tr><td><div class="element">Attribute <b>_variables</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : ~ _variables :  =  array()</li><li>Php :  var $_variables</li></ul><a name="ref1_139394"></a>
+<table><tr><td><div class="element">Attribute <b>_caching</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : ~ _caching :  =  true</li><li>Php :  var $_caching</li></ul><a name="ref1_139522"></a>
+<table><tr><td><div class="element">Attribute <b>_cacheDir</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : ~ _cacheDir : </li><li>Php :  var $_cacheDir</li></ul><a name="ref1_139650"></a>
+<table><tr><td><div class="element">Attribute <b>_cacheLifetime</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : ~ _cacheLifetime :  =  120</li><li>Php :  var $_cacheLifetime</li></ul><a name="ref1_139778"></a>
+<table><tr><td><div class="element">Attribute <b>_longName</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : ~ _longName :  =  "php"</li><li>Php :  var $_longName</li></ul><a name="ref1_139906"></a>
+<table><tr><td><div class="element">Attribute <b>_templateDir</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : ~ _templateDir :  =  ""</li><li>Php :  var $_templateDir</li></ul><a name="ref1_140034"></a>
+<table><tr><td><div class="element">Attribute <b>_absolutePath</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : ~ _absolutePath :  =  ""</li><li>Php :  var $_absolutePath</li></ul><a name="ref1_140162"></a>
+<table><tr><td><div class="element">Attribute <b>html</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : ~ html : </li><li>Php :  var $html</li></ul><a name="ref1_140290"></a>
+<table><tr><td><div class="element">Attribute <b>instance</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : static, ~ instance :  =  false</li><li>Php :  static $instance</li></ul><a name="ref2_154882"></a>
+<table><tr><td><div class="element">Operation <b>Template</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ Template() : void</li><li>Php :  function Template() </li></ul><a name="ref2_155010"></a>
+<table><tr><td><div class="element">Operation <b>assign</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ assign(inout name : , inout value : ) : void</li><li>Php :  function assign($name, $value) </li></ul><a name="ref2_155138"></a>
+<table><tr><td><div class="element">Operation <b>__set</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ __set(inout var : , inout val : ) : void</li><li>Php :  function __set($var, $val) </li></ul><a name="ref2_155266"></a>
+<table><tr><td><div class="element">Operation <b>display</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ display(inout file : , inout id :  = false) : void</li><li>Php :  function display($file, $id = false) </li></ul><a name="ref2_155394"></a>
+<table><tr><td><div class="element">Operation <b>fetch</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ fetch(inout file : , inout id :  = false) : void</li><li>Php :  function fetch($file, $id = false) </li></ul><a name="ref2_155522"></a>
+<table><tr><td><div class="element">Operation <b>setAbsolutePath</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ setAbsolutePath(inout abspath : ) : void</li><li>Php :  function setAbsolutePath($abspath) </li></ul><a name="ref2_155650"></a>
+<table><tr><td><div class="element">Operation <b>resolve_href</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ resolve_href(inout base : , inout href : ) : void</li><li>Php :  function resolve_href($base, $href) </li></ul><a name="ref2_155778"></a>
+<table><tr><td><div class="element">Operation <b>setRewrite</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ setRewrite(inout origHref : ) : void</li><li>Php :  function setRewrite($origHref) </li></ul><a name="ref2_155906"></a>
+<table><tr><td><div class="element">Operation <b>_compileBlocks</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ _compileBlocks(inout html_node : ) : void</li><li>Php :  function _compileBlocks($html_node) </li></ul><a name="ref2_156034"></a>
+<table><tr><td><div class="element">Operation <b>_compileScript</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ _compileScript(inout file : ) : void</li><li>Php :  function _compileScript($file) </li></ul><a name="ref2_156162"></a>
+<table><tr><td><div class="element">Operation <b>_getOutput</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ _getOutput(inout file : , inout template :  = true) : void</li><li>Php :  function _getOutput($file, $template = true) </li></ul><a name="ref2_156290"></a>
+<table><tr><td><div class="element">Operation <b>setCacheDir</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ setCacheDir(inout dir : ) : void</li><li>Php :  function setCacheDir($dir) </li></ul><a name="ref2_156418"></a>
+<table><tr><td><div class="element">Operation <b>setTemplateDir</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ setTemplateDir(inout dir : ) : void</li><li>Php :  function setTemplateDir($dir) </li></ul><a name="ref2_156546"></a>
+<table><tr><td><div class="element">Operation <b>_createCache</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ _createCache(inout file : ) : void</li><li>Php :  function _createCache($file) </li></ul><a name="ref2_156674"></a>
+<table><tr><td><div class="element">Operation <b>_getCache</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ _getCache(inout file : ) : void</li><li>Php :  function _getCache($file) </li></ul><a name="ref2_156802"></a>
+<table><tr><td><div class="element">Operation <b>getInstance</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ getInstance() : void</li><li>Php :  function getInstance() </li></ul><a name="ref2_156930"></a>
+<table><tr><td><div class="element">Operation <b>HTMLOption</b></div></td></tr></table><p>HTML kód beillesztő segédfüggvények<br /><br /></p><p>Declaration :</p><ul><li>Uml : ~ HTMLOption(inout value : , inout text : , inout selected_value :  = null) : void</li><li>Php :  function HTMLOption($value, $text, $selected_value = null) </li></ul><a name="ref2_157058"></a>
+<table><tr><td><div class="element">Operation <b>HTMLCheckbox</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ HTMLCheckbox(inout name : , inout value : , inout text : , inout selected_value :  = null, inout class :  = "") : void</li><li>Php :  function HTMLCheckbox($name, $value, $text, $selected_value = null, $class = "") </li></ul><a name="ref2_157186"></a>
+<table><tr><td><div class="element">Operation <b>HTMLRadio</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ HTMLRadio(inout name : , inout value : , inout text : , inout selected_value :  = null, inout class :  = "") : void</li><li>Php :  function HTMLRadio($name, $value, $text, $selected_value = null, $class = "") </li></ul><a name="ref2_157314"></a>
+<table><tr><td><div class="element">Operation <b>HTMLForwardFields</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : ~ HTMLForwardFields(inout exclude_fields :  = array()) : void</li><li>Php :  function HTMLForwardFields($exclude_fields = array()) </li></ul></div>
+</body>
+</html>
