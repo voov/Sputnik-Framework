@@ -16,7 +16,8 @@ class URIHelper {
 	function  __construct() {
 		global $uri_mappings;
 		$uri_array = explode("/", $_SERVER["REQUEST_URI"]);
-		$uri_filtered = array_filter($uri_array, array($this, "remove_index"));
+		$uri_filtered = array_filter($uri_array, array($this, "find_namedparams"));
+		$uri_filtered = array_filter($uri_filtered, array($this, "remove_index"));
 		$uri = implode("/", $uri_filtered);
 
 		foreach($uri_mappings as $map_regex => $map_replace) {
@@ -36,6 +37,16 @@ class URIHelper {
 		$this->class_name = $this->uri_array[$this->path_length];
 
 		$this->dir_path = implode("/", $this->class_path);
+	}
+
+	private function find_namedparams($var) {
+		global $config;
+		if(strpos($var, $config["namedparam_char"]) !== false) {
+			$param = explode($config["namedparam_char"], $var);
+			URI::SetNamedParam($param[0], $param[1]);
+			return false;
+		}
+		return true;
 	}
 
 	private function remove_index($var) {
@@ -67,6 +78,22 @@ class URIHelper {
 }
 
 class URI {
+	static $named_params = array();
+
+	static function SetNamedParam($name, $value) {
+		$name = htmlentities($name);
+		$value = htmlentities($value);
+		URI::$named_params[$name] = $value;
+	}
+
+	static function GetNamedParam($name) {
+		$name = html_entity_decode($name);
+		$buffer = html_entity_decode(self::$named_params[$name]);
+		if(!isset($buffer)) return false;
+		return $buffer;
+	}
+
+
 	static function RedirectToReferer() {
 		$referer = $_SERVER["HTTP_REFERER"];
 		if (headers_sent() == false)
@@ -78,13 +105,23 @@ class URI {
 			header("Location: " . URI::MakeURL($uri));
 	}
 
-	static function MakeURL($uri) {
+	static function MakeURL($uri, $extend_named=array()) {
+		global $config;
 		$host = $_SERVER["HTTP_HOST"];
 		$ret = Hooks::GetInstance()->CallHookAtPoint("pre_makeurl", array($host, $uri));
 		if ($ret != null)
 			return $ret;
-		else
+		else {
+			if(count(self::$named_params) > 0 || count($extend_named) > 0) {
+				$named_params = array_merge(self::$named_params, $extend_named);
+				foreach($named_params as $key=>$value) {
+					$named_params_list[] = "$key" . $config["namedparam_char"] . "$value";
+				}
+				$uri_named_params = implode("/", $named_params_list);
+				return "http://$host/$uri/$uri_named_params";
+			}
 			return "http://$host/$uri";
+		}
 	}
 }
 

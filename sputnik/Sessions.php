@@ -17,13 +17,29 @@ class Sessions {
 	function  __construct() {
 		global $config;
 		require_once "session_adapters/" . $config["session_adapter"] . ".php";
+		
 		$this->session_adapter = new $config["session_adapter"]();
+		//error_log(print_r($_SESSION, true));
+		// clear all flash data!
+		$this->ClearFlashdata();
+		$this->MarkFlashdata();
 	}
 
-	function  __destruct() {
-		// clear all flash data
-		foreach($this->deleteable_flash_data as $flash_name) {
-			$this->session_adapter->Clear($flash_name);
+	
+
+	function ClearFlashdata() {
+		foreach($this->session_adapter->GetSessions() as $session_key=>$session_value) {
+			if(strpos($session_key, "!_flash:") !== false) $this->session_adapter->Clear($session_key);
+		}
+	}
+
+	function MarkFlashdata() {
+		foreach($this->session_adapter->GetSessions() as $session_key=>$session_value) {
+			if(preg_match('/^_flash:(.+)/', $session_key, $regs)) {
+				$value = $this->session_adapter->Get($session_key);
+				$this->session_adapter->Clear($session_key);
+				$this->session_adapter->Set("!_flash:" . $regs[1], $value);
+			}
 		}
 	}
 	
@@ -74,15 +90,17 @@ class Sessions {
 	}
 
 	function GetFlashdata($var) {
-		$value = $this->session_adapter->Get("_flash:" . $var);
-		if ($value != null) {
-			//$this->session_adapter->Clear("_flash:" . $var);
-			$this->deleteable_flash_data[] = "_flash:" . $var;
+		$value = $this->session_adapter->Get("!_flash:" . $var);
+		if (!empty($value)) {
 			return $value;
 		} else {
 			return false;
 		}
 	}
+
+    function GetSessions() {
+        return $this->session_adapter->GetSessions();
+    }
 
 	/**
 	 * Visszaadja a session oszt�ly egy statikus instance-j�t

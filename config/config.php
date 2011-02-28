@@ -36,6 +36,14 @@ $config["set_fullpath"] = false;
 $config["view_fullpath"] = "http://" . $_SERVER["HTTP_HOST"] . "/";
 $config["load_jquery_version"] = "1.4.2";
 
+// Modulok beállításai
+$config["module_template"] = "module_template";
+
+// Image cache
+$config["enable_imagecache"] = true;
+$config["imagecache_dir"] = "image_cache";
+$config["imagecache_controller"] = "image_cache";
+
 // SMTP beállítások
 $config["smtp_server"][0] = "smtp.server.com";
 $config["smtp_port"][0] = "25";

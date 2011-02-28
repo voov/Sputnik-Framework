@@ -7,19 +7,20 @@
  */
 class FormValidator {
 
-	private $arr = array();
-	private $rules = array();
-	private $filter_chain = array();
-	private $use_regex = false;
-	private $error_strings = array();
-	private $error_wrap = "<p>%s</p>";
+	
+    private $arr = array();
+    private $rules = array();
+    private $titles = array();
+    private $filter_chain = array();
+    private $use_regex = false;
+    private $error_strings = array();
+    private $error_wrap = "<p>%s</p>";
 
-	// error reporting members
-	private $error_list = array();
-	private $num_of_errors = 0;
-	private $has_errors = false;
-	private $error_message = "";
-
+    // error reporting members
+    private $error_list = array();
+    private $num_of_errors = 0;
+    private $has_errors = false;
+    private $error_message = "";
 
 	// --
 	private $currentRunningFunction = "";
@@ -32,6 +33,15 @@ class FormValidator {
 		FormValidator::$currentInstance = $this;
 	}
 
+    /**
+     * Merges one more array to the list
+     * @param  $arr The Array to be merged
+     * @return void
+     */
+    public function ArrayMerge($arr) {
+        $this->arr = array_merge($this->arr, $arr);
+    }
+
 	/**
 	 * Validate the user input
 	 */
@@ -43,7 +53,6 @@ class FormValidator {
 				$this->arr[$field] = $this->_RunAction($field, $pre_filter);
 			}
 		}
-
 		// Run the validation rules
 		foreach($this->rules as $field_name=>$rule_fields) {
 			foreach($rule_fields as $expr) {
@@ -52,7 +61,9 @@ class FormValidator {
 					$is_valid = false;
 					$this->num_of_errors += 1;
 					$this->has_errors = true;
-					$error_message = sprintf($this->error_strings[$this->currentRunningFunction], $field_name);
+                    if (isset($this->titles[$field_name])) $field_trans = $this->titles[$field_name];
+                    else $field_trans = $field_name;
+					$error_message = sprintf($this->error_strings[$this->currentRunningFunction], $field_trans);
 					$this->error_list[$field_name] = $error_message;
 					$this->error_message .= sprintf($this->error_wrap, $error_message);
 				}
@@ -88,8 +99,10 @@ class FormValidator {
 	 * @param <type> $field
 	 * @param <type> $expr
 	 */
-	public function AddRule($field, $expr) {
+	public function AddRule($field, $expr, $title="") {
 		$fields = $this->_ParseFields($field);
+        if($title != "")
+            $this->titles[$field] = $title;
 		if(!is_array($expr)) {
 			$expr_list = explode(";", $expr);
 			foreach($expr_list as $expr_item) {
@@ -156,6 +169,15 @@ class FormValidator {
 		$this->error_wrap = $wrap_str;
 	}
 
+    /**
+     * Sets the translation titles
+     * @param  $arr
+     * @return void
+     */
+    public function SetTitles($arr) {
+        $this->titles = array_merge($this->titles, $arr);
+    }
+
 	/**
 	 * Gets the error string for the given variable
 	 * @param <type> $field
@@ -178,7 +200,7 @@ class FormValidator {
 
 	/**
 	 * Returns the error message
-	 * @return <type> 
+	 * @return <type>
 	 */
 	public function GetErrorMessage() {
 		return $this->error_message;
@@ -187,7 +209,7 @@ class FormValidator {
 
 	/**
 	 * Returns the working array
-	 * @return <type> 
+	 * @return <type>
 	 */
 	public function GetArray() {
 		return $this->arr;
@@ -205,10 +227,12 @@ class FormValidator {
 		$field_final = $field_string;
 		if ($this->use_regex == false)
 			$field_final = strtr($field_string, $wildcards);
-
+        $matches = 0;
 		foreach($this->arr as $key=>$value) {
-			if(preg_match("/^$field_final$/i", $key)) $field_buffer[] = $key;
+			if(($match = preg_match("/^$field_final$/i", $key))) $field_buffer[] = $key;
+            $matches += $match;
 		}
+        if($matches == 0) $field_buffer[] = $field_string;
 		return $field_buffer;
 	}
 
@@ -219,6 +243,11 @@ class FormValidator {
 	 * @return <type>
 	 */
 	private function _RunAction($field, $expr) {
+        if (!isset($this->arr[$field])) {
+            // set the field to empty value, so the error string could be
+            // printed out
+            $this->arr[$field] = "";
+        }
 		$param_array = array($this->arr[$field]);
 		if (is_array($expr)) {
 			// Easy .. we have an array we can call
@@ -250,17 +279,15 @@ class FormValidator {
 	}
 
 	public function RepostAll() {
-		$instance = Sputnik::GetInstance();
+		$instance = Sputnik::GetRunningInstance();
 		$instance->session->SetFlashdata("repost_validator", serialize($_POST));
 	}
 
-	public static function RenderRepost($prefix="repost_") {
-		$instance = Sputnik::GetInstance();
+	public static function RenderRepost($arr_name="post") {
+		$instance = Sputnik::GetRunningInstance();
 		if (!$instance->session->GetFlashdata("repost_validator")) return;
 		$repost_data = unserialize($instance->session->GetFlashdata("repost_validator"));
-		foreach($repost_data as $repost_key=>$repost_value) {
-			$instance->view->{$prefix . $repost_key} = $repost_value;
-		}
+        $instance->view->{$arr_name} = $repost_data;
 	}
 
 	/*

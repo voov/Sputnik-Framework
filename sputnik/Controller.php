@@ -20,6 +20,7 @@ require_once("Request.php");
 require_once("Db.php");
 require_once("PluginLoader.php");
 require_once("Localization.php");
+require_once("Form.php");
 
 if($config["enable_imagecache"] == true) {
 	require_once 'ImageCache.php';
@@ -52,7 +53,7 @@ abstract class Controller {
 	public $db = null;
 	public $session = null;
 	public $uri_helper;
-
+    public $form = null;
 
 	function __construct() {
 		
@@ -103,7 +104,7 @@ abstract class Controller {
 	 */
 	public function Forward($method = "", $action = "main") {
 		
-
+        global $config;
 		$parameters_index = 1; //calc in class
 		$action_buffer = $this->GetURIPart($parameters_index);
 		if (method_exists($this, $action_buffer)) {
@@ -121,11 +122,12 @@ abstract class Controller {
 
 		if ($classActionMethod->isPublic() != true)
 			trigger_error("'$action' is not public!", E_USER_ERROR);
-
+		
+		$parameters = array();
 		if ($classActionMethod->getNumberOfParameters() > 0) {
 			$actionParameters = $classActionMethod->getParameters();
 			$paramCounter = 0;
-			$parameters = array();
+			
 			foreach($actionParameters as $param) {
 				$val = $this->GetURIPart($paramCounter+$parameters_index);
 				$parameters[] = $val;
@@ -138,6 +140,15 @@ abstract class Controller {
 		if (method_exists($this, "_autorun"))
 			$this->_autorun();
 
+        if(method_exists($this, "_authenticate")) {
+            // authentikáció szükséges
+            $ret = $this->_authenticate($_POST[$config["form_username"]], $_POST[$config["form_password"]], $action);
+            if($ret == false) {
+                //$this->Forward($method, $action); // addig ne engedjük tovább, amíg nem jelentkezett be
+                return;
+            }
+        }
+		
 		call_user_func_array(array($this, $action), $parameters);
 	}
 
@@ -198,8 +209,11 @@ class Sputnik {
 			error_log("Not class '$class_filename'", 0);
 		}
 
+
+
 		require_once $class_filename;
 		$controller = new $this->uri_helper->class_name();
+        $controller->form = Form::GetInstance();
 		Sputnik::$controller = $controller;
 		global $autoload;
 		foreach($autoload as $plugin_name) {

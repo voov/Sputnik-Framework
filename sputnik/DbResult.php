@@ -111,9 +111,9 @@ class DbResult implements Iterator {
 			return false;
 	}
 
-	public function GetArray() {
+	public function GetArray($single_row=true) {
 		$buffer = array();
-		if(count($this->rows) == 1) {
+		if(count($this->rows) == 1 && $single_row==true) {
 			// Only one row
 			return $this->rows[0]->GetFields();
 		}
@@ -123,9 +123,11 @@ class DbResult implements Iterator {
 		return $buffer;
 	}
 
-	public function GetJSON() {
-		$buffer = $this->GetArray();
-		return json_encode($buffer);
+	public function GetJSON($standard=false) {
+        if($standard==false)
+		    return json_encode($this->GetArray());
+        else
+            return json_encode($this->GetArray(false));
 	}
 
 
@@ -144,6 +146,54 @@ class DbResult implements Iterator {
 	 */
 	public function Length() {
 		return $this->length;
+	}
+
+    /**
+     * @param  $index
+     * @return void
+     */
+    public function GetRow($index) {
+        return $this->rows[$index];
+    }
+
+
+	/**
+	 *
+	 */
+	public function IsLast() {
+		return ($this->position == $this->length-1);
+	}
+
+	/**
+	 *
+	 * @return <type> 
+	 */
+	public function IsFirst() {
+		return ($this->position == 0);
+	}
+	/**
+	 *
+	 * @return <type>
+	 */
+	public function IsOdd() {
+		return ($this->position % 2 != 0);
+	}
+
+	/**
+	 *
+	 * @param <type> $n
+	 * @return <type> 
+	 */
+	public function IsNth($n) {
+		return ($this->position % $n == 0);
+	}
+
+	/**
+	 *
+	 * @return <type> 
+	 */
+	public function IsEven() {
+		return ($this->position % 2 == 0);
 	}
 
 	/**
@@ -165,6 +215,7 @@ class DbResult implements Iterator {
 
 
 	public function rewind() {
+		$this->position = 0;
 		reset($this->rows);
 	}
 
@@ -179,6 +230,7 @@ class DbResult implements Iterator {
 	}
 
 	public function next() {
+		$this->position++;
 		$next = next($this->rows);
 		return $next;
 	}

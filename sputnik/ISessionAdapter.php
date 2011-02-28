@@ -9,7 +9,7 @@ interface ISessionAdapter {
 	public function Set($var, $value, $ttl=0);
 	public function Clear($var);
 	public function Is_set($var);
-	
+	public function GetSessions();
 }
 
 /**

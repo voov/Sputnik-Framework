@@ -1,0 +1,100 @@
+<?php
+require_once "FormValidator.php";
+require_once "FormEvent.php";
+
+class Form {
+
+    private $notsafe_vars = array();
+    private static $instance = null;
+
+    function __construct() {
+        $this->notsafe_vars = $_POST;
+        // Clean POST
+        foreach ($_POST as $post_key => $post_value) {
+            if (preg_match("/^[a-z0-9:_\/-]+$/i", $post_key))
+                trigger_error("Not safe var key!");
+
+	        $_POST[$post_key . ":unsafe"] = $post_value;
+            $_POST[$post_key] = $this->XSS_Clean($post_value);
+        }
+    }
+
+    public function GetNotSafe($name) {
+        return $this->notsafe_vars[$name];
+    }
+
+    public function GetField($name, $useregex) {
+        $field_buffer = array();
+        $wildcards = array("*" => "(?:.*?)", "?" => "(?:.{1})", "+" => "(?:.+?)");
+        // we don't want to use regular expressions by default
+        $field_final = $name;
+        if ($this->use_regex == false)
+            $field_final = strtr($name, $wildcards);
+        foreach ($_POST as $key => $value) {
+            if (preg_match("/^$field_final$/i", $key)) $field_buffer[$key] = $_POST[$key];
+        }
+        if(count($field_buffer) == 1) return $field_buffer[0];
+        return $field_buffer;
+    }
+
+    public static function GetInstance() {
+        if (self::$instance === null) self::$instance = new self();
+        return self::$instance;
+    }
+
+    public function GenerateInputToken() {
+        $token = uniqid();
+        Sessions::GetInstance()->input_token = $token;
+        return HtmlBuilder::HtmlBuilder("input")->type("hidden")->name(":input_token")->value($token);
+    }
+
+    private function XSS_Clean($data) {
+
+        if(is_array($data)) {
+            return $data;
+            /*foreach($data as $value) {
+                $this->XSS_Clean($value);
+            }*/
+            
+        }
+        $data = urldecode($data);
+
+        // Fix &entity\n;
+        $data = str_replace(array('&amp;', '&lt;', '&gt;'), array('&amp;amp;', '&amp;lt;', '&amp;gt;'), $data);
+        $data = preg_replace('/(&#*\w+)[\x00-\x20]+;/u', '$1;', $data);
+        $data = preg_replace('/(&#x*[0-9A-F]+);*/iu', '$1;', $data);
+        $data = html_entity_decode($data, ENT_COMPAT, 'UTF-8');
+
+        // Remove any attribute starting with "on" or xmlns
+        $data = preg_replace('#(<[^>]+?[\x00-\x20"\'])(?:on|xmlns)[^>]*+>#iu', '$1>', $data);
+
+        // Remove javascript: and vbscript: protocols
+        $data = preg_replace('#([a-z]*)[\x00-\x20]*=[\x00-\x20]*([`\'"]*)[\x00-\x20]*j[\x00-\x20]*a[\x00-\x20]*v[\x00-\x20]*a[\x00-\x20]*s[\x00-\x20]*c[\x00-\x20]*r[\x00-\x20]*i[\x00-\x20]*p[\x00-\x20]*t[\x00-\x20]*:#iu', '$1=$2nojavascript...', $data);
+        $data = preg_replace('#([a-z]*)[\x00-\x20]*=([\'"]*)[\x00-\x20]*v[\x00-\x20]*b[\x00-\x20]*s[\x00-\x20]*c[\x00-\x20]*r[\x00-\x20]*i[\x00-\x20]*p[\x00-\x20]*t[\x00-\x20]*:#iu', '$1=$2novbscript...', $data);
+        $data = preg_replace('#([a-z]*)[\x00-\x20]*=([\'"]*)[\x00-\x20]*-moz-binding[\x00-\x20]*:#u', '$1=$2nomozbinding...', $data);
+
+        // Only works in IE: <span style="width: expression(alert('Ping!'));"></span>
+        $data = preg_replace('#(<[^>]+?)style[\x00-\x20]*=[\x00-\x20]*[`\'"]*.*?expression[\x00-\x20]*\([^>]*+>#i', '$1>', $data);
+        $data = preg_replace('#(<[^>]+?)style[\x00-\x20]*=[\x00-\x20]*[`\'"]*.*?behaviour[\x00-\x20]*\([^>]*+>#i', '$1>', $data);
+        $data = preg_replace('#(<[^>]+?)style[\x00-\x20]*=[\x00-\x20]*[`\'"]*.*?s[\x00-\x20]*c[\x00-\x20]*r[\x00-\x20]*i[\x00-\x20]*p[\x00-\x20]*t[\x00-\x20]*:*[^>]*+>#iu', '$1>', $data);
+
+        // Remove namespaced elements (we do not need them)
+        $data = preg_replace('#</*\w+:\w[^>]*+>#i', '', $data);
+
+        do
+        {
+            // Remove really unwanted tags
+            $old_data = $data;
+            $data = preg_replace('#</*(?:applet|b(?:ase|gsound|link)|embed|frame(?:set)?|i(?:frame|layer)|l(?:ayer|ink)|meta|object|s(?:cript|tyle)|title|xml)[^>]*+>#i', '', $data);
+	        //$data = preg_replace('#</*(?:applet|b(?:ase|gsound|link)|frame(?:set)?|i(?:frame|layer)|l(?:ayer|ink)|meta|s(?:cript|tyle)|title|xml)[^>]*+>#i', '', $data);
+        }
+        while ($old_data !== $data);
+
+        // we are done...
+        return $data;
+    }
+
+
+}
+
+?>

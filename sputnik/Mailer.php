@@ -121,6 +121,7 @@ class Mailer {
 		$headers .= $body;
 
 		//observe the . after the newline, it signals the end of message
+        $subject = "=?UTF-8?B?" . base64_encode($subject) . "?=";
 		fputs($conn, "To: $to\r\nFrom: $from\r\nSubject: $subject\r\n$headers\r\n.\r\n");
 		$smtpResponse = fgets($conn, 4096);
 
@@ -153,7 +154,7 @@ class Mailer {
 
 		/* PLAIN TEXT */
 		$message .= "--VOOV-Sputnik-" . $random_hash . "\r\n";
-		$message .= "Content-Type: text/plain; charset=\"utf8\" \r\n";
+		$message .= "Content-Type: text/plain; charset=\"UTF-8\" \r\n";
 		$message .= "Content-Transfer-Encoding: 7bit\r\n\r\n";
 
 		$string_nl = eregi_replace('<br[[:space:]]*/?[[:space:]]*>',chr(13).chr(10),$string);
@@ -163,7 +164,7 @@ class Mailer {
 
 		/* HTML TEXT */
 		$message .= "--VOOV-Sputnik-" . $random_hash . "\r\n";
-		$message .= "Content-Type: text/html; charset=\"utf8\" \r\n";
+		$message .= "Content-Type: text/html; charset=\"UTF-8\" \r\n";
 		$message .= "Content-Transfer-Encoding: 7bit\r\n\r\n";
 
 		$message .= $string;

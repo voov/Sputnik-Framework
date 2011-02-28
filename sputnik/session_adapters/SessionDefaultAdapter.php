@@ -40,6 +40,10 @@ class SessionDefaultAdapter implements ISessionAdapter {
 	function Is_set($var) {
 		return isset($_SESSION[$var]);
 	}
+
+	function GetSessions() {
+		return $_SESSION;
+	}
 }
 
 ?>
