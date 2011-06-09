@@ -7,22 +7,28 @@
  */
 
 
+require_once "Crypt.php";
 
 class Sessions {
 
 	static $instance = false;
 	private $session_adapter = null;
 	private $deleteable_flash_data = array();
+	private $crypt = false;
+	private $secondary_flash_cache = array();
 
 	function  __construct() {
 		global $config;
-		require_once "session_adapters/" . $config["session_adapter"] . ".php";
+		require_once "session/" . $config["session_adapter"] . ".php";
 		
 		$this->session_adapter = new $config["session_adapter"]();
-		//error_log(print_r($_SESSION, true));
-		// clear all flash data!
 		$this->ClearFlashdata();
 		$this->MarkFlashdata();
+
+		if(!empty($config["session_key"])) {
+			$this->crypt = new Crypt();
+			$this->crypt->SetKey($config["session_key"]);
+		}
 	}
 
 	
@@ -33,14 +39,32 @@ class Sessions {
 		}
 	}
 
-	function MarkFlashdata() {
+	function MarkFlashdata($exact_name=false) {
 		foreach($this->session_adapter->GetSessions() as $session_key=>$session_value) {
 			if(preg_match('/^_flash:(.+)/', $session_key, $regs)) {
+				if($exact_name !== false && $regs[1] != $exact_name) continue;
 				$value = $this->session_adapter->Get($session_key);
 				$this->session_adapter->Clear($session_key);
 				$this->session_adapter->Set("!_flash:" . $regs[1], $value);
 			}
 		}
+	}
+
+	public function Get($var) {
+		if($this->crypt != false) {
+			$value = $this->session_adapter->Get($var);
+			return $this->crypt->Decrypt($value);
+		} else {
+			return $this->session_adapter->Get($var);
+		}
+
+	}
+
+	public function Set($var, $value) {
+		if($this->crypt != false) {
+			$value = $this->crypt->Encrypt($value);
+		}
+		$this->session_adapter->Set($var, $value);
 	}
 	
 	/**
@@ -49,7 +73,7 @@ class Sessions {
 	 * @param $var Object Session v�ltoz�
 	 */
 	function __get($var) {
-		$value = $this->session_adapter->Get($var);
+		$value = $this->Get($var);
 		if ($value != null)
 			return $value;
 		else
@@ -65,7 +89,7 @@ class Sessions {
 	 * @param $val Object v�ltoz� �rt�ke
 	 */
 	function __set($var, $val) {
-		$this->session_adapter->Set($var, $val);
+		$this->Set($var, $val);
 	}
 
 
@@ -86,11 +110,17 @@ class Sessions {
 
 	
 	function SetFlashdata($var, $value) {
-		$this->session_adapter->Set("_flash:" . $var, $value);
+		$this->Set("_flash:" . $var, $value);
+		$this->secondary_flash_cache[$var] = $value;
 	}
 
 	function GetFlashdata($var) {
-		$value = $this->session_adapter->Get("!_flash:" . $var);
+		if(!empty($this->secondary_flash_cache[$var])) {
+			// We have accessed the flashdata without reload, mark to delete
+			$this->MarkFlashdata($var);
+			return $this->secondary_flash_cache[$var];
+		}
+		$value = $this->Get("!_flash:" . $var);
 		if (!empty($value)) {
 			return $value;
 		} else {
@@ -106,7 +136,7 @@ class Sessions {
 	 * Visszaadja a session oszt�ly egy statikus instance-j�t
 	 * @return
 	 */
-	function getInstance() {
+	static function GetInstance() {
 		if (!Sessions::$instance) {
 			Sessions::$instance = new Sessions;
 		}

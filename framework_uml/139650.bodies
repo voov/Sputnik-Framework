@@ -1,0 +1,57 @@
+class Sputnik
+!!!176386.php!!!	__construct()
+
+		$this->uri_helper = new URIHelper();
+!!!176514.php!!!	GetInstance()
+
+		if (Sputnik::$instance == false) {
+			Sputnik::$instance = new self;
+		}
+		return Sputnik::$instance;
+!!!176642.php!!!	GetRunningInstance()
+
+		return Sputnik::$controller;
+!!!176770.php!!!	Dispatch()
+
+		global $config;
+
+		if($config["enable_imagecache"]) {
+
+			if($this->uri_helper->uri_array[0] == $config["imagecache_controller"]) {
+				$dir = implode("/", array_splice($this->uri_helper->uri_array, 1));
+				$fname = basename($dir);
+				$dir = preg_replace('/-[xr]([0-9]+)/', '', $dir);
+				//if(!is_file($dir)) return;
+				// Get picture size and function
+				preg_match("/-([xr])([0-9]+)/", $fname, $matches);
+				if($matches[1] == "r") {
+					// resize
+					$ic = new ImageCache();
+					$ic->RenderImage($dir, $matches[2], $matches[2]);
+				} elseif ($matches[1] == "x") {
+					// crop
+					$ic = new ImageCache();
+					$ic->RenderImage($dir, $matches[2], $matches[2], true);
+				}
+				return; // End of imagecache, do not run as normal controller!
+			}
+		}
+
+		// Get the filename
+		$class_filename = $config["app_directory"] . $this->uri_helper->dir_path . "/" . strtolower($this->uri_helper->class_name) . ".php";
+		if(!is_file($class_filename)) {
+			die("Not class '$class_filename'"); // Error 404
+			error_log("Not class '$class_filename'", 0);
+		}
+
+
+
+		require_once $class_filename;
+		$controller = new $this->uri_helper->class_name();
+        $controller->form = Form::GetInstance();
+		Sputnik::$controller = $controller;
+		global $autoload;
+		foreach($autoload as $plugin_name) {
+			$controller->LoadPlugin($plugin_name);
+		}
+		$controller->Forward();

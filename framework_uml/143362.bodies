@@ -1,0 +1,39 @@
+class URI
+!!!203906.php!!!	SetNamedParam(inout name : , inout value : )
+
+		$name = htmlentities($name);
+		$value = htmlentities($value);
+		URI::$named_params[$name] = $value;
+!!!204034.php!!!	GetNamedParam(inout name : )
+
+		$name = html_entity_decode($name);
+		$buffer = html_entity_decode(self::$named_params[$name]);
+		if(!isset($buffer)) return false;
+		return $buffer;
+!!!204162.php!!!	RedirectToReferer()
+
+		$referer = $_SERVER["HTTP_REFERER"];
+		if (headers_sent() == false)
+			header("Location: $referer");
+!!!204290.php!!!	Redirect(inout uri : )
+
+		if (headers_sent() == false)
+			header("Location: " . URI::MakeURL($uri));
+!!!204418.php!!!	MakeURL(inout uri : , inout extend_named :  = array())
+
+		global $config;
+		$host = $_SERVER["HTTP_HOST"];
+		$ret = Hooks::GetInstance()->CallHookAtPoint("pre_makeurl", array($host, $uri));
+		if ($ret != null)
+			return $ret;
+		else {
+			if(count(self::$named_params) > 0 || count($extend_named) > 0) {
+				$named_params = array_merge(self::$named_params, $extend_named);
+				foreach($named_params as $key=>$value) {
+					$named_params_list[] = "$key" . $config["namedparam_char"] . "$value";
+				}
+				$uri_named_params = implode("/", $named_params_list);
+				return "http://$host/$uri/$uri_named_params";
+			}
+			return "http://$host/$uri";
+		}

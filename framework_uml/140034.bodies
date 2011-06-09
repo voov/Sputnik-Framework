@@ -1,0 +1,115 @@
+class DbResult
+!!!179714.php!!!	__construct(inout result : result, inout conn : resource, inout insert : boolean = false, inout uselimit :  = false)
+
+		$this->result = $result;
+		$this->conn = $conn;
+
+		if ((@mysql_num_rows($this->result) >= 0 && $this->result !== false) || $insert) {
+			if ($uselimit == true) {
+				$found_rows_q = mysql_query("SELECT FOUND_ROWS()");
+				$found_rows_ret = mysql_fetch_array($found_rows_q);
+				$this->found_rows = $found_rows_ret[0];
+			}
+
+			$this->length = (int) @mysql_num_rows($this->result);
+			$this->affectedRows = mysql_affected_rows($conn);
+			if ($insert == false) {
+				/* kérdezzük le az összes sort */
+				while($row = mysql_fetch_assoc($this->result)) {
+					$row_ob = new DbRow();
+					$row_ob->SetFields($row);
+					$this->rows[] = $row_ob;
+				}
+			}
+		}
+!!!179842.php!!!	__get(inout n : )
+
+		if (count($this->rows) > 0)
+			return $this->rows[0]->{$n};
+		else
+			return false;
+!!!179970.php!!!	GetIDs(inout n : <type> = "id") : <type>
+
+		$buffer = array();
+		if (count($this->rows) > 0) {
+			foreach($this->rows as $row)
+				$buffer[] = $row->{$n};
+
+			return $buffer;
+		}
+		else
+			return false;
+!!!180098.php!!!	GetArray(inout single_row :  = true)
+
+		$buffer = array();
+		if(count($this->rows) == 1 && $single_row==true) {
+			// Only one row
+			return $this->rows[0]->GetFields();
+		}
+		foreach($this->rows as $row) {
+			$buffer[] = $row->GetFields();
+		}
+		return $buffer;
+!!!180226.php!!!	GetJSON(inout standard :  = false)
+
+        if($standard==false)
+		    return json_encode($this->GetArray());
+        else
+            return json_encode($this->GetArray(false));
+!!!180354.php!!!	Length() : <int>
+
+		return $this->length;
+!!!180482.php!!!	GetRow(inout index : $index) : void
+
+        return $this->rows[$index];
+!!!180610.php!!!	IsLast()
+
+		return ($this->position == $this->length-1);
+!!!180738.php!!!	IsFirst() : <type>
+
+		return ($this->position == 0);
+!!!180866.php!!!	IsOdd() : <type>
+
+		return ($this->position % 2 != 0);
+!!!180994.php!!!	IsNth(inout n : <type>) : <type>
+
+		return ($this->position % $n == 0);
+!!!181122.php!!!	IsEven() : <type>
+
+		return ($this->position % 2 == 0);
+!!!181250.php!!!	found_rows() : <int>
+
+		$this->FoundRows();
+!!!181378.php!!!	FoundRows() : <int>
+
+		return $this->found_rows;
+!!!181506.php!!!	rewind()
+
+		$this->position = 0;
+		reset($this->rows);
+!!!181634.php!!!	current()
+
+		$row = current($this->rows);
+		return $row;
+!!!181762.php!!!	key()
+
+		$key = key($this->rows);
+		return $key;
+!!!181890.php!!!	next()
+
+		$this->position++;
+		$next = next($this->rows);
+		return $next;
+!!!182018.php!!!	valid()
+
+		$var = $this->current() !== false;
+		return $var;
+!!!182146.php!!!	AffectedRows() : <int>
+
+		return $this->affectedRows;
+!!!182274.php!!!	get()
+
+		return $this->result;
+!!!182402.php!!!	position()
+
+		return $this->position;

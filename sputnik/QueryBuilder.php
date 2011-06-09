@@ -1,10 +1,16 @@
 <?php
 class TableJoin {
 	private $tbl_name = "";
+	private $master_table = "";
 	private $joins = array();
+
+	public static function TableJoin($tbl_name) {
+		return new TableJoin($tbl_name);
+	}
 
 	function  __construct($tbl_name) {
 		$this->tbl_name = $tbl_name;
+		$this->SetMasterTable($tbl_name);
 		return $this;
 	}
 
@@ -31,6 +37,14 @@ class TableJoin {
 	function  __toString() {
 		return "$this->tbl_name " . implode(" ", $this->joins);
 	}
+
+	public function SetMasterTable($master_table) {
+		$this->master_table = $master_table;
+	}
+
+	public function GetMasterTable() {
+		return $this->master_table;
+	}
 }
 
 class QueryBuilder {
@@ -39,7 +53,34 @@ class QueryBuilder {
 	private $where_conditions = array();
 	private $limit_str = "";
 	private $orders = array();
+	private $groups = array();
 	private $from = "";
+	private $master_table = "";
+	private $subsite_filter = true;
+	private $unions = array();
+
+	public function __construct() {
+		
+		return $this;
+	}
+
+	public static function QueryBuilder() {
+		return new QueryBuilder();
+	}
+
+	public static function SelectFrom($select="*", $from) {
+		$q = new QueryBuilder();
+		return $q->Select($select)->From($from);
+	}
+
+	public function SubsiteFilter($use) {
+		$this->subsite_filter = $use;
+		return $this;
+	}
+
+	public function CanUseSubsiteFilter() {
+		return $this->subsite_filter;
+	}
 
 
 	function Select($cols="*") {
@@ -49,10 +90,14 @@ class QueryBuilder {
 	}
 
 	function From($tbl_name) {
-		if($tbl_name instanceof TableJoin)
+		if($tbl_name instanceof TableJoin) {
+			$this->SetMasterTable($tbl_name->GetMasterTable());
 			$this->from = $tbl_name->__toString();
-		else
+		}
+		else {
+			$this->SetMasterTable($tbl_name);
 			$this->from = $tbl_name;
+		}
 		return $this;
 	}
 
@@ -68,7 +113,7 @@ class QueryBuilder {
 		return $this;
 	}
 
-	function OrderBy($order_col, $order_dir) {
+	function OrderBy($order_col, $order_dir="asc") {
 		if(!isset($order_col) || !isset($order_dir))
 			return $this;
 		$order_buffer = "$order_col $order_dir";
@@ -76,13 +121,35 @@ class QueryBuilder {
 		return $this;
 	}
 
+	function GroupBy($group_col) {
+		if(!isset($group_col))
+			return $this;
+		$this->groups[] = $group_col;
+		return $this;
+	}
+
+	function Union($qb) {
+		$this->unions[] = $qb->Render();
+		return $this;
+	}
+
 	function Render() {
+		Hooks::GetInstance()->CallHookAtPoint("pre_makequery", array($this));
 		$select = implode(", ", $this->select_cols);
 
-		$sql = "SELECT $select FROM {$this->from}";
+		if(count($this->unions) > 1) {
+			$unions = implode(") UNION (", $this->unions);
+			$sql = "($unions)";
+		} else {
+			$sql = "SELECT $select FROM {$this->from}";
+		}
 		if(count($this->where_conditions) > 0) {
 			$sql .= " WHERE ";
 			$sql .= implode(" AND ", $this->where_conditions);
+		}
+		if(count($this->groups) > 0) {
+			$sql .= " GROUP BY ";
+			$sql .= implode(", ", $this->groups);
 		}
 		if(count($this->orders) > 0) {
 			$sql .= " ORDER BY ";
@@ -96,6 +163,14 @@ class QueryBuilder {
 		return $this->Render();
 	}
 
-	
+	public function SetMasterTable($master_table) {
+		$this->master_table = $master_table;
+	}
+
+	public function GetMasterTable() {
+		return $this->master_table;
+	}
+
+
 }
 ?>

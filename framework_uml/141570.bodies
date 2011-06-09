@@ -1,0 +1,12 @@
+class SessionAdapterHelper
+!!!192514.php!!!	GetUserHash() : <string>
+
+		$user_agent = $_SERVER["HTTP_USER_AGENT"];
+		$user_ip = $_SERVER["REMOTE_ADDR"];
+		$user_string = $user_agent . "|" . $user_ip;
+		return md5($user_string);
+!!!192642.php!!!	GenerateSessionID() : <type>
+
+		$session_id = md5(uniqid());
+		//setco
+		return $session_id;

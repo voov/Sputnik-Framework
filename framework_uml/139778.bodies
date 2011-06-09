@@ -1,0 +1,207 @@
+class Db
+!!!176898.php!!!	__construct(inout host : string, inout user : string, inout pass : string, inout db : string = false)
+
+		$this->ConnectTo($host, $user, $pass);
+		if ($this->conn && $db) $this->SelectDatabase($db);
+!!!177026.php!!!	__set(inout name : , inout value : )
+
+		$this->is_prepared = true;
+		$this->prep_vars[$name] = $value;
+!!!177154.php!!!	__destruct()
+
+		$this->Disconnect();
+!!!177282.php!!!	GetInstance(inout host : <type> = null, inout user : <type> = null, inout pass : <type> = null, inout db : <type> = null) : object
+
+		global $config;
+		if (self::$instance === null) {
+			if ($host == null)
+				self::$instance = new Db($config["db_connect"], $config["db_username"], $config["db_password"], $config["db_dbname"]);
+			else
+				self::$instance = new Db($host, $user, $pass, $db);
+		}
+		return self::$instance;
+!!!177410.php!!!	ConnectTo(inout host : string, inout user : string, inout pass : string)
+
+		$this->conn = mysql_connect($host, $user, $pass) or die("Csatlakozási hiba: " . mysql_error());
+		//$this->Switch_Utf8();
+!!!177538.php!!!	SelectDatabase(inout db : string)
+
+		@mysql_select_db($db, $this->conn);
+		$this->db = $db;
+!!!177666.php!!!	Switch_Utf8()
+
+		mysql_query("SET CHARACTER SET utf8");
+!!!177794.php!!!	GetDbName() : string
+
+		return $this->db;
+!!!177922.php!!!	IsConnected() : boolean
+
+		return is_resource($this->conn);
+!!!178050.php!!!	Disconnect()
+
+		@mysql_close($this->conn);
+!!!178178.php!!!	GetError() : string
+
+		return mysql_error($this->conn);
+!!!178306.php!!!	ReplaceCallback(inout groups : <type>) : <type>
+
+		//print_r($groups);
+		$val = $this->prep_vars[$groups[1]];
+		if (get_magic_quotes_gpc()) $val = stripslashes($val);
+		$val = mysql_real_escape_string($val);
+		if (empty($val)) $val = "";
+		return "'". $val ."'";
+!!!178434.php!!!	PrepareQuery(inout query : <type>) : <type>
+
+		
+		if ($this->is_prepared == false) return $query;
+		$func_string = '';
+		$result = preg_replace_callback('/\{([a-zA-Z0-9_]+?)\}/', array($this, ReplaceCallback), $query);
+		return $result;
+!!!178562.php!!!	Query(inout query : , inout send_in_utf8 :  = false) : object
+
+		if($query instanceof QueryBuilder)
+			$query = $query->Render();
+		
+		$uselimit = false;
+		// Engedélyezzük az SQL_CALC_FOUND_ROWS -t ha van benne LIMIT rész
+		$tokens = explode(' ', strtolower($query));
+		if (in_array("limit", $tokens) && $tokens[0] == "select") {
+			$query = str_replace("select", "select sql_calc_found_rows", strtolower($query));
+			$uselimit = true;
+		}
+
+		if ($send_in_utf8 == true) {
+			$this->Switch_Utf8();
+		}
+		
+		if ($this->is_prepared) $query = $this->PrepareQuery($query);
+		$this->last_query = $query;
+		$result = mysql_query($query, $this->conn) or
+			   trigger_error("SQL Hiba: " . mysql_error() . "<br /><b>" . $query . "</b>", E_USER_ERROR);
+
+		if ($this->is_prepared) {
+			$this->prep_vars = array();
+			$this->is_prepared = false;
+		}
+		if (count($tokens) > 0) {
+			if (!in_array(trim($tokens[0]), array('update', 'delete', 'insert', 'replace'))) {
+				//$insert = true;
+				return new DbResult($result, $this->conn, $insert, $uselimit);
+			} elseif(trim($tokens[0]) == "insert")
+				return mysql_insert_id($this->conn);
+		}
+		return mysql_affected_rows($this->conn);
+!!!178690.php!!!	DumpLastQuery()
+
+		echo $this->last_query;
+!!!178818.php!!!	Insert(inout tablename : <type>, inout row : sp_db_row) : <type>
+
+		$field_list = "";
+		$value_list = "";
+		$count = 0;
+		foreach($row as $key => $field) {
+			if (get_magic_quotes_gpc()) $value = stripslashes($value);
+			$value = mysql_real_escape_string($value);
+			if ($count > 0) {
+				$field_list .= ", `$key`";
+				$value_list .= ", '$field'";
+			} else {
+				$field_list .= "`$key`";
+				$value_list .= "'$field'";
+			}
+			$count++;
+		}
+
+		$sql = "INSERT INTO `$tablename` ($field_list) VALUES ($value_list)";
+		return $this->Query($sql);
+		//echo "$sql<br />";
+!!!178946.php!!!	Replace(inout tablename : <type>, inout row : sp_db_row) : <type>
+
+		$field_list = "";
+		$value_list = "";
+		$count = 0;
+		foreach($row as $key => $field) {
+			if (get_magic_quotes_gpc()) $value = stripslashes($value);
+			$value = mysql_real_escape_string($value);
+			if ($count > 0) {
+				$field_list .= ", `$key`";
+				$value_list .= ", '$field'";
+			} else {
+				$field_list .= "`$key`";
+				$value_list .= "'$field'";
+			}
+			$count++;
+		}
+
+		$sql = "REPLACE INTO `$tablename` ($field_list) VALUES ($value_list)";
+		return $this->Query($sql);
+		//echo "$sql<br />";
+!!!179074.php!!!	Update(inout tablename : <type>, inout id : <type>, inout row : sp_db_row, inout where : sp_db_row = null) : <type>
+
+		$set_list = "";
+		$count = 0;
+		foreach($row as $key => $value) {
+			if (get_magic_quotes_gpc()) $value = stripslashes($value);
+			$value = mysql_escape_string($value);
+			if ($count > 0) {
+				$set_list .= ", `$key`='$value'";
+			} else {
+				$set_list .= "`$key`='$value'";
+			}
+			$count++;
+		}
+		if ($id instanceof DbRow)
+			$where = $id;
+
+		if ($where != null) {
+			// Adtunk meg teljes Where t�bl�t!
+			$w_count = 0;
+			$where_list = "";
+			foreach($where as $key => $value) {
+				$value = mysql_real_escape_string($value);
+				if ($w_count > 0) {
+					$where_list .= "AND `$key`='$value'";
+				} else {
+					$where_list .= "`$key`='$value'";
+				}
+				$w_count++;
+			}
+
+			$sql = "UPDATE `$tablename` SET $set_list WHERE $where_list";
+		} else {
+			// Csak ID-t adtunk meg
+			$sql = "UPDATE `$tablename` SET $set_list WHERE id='$id'";
+		}
+		return $this->Query($sql);
+		//echo "$sql<br />";
+!!!179202.php!!!	Delete(inout tablename : <type>, inout row : <type>, inout or_operator : <type> = NULL) : <type>
+
+		$set_list = "";
+		$count = 0;
+		$op = "AND";
+		if ($or_operator == true) $op = "OR";
+		if ($row instanceof DbRow === false)
+			$row = new DbRow(array("id" => $row));
+
+		foreach($row as $key => $value) {
+			$value = mysql_escape_string($value);
+			if ($count > 0) {
+				$set_list .= " $op `$key`='$value'";
+			} else {
+				$set_list .= "`$key`='$value'";
+			}
+			$count++;
+		}
+		$sql = "DELETE FROM `$tablename` WHERE $set_list";
+		return $this->Query($sql);
+		//echo "$sql<br />";
+!!!179330.php!!!	ServerInfo() : string
+
+		return mysql_get_server_info($this->conn);
+!!!179458.php!!!	Status() : array
+
+		return explode('  ', mysql_stat($this->conn));
+!!!179586.php!!!	Escape(inout string : <type>) : <type>
+
+		return mysql_real_escape_string($string, $this->conn);

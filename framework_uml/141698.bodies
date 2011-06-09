@@ -1,0 +1,35 @@
+class Localization
+!!!192770.php!!!	GetInstance() : <type>
+
+		if(self::$instance === null) self::$instance = new Localization();
+		return self::$instance;
+!!!192898.php!!!	_(inout str : , inout args : )
+
+		$o = Localization::GetInstance();
+		return $o->TranslateText($str, $args);
+!!!193026.php!!!	TranslateText(inout str : str, inout args : args)
+
+		
+!!!193154.php!!!	SetLocale(inout loc : )
+
+		
+!!!193282.php!!!	RewriteHook(inout response : , inout host : , inout uri : )
+
+		//print_r(func_get_args());
+		return "http://" . $host . "/" . $this->loc ."/" . $uri;
+!!!193410.php!!!	SetLocaleFromURI(inout regex : , inout uri : )
+
+		preg_match($regex, $uri, $matches);
+		// Query the selected language from database, and set the
+		// session
+		$lang = Db::GetInstance()->Query("SELECT * FROM languages WHERE code='{$matches[1]}'");
+		if($lang->Length() > 0)
+			Sessions::GetInstance()->lang_id = $lang->id; // If there is a language found
+		Sessions::GetInstance()->lang_code = $matches[1];
+		$localization = Localization::GetInstance();
+		$localization->loc = $matches[1];
+
+		// Add hook
+		Hooks::GetInstance()->RegisterFunction("pre_makeurl", array($localization, "RewriteHook"));
+
+		return $matches[2];

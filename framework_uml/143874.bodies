@@ -1,0 +1,9 @@
+class SessionMySQLAdapter
+!!!206338.php!!!	__construct()
+		
+!!!206466.php!!!	Get(inout var : )
+		
+!!!206594.php!!!	Set(inout var : , inout value : , inout ttl :  = 0)
+
+!!!206722.php!!!	Clear(inout var : )
+

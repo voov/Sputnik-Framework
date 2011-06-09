@@ -8,4 +8,7 @@ interface IDbAdapter {
 	public function Query($query_string);
 	public function EscapeString($string);
 	public function Info();
+	public function GetInsertedId();
+	public function GetAffectedRows();
+	public function GetError();
 }

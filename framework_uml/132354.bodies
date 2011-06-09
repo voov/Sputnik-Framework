@@ -1,0 +1,15 @@
+class FormBadFields
+!!!163458.php!!!	__construct(inout arr : )
+
+			$this->badFields = $arr;
+			
+!!!163586.php!!!	__get(inout name : )
+
+			return $this->IsFieldBad($name);
+!!!163714.php!!!	HasBad()
+
+			/*print_r($this->badFields);*/
+			return count($this->badFields) > 0;
+!!!163842.php!!!	IsFieldBad(inout fieldname : )
+
+			return in_array($fieldname, $this->badFields);

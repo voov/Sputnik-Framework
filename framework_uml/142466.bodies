@@ -1,0 +1,76 @@
+class Renderable
+!!!197634.php!!!	__construct(inout template :  = "")
+		global $config;
+
+		//echo nl2br(print_r(debug_backtrace(), true));
+		//echo "construct";
+		$this->_variables = array();
+		$this->_renderables = array();
+		$this->template_dir = $config["view_template"];
+		if($template != "") {
+			$this->template_file = $this->GetFilename($template);
+		}
+!!!197762.php!!!	GetFilename(inout template_name : )
+		$file = $this->template_dir . "/" . $template_name;
+		if (strpos($file, ".") === FALSE) {
+			// Find the extension
+
+			$extensions = array("php", "html", "htm");
+			foreach($extensions as $ext) {
+				if (is_file($file . "." . $ext)) $file .=  "." . $ext;
+			}
+		}
+		return $file;
+!!!197890.php!!!	set(inout name : <type>, inout value : <type>)
+		if(empty($value)) return;
+		$this->_variables[$name] = $value;
+!!!198018.php!!!	get(inout name : <type>) : <type>
+		return $this->_variables[$name];
+!!!198146.php!!!	__set(inout name : <type>, inout value : <type>)
+		$this->set($name, $value);
+!!!198274.php!!!	__get(inout name : <type>) : <type>
+		return $this->get($name);
+!!!198402.php!!!	AddRenderable(inout name : <type>, inout renderable : ) : <type>
+		if(is_object($renderable))
+			$this->_renderables[$name] = $renderable;
+		else
+			$this->_renderables[$name] = new self($renderable);
+		return $this->_renderables[$name];
+!!!198530.php!!!	Display(inout template :  = "")
+		echo $this->Fetch($template);
+!!!198658.php!!!	Fetch(inout template :  = "") : <type>
+		if($template != "") {
+			$this->template_file = $this->GetFilename($template);
+		}
+		return $this->Render();
+!!!198786.php!!!	GetImageCache(inout fname : <type>, inout size : <type>, inout crop : <type> = false)
+		global $config;
+		if($config["enable_imagecache"] == true) {
+			$ic = new ImageCache();
+			return $ic->GetImageFromCache($fname, $size, $size, $crop);
+		} else {
+			return $fname;
+		}
+!!!198914.php!!!	__toString()
+		return $this->Fetch();
+!!!199042.php!!!	Render(inout template :  = "") : <type>
+		if($template != "") {
+			$this->template_file = $this->GetFilename($template);
+		}
+		ob_start();
+		// first extract all renderables to sandbox
+		extract($this->_renderables);
+		extract($this->_variables); // in sandbox
+		if (($front_instance = Sputnik::GetRunningInstance()) != false) {
+			$vars = get_object_vars($front_instance);
+			foreach($vars as $var_key => $var_value) {
+				if (!isset($this->$var_key)) {
+					$this->$var_key = null;
+					$this->set($var_key, &$vars[$var_key]);
+				}
+			}
+		}
+		include $this->template_file;
+		$output = ob_get_contents();
+		ob_end_clean();
+		return $output;

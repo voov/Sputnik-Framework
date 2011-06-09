@@ -1,0 +1,46 @@
+class RenderablePlugin
+!!!199298.php!!!	OnLoad()
+		
+!!!199426.php!!!	__toString()
+		echo $this->Render();
+!!!199554.php!!!	__construct()
+		$this->base = Sputnik::GetRunningInstance();
+		$this->_views = array();
+		$this->_variables = array();
+		$class_name = get_class($this);
+
+		// set a value in the view based on the class name
+		if(!isset($this->base->view->$class_name)) {
+			$this->base->view->$class_name = $this;
+		}
+!!!199682.php!!!	SetModuleName(inout name : )
+		global $config;
+		$this->name = $name;
+		$fd = @opendir($config["module_template"] . "/" . $this->name);
+		while (($part = @readdir($fd)) == true) {
+			if ($part != "." && $part != ".." && !is_dir($part)) {
+				$info = pathinfo($part);
+				$view_name =  basename($part,'.'.$info['extension']);
+				$this->_views[$view_name] = $config["module_template"] . "/" . $this->name ."/" . $part;
+			}
+		}
+!!!199810.php!!!	GetImageCache(inout fname : <type>, inout size : <type>, inout crop : <type> = false)
+		global $config;
+		if($config["enable_imagecache"] == true) {
+			$ic = new ImageCache();
+			return $ic->GetImageFromCache($fname, $size, $size, $crop);
+		} else {
+			return $fname;
+		}
+!!!199938.php!!!	Render(inout view_name :  = "main")
+		ob_start();
+		extract($this->_variables); // in sandbox
+		include $this->_views[$view_name];
+		$output = ob_get_contents();
+		ob_end_clean();
+
+		return $output;
+!!!200066.php!!!	set(inout name : , inout value : )
+		$this->_variables[$name] = $value;
+!!!200194.php!!!	get(inout name : )
+		return $this->_variables[$name];

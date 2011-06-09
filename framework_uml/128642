@@ -1,0 +1,1764 @@
+format 76
+"plugins" // plugins
+  revision 2
+  modified_by 2 "user"
+  // class settings
+  //class diagram settings
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  //use case diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default class_drawing_mode default shadow default show_stereotype_properties default
+  //sequence diagram settings
+  show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
+  //collaboration diagram settings
+  show_full_operations_definition default show_hierarchical_rank default write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+  //object diagram settings
+   write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+  //component diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  //deployment diagram settings
+  package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  //state diagram settings
+  package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  //activity diagram settings
+  package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+  show_infonote default drawing_language default show_stereotype_properties default
+  
+  deploymentview 128514 "plugins"
+    //deployment diagram settings
+    package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+    draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+    artifact 131714 "auth.plugin"
+      stereotype "source"
+      php_src "<?php
+${comment}
+${namespace}
+${require_once}
+${definition}
+?>
+"
+      associated_classes
+	class_ref 131714 // AuthPlugin
+      end
+    end
+
+    artifact 131842 "class.inputfilter"
+      stereotype "source"
+      php_src "<?php
+${comment}
+${namespace}
+${require_once}
+${definition}
+?>
+"
+      associated_classes
+	class_ref 131970 // InputFilter
+      end
+    end
+
+    artifact 131970 "cycle.plugin"
+      stereotype "source"
+      php_src "<?php
+${comment}
+${namespace}
+${require_once}
+${definition}
+?>
+"
+      associated_classes
+	class_ref 132098 // CyclePlugin
+      end
+    end
+
+    artifact 132098 "form.plugin"
+      stereotype "source"
+      php_src "<?php
+${comment}
+${namespace}
+${require_once}
+${definition}
+?>
+"
+      associated_classes
+	class_ref 132226 // FormElement
+	class_ref 132354 // FormBadFields
+	class_ref 132482 // FormPlugin
+      end
+    end
+
+    artifact 132226 "imagecache.plugin"
+      stereotype "source"
+      php_src "<?php
+${comment}
+${namespace}
+${require_once}
+${definition}
+?>
+"
+      associated_classes
+	class_ref 132610 // ImagecachePlugin
+      end
+    end
+
+    artifact 132354 "querybuilder.plugin"
+      stereotype "source"
+      php_src "<?php
+${comment}
+${namespace}
+${require_once}
+${definition}
+?>
+"
+      associated_classes
+	class_ref 132738 // QuerybuilderPlugin
+      end
+    end
+
+    artifact 132482 "relativedate.plugin"
+      stereotype "source"
+      php_src "<?php
+${comment}
+${namespace}
+${require_once}
+${definition}
+?>
+"
+      associated_classes
+	class_ref 132866 // RelativeDatePlugin
+      end
+    end
+
+    artifact 132610 "upload.plugin"
+      stereotype "source"
+      php_src "<?php
+${comment}
+${namespace}
+${require_once}
+${definition}
+?>
+"
+      associated_classes
+	class_ref 132994 // UploadPlugin
+      end
+    end
+  end
+
+  classview 128386 "plugins"
+    //class diagram settings
+    draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+    //collaboration diagram settings
+    show_full_operations_definition default show_hierarchical_rank default write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+    //object diagram settings
+     write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+    //sequence diagram settings
+    show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
+    //state diagram settings
+    package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+    show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+    //class settings
+    //activity diagram settings
+    package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+    show_infonote default drawing_language default show_stereotype_properties default
+    class 131714 "AuthPlugin"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl "${comment}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      attribute 141314 "baseObject"
+	private explicit_type ""
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 141442 "minimumLevel"
+	public explicit_type ""
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 159618 "__construct"
+	public explicit_return_type "void"
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}function ${name}${(}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 159746 "SetBaseObject"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "base" explicit_type ""
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 159874 "OnLoad"
+	public explicit_return_type "void"
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 160002 "RunOnEnter"
+	public explicit_return_type "void"
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 160130 "LoginUser"
+	public explicit_return_type "void"
+	nparams 2
+	  param inout name "username" explicit_type "$username"
+	  param inout name "password" explicit_type "$password"
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}, ${p1}${v1}${)}
+{
+  ${body}}
+"
+	
+	
+	comment "
+LoginUser
+Bel�pteti a felhaszn�l�t, ha tal�l ilyen felhaszn�l�n�vvel, �s jelsz�val felhaszn�l�t
+Ha bel�p, akkor be�ll�tja a \"userid\" session-t a felhaszn�l� ID-j�ra
+@return 
+@param ${t0} Object
+@param ${t1} Object
+"
+      end
+
+      operation 160258 "CheckUser"
+	private explicit_return_type "bool"
+	nparams 2
+	  param inout name "minimum_level" explicit_type "$minimum_level"
+	  param inout name "inherit" explicit_type "$inherit"
+	    defaultvalue "true"
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}, ${p1}${v1}${)}
+{
+  ${body}}
+"
+	
+	
+	comment "
+CheckUser
+@return ${type} igaz, ha a felhaszn�l�nak megvan a minimum szintje
+@param ${t0} int az a minimum szint, amivel a felhaszn�l� authentik�lhat� az oldalra
+@param ${t1} bool ha igaz, akkor a megadott szint felett �ll� felhaszn�l�k is authentik�lhat�ak
+"
+      end
+    end
+
+    class 131970 "InputFilter"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl "${comment}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment " @class: InputFilter (PHP5-Strict with comments)
+@project: PHP Input Filter
+@date: 10-05-2005
+@version: 1.2.2_php5
+@author: Daniel Morris
+@contributors: Gianpaolo Racca, Ghislain Picard, Marco Wandschneider, Chris Tobin and Andrew Eddie.
+@copyright: Daniel Morris
+@email: dan@rootcube.com
+@license: GNU General Public License (GPL)
+"
+      attribute 141570 "tagsArray"
+	protected explicit_type ""
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 141698 "attrArray"
+	protected explicit_type ""
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+	comment " default = empty array"
+      end
+
+      attribute 141826 "tagsMethod"
+	protected explicit_type ""
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+	comment " default = empty array"
+      end
+
+      attribute 141954 "attrMethod"
+	protected explicit_type ""
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+	comment " default = 0"
+      end
+
+      attribute 142082 "xssAuto"
+	protected explicit_type ""
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+	comment " default = 0"
+      end
+
+      attribute 142210 "tagBlacklist"
+	protected explicit_type ""
+	init_value " array('applet', 'body', 'bgsound', 'base', 'basefont', 'embed', 'frame', 'frameset', 'head', 'html', 'id', 'iframe', 'ilayer', 'layer', 'link', 'meta', 'name', 'object', 'script', 'style', 'title', 'xml')"
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+	comment " default = 1"
+      end
+
+      attribute 142338 "attrBlacklist"
+	protected explicit_type ""
+	init_value " array('action', 'background', 'codebase', 'dynsrc', 'lowsrc')"
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 160386 "__construct"
+	public explicit_return_type "void"
+	nparams 5
+	  param inout name "tagsArray" explicit_type "Array"
+	    defaultvalue "array()"
+	  param inout name "attrArray" explicit_type "Array"
+	    defaultvalue "array()"
+	  param inout name "tagsMethod" explicit_type "int"
+	    defaultvalue "0"
+	  param inout name "attrMethod" explicit_type "int"
+	    defaultvalue "0"
+	  param inout name "xssAuto" explicit_type "int"
+	    defaultvalue "1"
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}function ${name}${(}${p0}${v0}, ${p1}${v1}, ${p2}${v2}, ${p3}${v3}, ${p4}${v4}${)}
+{
+  ${body}}
+"
+	
+	
+	comment " also will strip ALL event handlers
+ 
+Constructor for inputFilter class. Only first parameter is required.
+@access constructor
+@param ${t0} ${p0} - list of user-defined tags
+@param ${t1} ${p1} - list of user-defined attributes
+@param ${t2} ${p2} - 0= allow just user-defined, 1= allow all but user-defined
+@param ${t3} ${p3} - 0= allow just user-defined, 1= allow all but user-defined
+@param ${t4} ${p4} - 0= only auto clean essentials, 1= allow clean blacklisted tags/attr
+"
+      end
+
+      operation 160514 "process"
+	public explicit_return_type "String"
+	nparams 1
+	  param inout name "source" explicit_type "Mixed"
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}${)}
+{
+  ${body}}
+"
+	
+	
+	comment " 
+Method to be called by another php script. Processes for XSS and specified bad code.
+@access ${visibility}
+@param ${t0} ${p0} - input string/array-of-string to be 'cleaned'
+@return ${type} $source - 'cleaned' version of input parameter
+"
+      end
+
+      operation 160642 "remove"
+	protected explicit_return_type "String"
+	nparams 1
+	  param inout name "source" explicit_type "String"
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}${)}
+{
+  ${body}}
+"
+	
+	
+	comment " 
+Internal method to iteratively remove all unwanted tags and attributes
+@access ${visibility}
+@param ${t0} ${p0} - input string to be 'cleaned'
+@return ${type} $source - 'cleaned' version of input parameter
+"
+      end
+
+      operation 160770 "filterTags"
+	protected explicit_return_type "String"
+	nparams 1
+	  param inout name "source" explicit_type "String"
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}${)}
+{
+  ${body}}
+"
+	
+	
+	comment " 
+Internal method to strip a string of certain tags
+@access ${visibility}
+@param ${t0} ${p0} - input string to be 'cleaned'
+@return ${type} $source - 'cleaned' version of input parameter
+"
+      end
+
+      operation 160898 "filterAttr"
+	protected explicit_return_type "Array"
+	nparams 1
+	  param inout name "attrSet" explicit_type "Array"
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}${)}
+{
+  ${body}}
+"
+	
+	
+	comment " 
+Internal method to strip a tag of certain attributes
+@access ${visibility}
+@param ${t0} ${p0}
+@return ${type} $newSet
+"
+      end
+
+      operation 161026 "decode"
+	protected explicit_return_type "String"
+	nparams 1
+	  param inout name "source" explicit_type "String"
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}${)}
+{
+  ${body}}
+"
+	
+	
+	comment " 
+Try to convert to plaintext
+@access ${visibility}
+@param ${t0} ${p0}
+@return ${type} $source
+"
+      end
+
+      operation 161154 "safeSQL"
+	public explicit_return_type "String"
+	nparams 2
+	  param inout name "source" explicit_type "Mixed"
+	  param inout name "connection" explicit_type "Buffer"
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}, ${p1}${v1}${)}
+{
+  ${body}}
+"
+	
+	
+	comment " 
+Method to be called by another php script. Processes for SQL injection
+@access ${visibility}
+@param ${t0} ${p0} - input string/array-of-string to be 'cleaned'
+@param ${t1} ${p1} - An open MySQL connection
+@return ${type} $source - 'cleaned' version of input parameter
+"
+      end
+
+      operation 161282 "quoteSmart"
+	protected explicit_return_type "String"
+	nparams 2
+	  param inout name "source" explicit_type "String"
+	  param inout name "connection" explicit_type "Resource"
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}, ${p1}${v1}${)}
+{
+  ${body}}
+"
+	
+	
+	comment " 
+@author Chris Tobin
+@author Daniel Morris
+@access ${visibility}
+@param ${t0} ${p0}
+@param ${t1} ${p1} - An open MySQL connection
+@return ${type} $source
+"
+      end
+
+      operation 161410 "escapeString"
+	protected explicit_return_type "String"
+	nparams 2
+	  param inout name "string" explicit_type ""
+	  param inout name "connection" explicit_type "Resource"
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}, ${p1}${v1}${)}
+{
+  ${body}}
+"
+	
+	
+	comment " 
+@author Chris Tobin
+@author Daniel Morris
+@access ${visibility}
+@param ${t2} $source
+@param ${t1} ${p1} - An open MySQL connection
+@return ${type} $source
+"
+      end
+    end
+
+    class 132098 "CyclePlugin"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl "${comment}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      attribute 142466 "_args"
+	private explicit_type ""
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 142594 "_key"
+	private explicit_type ""
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 142722 "baseObj"
+	private explicit_type ""
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 161538 "__construct"
+	package explicit_return_type "void"
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}function ${name}${(}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 161666 "SetBaseObject"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "base" explicit_type ""
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 161794 "OnLoad"
+	public explicit_return_type "void"
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 161922 "AddCycles"
+	public explicit_return_type "void"
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 162050 "LastString"
+	public explicit_return_type "void"
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 162178 "__toString"
+	package explicit_return_type "void"
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+    end
+
+    class 132226 "FormElement"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl "${comment}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      attribute 142850 "elementName"
+	private explicit_type ""
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 142978 "elementText"
+	private explicit_type ""
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 143106 "formObject"
+	private explicit_type ""
+	init_value " null"
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 162306 "__construct"
+	public explicit_return_type "void"
+	nparams 3
+	  param inout name "string" explicit_type ""
+	  param inout name "formObject" explicit_type ""
+	  param inout name "elementName" explicit_type ""
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}function ${name}${(}${p0}${v0}, ${p1}${v1}, ${p2}${v2}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 162434 "__toString"
+	public explicit_return_type "void"
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 162562 "CheckFieldSize"
+	public explicit_return_type "void"
+	nparams 2
+	  param inout name "minSize" explicit_type ""
+	  param inout name "maxSize" explicit_type ""
+	    defaultvalue "0"
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}, ${p1}${v1}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 162690 "CheckFieldAgainstSQL"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "sql" explicit_type ""
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 162818 "CheckField"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "expr" explicit_type ""
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 162946 "IsSubmit"
+	public explicit_return_type "void"
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 163074 "CreatePermalink"
+	public explicit_return_type "void"
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 163202 "GetBoolean"
+	public explicit_return_type "void"
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 163330 "GetInteger"
+	public explicit_return_type "void"
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+    end
+
+    class 132354 "FormBadFields"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl "${comment}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      attribute 143234 "badFields"
+	public explicit_type ""
+	init_value " array()"
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 163458 "__construct"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "arr" explicit_type ""
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}function ${name}${(}${p0}${v0}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 163586 "__get"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "name" explicit_type ""
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 163714 "HasBad"
+	public explicit_return_type "void"
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 163842 "IsFieldBad"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "fieldname" explicit_type ""
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+    end
+
+    class 132482 "FormPlugin"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl "${comment}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      attribute 143362 "enableXssClean"
+	private explicit_type ""
+	init_value " true"
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 143490 "baseObject"
+	private explicit_type ""
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 143618 "badFields"
+	private explicit_type ""
+	init_value " array()"
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 143746 "post"
+	private explicit_type ""
+	init_value " array()"
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 163970 "__construct"
+	public explicit_return_type "void"
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}function ${name}${(}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 164098 "AddBadField"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "fieldname" explicit_type ""
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 164226 "GetBadFields"
+	public explicit_return_type "void"
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 164354 "SetBaseObject"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "base" explicit_type ""
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 164482 "GetBaseObject"
+	public explicit_return_type "void"
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 164610 "OnLoad"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "postObj" explicit_type ""
+	    defaultvalue "null"
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 164738 "DisableXssClean"
+	public explicit_return_type "void"
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 164866 "EnableXssClean"
+	public explicit_return_type "void"
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 164994 "RepostFields"
+	public explicit_return_type "void"
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 165122 "__get"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "var" explicit_type ""
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 165250 "IsSubmit"
+	public explicit_return_type "void"
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}
+{
+  ${body}}
+"
+	
+	
+	comment "
+	@deprecated
+"
+      end
+
+      operation 165378 "CleanXSS"
+	private explicit_return_type "void"
+	nparams 1
+	  param inout name "val" explicit_type ""
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+    end
+
+    class 132610 "ImagecachePlugin"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl "${comment}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      attribute 143874 "_args"
+	private explicit_type ""
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 144002 "_key"
+	private explicit_type ""
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 144130 "baseObj"
+	private explicit_type ""
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 165506 "__construct"
+	package explicit_return_type "void"
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}function ${name}${(}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 165634 "resizeImage"
+	private explicit_return_type "void"
+	nparams 6
+	  param inout name "path" explicit_type ""
+	  param inout name "newpath" explicit_type ""
+	  param inout name "newx" explicit_type ""
+	  param inout name "newy" explicit_type ""
+	  param inout name "forcewidth" explicit_type ""
+	    defaultvalue "false"
+	  param inout name "forceheight" explicit_type ""
+	    defaultvalue "false"
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}, ${p1}${v1}, ${p2}${v2}, ${p3}${v3}, ${p4}${v4}, ${p5}${v5}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 165762 "getImageFromCache"
+	package explicit_return_type "void"
+	nparams 3
+	  param inout name "filename" explicit_type ""
+	  param inout name "sizeX" explicit_type ""
+	  param inout name "sizeY" explicit_type ""
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}, ${p1}${v1}, ${p2}${v2}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 165890 "createImageCache"
+	package explicit_return_type "void"
+	nparams 3
+	  param inout name "filename" explicit_type ""
+	  param inout name "sizeX" explicit_type ""
+	  param inout name "sizeY" explicit_type ""
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}, ${p1}${v1}, ${p2}${v2}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 166018 "SetBaseObject"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "base" explicit_type ""
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 166146 "OnLoad"
+	public explicit_return_type "void"
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+    end
+
+    class 132738 "QuerybuilderPlugin"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl "${comment}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      attribute 144258 "query"
+	private explicit_type ""
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 144386 "baseObj"
+	private explicit_type ""
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 144514 "endsWithNonQuery"
+	private explicit_type ""
+	init_value " false"
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 166274 "__construct"
+	package explicit_return_type "void"
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}function ${name}${(}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 166402 "SetBaseObject"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "base" explicit_type ""
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 166530 "OnLoad"
+	public explicit_return_type "void"
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 166658 "AddWhere"
+	public explicit_return_type "void"
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 166786 "AddQueryIf"
+	package explicit_return_type "void"
+	nparams 2
+	  param inout name "var" explicit_type ""
+	  param inout name "query" explicit_type ""
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}, ${p1}${v1}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 166914 "AddQuery"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "query" explicit_type ""
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 167042 "AddAnd"
+	public explicit_return_type "void"
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 167170 "AddOr"
+	public explicit_return_type "void"
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 167298 "ClearQuery"
+	public explicit_return_type "void"
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 167426 "__toString"
+	package explicit_return_type "void"
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+    end
+
+    class 132866 "RelativeDatePlugin"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl "${comment}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      attribute 144642 "baseObj"
+	private explicit_type ""
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 144770 "dateTime"
+	private explicit_type ""
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 144898 "config"
+	private explicit_type ""
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 167554 "__construct"
+	package explicit_return_type "void"
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}function ${name}${(}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 167682 "SetConfig"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "config" explicit_type ""
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 167810 "SetBaseObject"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "base" explicit_type ""
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 167938 "OnLoad"
+	public explicit_return_type "void"
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 168066 "ConvertDate"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "date" explicit_type ""
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 168194 "__toString"
+	package explicit_return_type "void"
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+    end
+
+    class 132994 "UploadPlugin"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl "${comment}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      attribute 145026 "baseObject"
+	private explicit_type ""
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 145154 "config"
+	private explicit_type ""
+	init_value " array()"
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 145282 "return_buffer"
+	private explicit_type ""
+	init_value " array()"
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 168322 "__construct"
+	public explicit_return_type "void"
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}function ${name}${(}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 168450 "SetBaseObject"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "base" explicit_type ""
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 168578 "OnLoad"
+	public explicit_return_type "void"
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 168706 "SetConfig"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "p_conf" explicit_type ""
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 168834 "resizeImage"
+	private explicit_return_type "void"
+	nparams 6
+	  param inout name "path" explicit_type ""
+	  param inout name "newpath" explicit_type ""
+	  param inout name "newx" explicit_type ""
+	  param inout name "newy" explicit_type ""
+	  param inout name "forcewidth" explicit_type ""
+	    defaultvalue "false"
+	  param inout name "forceheight" explicit_type ""
+	    defaultvalue "false"
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}, ${p1}${v1}, ${p2}${v2}, ${p3}${v3}, ${p4}${v4}, ${p5}${v5}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 168962 "DoUpload"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "name" explicit_type ""
+	    defaultvalue "null"
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 169090 "DoUploadArray"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "arr_name" explicit_type ""
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}${)}
+{
+  ${body}}
+"
+	
+	
+      end
+    end
+  end
+end

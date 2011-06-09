@@ -60,8 +60,9 @@ function SputnikShutdownFunction() {
 	}
 }
 
-error_reporting(0);
-set_error_handler("SputnikErrorHandler");
-register_shutdown_function("SputnikShutdownFunction");
+error_reporting(E_ALL ^ E_NOTICE);
+//error_reporting(E_ALL);
+//set_error_handler("SputnikErrorHandler");
+//register_shutdown_function("SputnikShutdownFunction");
 
 ?>

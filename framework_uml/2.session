@@ -1,0 +1,11 @@
+window_sizes 1680 1000 411 1263 792 134
+diagrams
+  active  classdiagram_ref 134530 // Sputnik3.0
+    1263 792 100 4 0 0
+end
+show_stereotypes
+selected class_ref 139650 // Sputnik
+open
+  classview_ref 134914 // sputnik
+end
+end

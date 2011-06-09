@@ -1,0 +1,55 @@
+class ImagecachePlugin
+!!!165506.php!!!	__construct()
+
+       
+!!!165634.php!!!	resizeImage(inout path : , inout newpath : , inout newx : , inout newy : , inout forcewidth :  = false, inout forceheight :  = false)
+
+			if (!extension_loaded('gd') && !extension_loaded('gd2')) 
+		    {
+		        trigger_error("GD is not loaded", E_USER_WARNING);
+		        return false;
+		    }
+		    $im = imagecreatefromjpeg($path) or die ("Nem lehet megnyitani a f�jlt!");
+		    $iwidth = imagesx($im); $iheight = imagesy($im);
+		
+		    if (($iwidth <= $newx) && ($iheight <= $newy)) {
+		        imagejpeg($im, $newpath, 100);
+		        imagedestroy($im);
+		        return;
+		    }
+			
+			$w = round($iwidth * $newx / $iheight);
+			$h = round($iheight * $newy / $iwidth );
+		    $new_width = $newx;
+		    $new_height = $newy;
+		
+		    if (($newy-$h) < ($newx-$w))
+		        $new_width = $w;
+		    else
+		        $new_height = $h;
+		
+		    $ithumb = imagecreatetruecolor($new_width, $new_height);
+		    imagecopyresampled($ithumb, $im, 0, 0, 0, 0, $new_width, $new_height, $iwidth, $iheight);
+		    imagejpeg($ithumb, $newpath, 100);
+		    imagedestroy($ithumb); imagedestroy($im);
+!!!165762.php!!!	getImageFromCache(inout filename : , inout sizeX : , inout sizeY : )
+
+		if (trim($filename) == "") return "";
+		global $config;
+		$cacheFilename = $config["image_cache_dir"]  . "/" . md5($filename . $sizeX . $sizeY) . ".jpg";
+		if (!is_file($cacheFilename)) $returnImage = $this->createImageCache($filename, $sizeX, $sizeY);
+		else $returnImage = $cacheFilename;
+		return $returnImage;
+!!!165890.php!!!	createImageCache(inout filename : , inout sizeX : , inout sizeY : )
+
+		global $config;
+		$cacheFilename = $config["image_cache_dir"] . "/" . md5($filename . $sizeX . $sizeY) . ".jpg";
+		if (is_file($cacheFilename)) return $cacheFilename; // M�r l�tezik, hejj!
+		$this->resizeImage($filename, $cacheFilename, $sizeX, $sizeY);
+		return $cacheFilename;
+!!!166018.php!!!	SetBaseObject(inout base : )
+
+		$this->baseObject =& $base;
+!!!166146.php!!!	OnLoad()
+
+		$this->baseObject->imagecache = $this;

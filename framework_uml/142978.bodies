@@ -1,0 +1,5 @@
+class SimpleTemplate
+!!!202242.php!!!	GetValue(inout value_string : , inout vars : )
+		
+!!!202370.php!!!	ParseBlock(inout block : , inout vars : )
+		

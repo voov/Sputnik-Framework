@@ -1,0 +1,67 @@
+class FormElement
+!!!162306.php!!!	__construct(inout string : , inout formObject : , inout elementName : )
+
+			$this->elementText = $string;
+			$this->formObject = $formObject;
+			$this->elementName = $elementName;
+!!!162434.php!!!	__toString()
+
+			/*echo $this->elementText;*/
+			return $this->elementText;
+!!!162562.php!!!	CheckFieldSize(inout minSize : , inout maxSize :  = 0)
+
+			$bad = false;
+			if (strlen($this->elementText) < $minSize) $bad = true;
+			if (strlen($this->elementText) > $maxSize && $maxSize != 0) $bad = true;
+			
+			if ($bad == true) {
+				$this->formObject->AddBadField($this->elementName);
+				return null;
+			} else
+				return $this->elementText;
+!!!162690.php!!!	CheckFieldAgainstSQL(inout sql : )
+ 
+			$db = $this->formObject->GetBaseObject()->db;
+			$real_sql = preg_replace('/\{var\}/', $this->elementText, $sql);
+			$query = $db->Query($real_sql);
+			
+			if ($query->length() > 0) {
+				$this->formObject->AddBadField($this->elementName);
+				return null;
+			} else
+				return $this->elementText;
+!!!162818.php!!!	CheckField(inout expr : )
+
+			/*echo preg_match("/$expr/", $this->elementText) . " preg_match(\"/$expr/\", $this->elementText)<br />";*/
+			if(preg_match("/$expr/", $this->elementText) == 0) {
+				$this->formObject->AddBadField($this->elementName);
+				return null;
+			} else
+				return $this->elementText;
+!!!162946.php!!!	IsSubmit()
+
+			if (preg_match("/.*submit.*/", strtolower($this->elementName)) && !empty($this->elementText)) {
+				return true;
+			}
+			return false;
+!!!163074.php!!!	CreatePermalink()
+
+
+			$from = array("ö","ü","ó","ő","ú","á","ű","í","é","Ö","Ü","Ó","Ő","Ú","Á","Ű","Í","É");
+			$to   = array("o","u","o","o","u","a","u","i","e","O","U","O","O","U","A","U","I","E");
+			$str = str_replace($from, $to, $this->elementText);
+
+			//$clean = iconv('UTF-8', 'ASCII//TRANSLIT', utf8_encode($str));
+			$clean = preg_replace("/[^a-zA-Z0-9\/_|+ -]/", '', $str);
+			$clean = strtolower(trim($clean, '-'));
+			$clean = preg_replace("/[\/_|+ -]+/", "-", $clean);
+
+			return $clean;
+
+!!!163202.php!!!	GetBoolean()
+
+			if (empty($this->elementText)) return "0";
+			else return $this->elementText;
+!!!163330.php!!!	GetInteger()
+
+			return preg_replace('/[^0-9]+/', '', $this->elementText);

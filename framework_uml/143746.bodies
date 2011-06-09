@@ -1,0 +1,30 @@
+class SessionDefaultAdapter
+!!!205570.php!!!	__construct()
+		// Setup default PHP session
+		
+		session_start();
+		header("Cache-control: private");
+		
+!!!205698.php!!!	Get(inout var : )
+		return $_SESSION[$var];
+!!!205826.php!!!	Set(inout var : , inout value : , inout ttl :  = 0)
+		
+		if (!session_is_registered($var)) {
+			// We don't have the session registered yet
+			session_register($var);
+		}
+
+		if ($value == null) {
+			// Clear the session
+			$this->Clear($var);
+		} else {
+			// Set session
+			$_SESSION[$var] = $value;
+		}
+!!!205954.php!!!	Clear(inout var : )
+		unset($_SESSION[$var]);
+		session_unregister($var);
+!!!206082.php!!!	Is_set(inout var : )
+		return isset($_SESSION[$var]);
+!!!206210.php!!!	GetSessions()
+		return $_SESSION;

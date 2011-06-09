@@ -130,7 +130,6 @@ class DbResult implements Iterator {
             return json_encode($this->GetArray(false));
 	}
 
-
 	/**
 	 * Size of the resultset
 	 * @deprecated since version 3.0 use Length() instead
@@ -164,6 +163,10 @@ class DbResult implements Iterator {
 		return ($this->position == $this->length-1);
 	}
 
+	public function IsPosition($pos) {
+		return (($this->position+1) == $pos);
+	}
+
 	/**
 	 *
 	 * @return <type> 
@@ -185,7 +188,7 @@ class DbResult implements Iterator {
 	 * @return <type> 
 	 */
 	public function IsNth($n) {
-		return ($this->position % $n == 0);
+		return (($this->position + 1) % $n == 0);
 	}
 
 	/**

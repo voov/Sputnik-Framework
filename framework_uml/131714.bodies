@@ -1,0 +1,47 @@
+class AuthPlugin
+!!!159618.php!!!	__construct()
+
+			
+!!!159746.php!!!	SetBaseObject(inout base : )
+
+			$this->baseObject =& $base;
+			//var_dump($this);
+!!!159874.php!!!	OnLoad()
+
+			$this->baseObject->auth_plugin = $this;
+
+!!!160002.php!!!	RunOnEnter()
+
+			if (!$this->CheckUser($this->minimumLevel)) {
+				// Show GateKeeper
+				$this->baseObject->view->display("gatekeeper.html");
+				exit;
+			}			
+!!!160130.php!!!	LoginUser(inout username : $username, inout password : $password)
+
+			global $config; // tal�ljuk meg a $config glob�lis v�ltoz�t
+			$user_table = $config["user_table"];
+			$user_table_username = $config["user_table_username"];
+			$user_table_password = $config["user_table_password"];
+			//echo "SELECT * FROM `$user_table` WHERE `$user_table_username`='$username' AND `$user_table_password`='$password'";
+			$result = $this->baseObject->db->Query("SELECT * FROM `$user_table` WHERE `$user_table_username`='$username' AND `$user_table_password`='$password'");
+			//var_dump($result);
+			if ($result->length() > 0) $this->baseObject->GetSession()->userid = $result->id;
+!!!160258.php!!!	CheckUser(inout minimum_level : $minimum_level, inout inherit : $inherit = true) : bool
+
+			global $config;
+			if ($minimum_level == 0) return true; // a 0.-ik szint alapb�l eneged�lyezett
+			$session = $this->baseObject->GetSession();
+			if (!isset($session->userid)) return false;
+			$user_table = $config["user_table"];
+			$user_table_level = $config["user_table_level"];
+			
+			if ($inherit == true) {
+				$result = $this->baseObject->db->Query("SELECT `$user_table_level` FROM `$user_table` WHERE `id`='$session->userid' AND `$user_table_level` >= '$minimum_level'");
+			}
+			else
+				$result = $this->baseObject->db->Query("SELECT `$user_table_level` FROM `$user_table` WHERE `id`='$session->userid' AND `$user_table_level` = '$minimum_level'");
+			
+
+			if ($result->length() > 0) return true;
+			else return false;

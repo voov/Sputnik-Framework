@@ -1,0 +1,25 @@
+class Helper
+!!!187010.php!!!	GetInstance() : null
+
+		if(self::$instance == null) self::$instance = new Helper();
+		return self::$instance;
+!!!187138.php!!!	GI() : void
+
+		return self::GetInstance();
+!!!187266.php!!!	LoadFunction(inout method : $method, inout args : $args) : bool|mixed
+
+		// First look in Sputnik own helper lib
+		$include = "helpers/$method.php";
+		if(!is_file($include)) $include = "../" . $include; // step back one dir
+
+		if (!function_exists($method) && is_file($include)) {
+			include_once($include);
+			return call_user_func_array($method, $args);
+		}
+		return false;
+!!!187394.php!!!	__callStatic(inout method : <type>, inout args : <type>) : <type>
+
+		return self::GetInstance()->LoadFunction($method, $args);
+!!!187522.php!!!	__call(inout method : , inout args : )
+
+		return $this->LoadFunction($method, $args);

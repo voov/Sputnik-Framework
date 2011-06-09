@@ -8,7 +8,6 @@
  */
 
 require_once "config/config.php";
-require_once "simple_html_dom.php";
 
 class Mailer {
 

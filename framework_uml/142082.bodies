@@ -1,0 +1,20 @@
+class PrintablePlugin
+!!!195202.php!!!	__construct()
+		$this->base = Sputnik::GetRunningInstance();
+		$this->_variables = array();
+		$class_name = get_class($this);
+
+		// set a value in the view based on the class name
+		if(!isset($this->base->view->$class_name)) {
+			$this->base->view->$class_name = $this;
+		}
+!!!195330.php!!!	Render()
+return "";
+!!!195458.php!!!	__toString()
+		echo $this->Render();
+!!!195586.php!!!	SetModuleName(inout name : )
+		$this->name = $name;
+!!!195714.php!!!	set(inout name : , inout value : )
+		$this->_variables[$name] = $value;
+!!!195842.php!!!	get(inout name : )
+		return $this->_variables[$name];

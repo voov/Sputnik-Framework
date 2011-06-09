@@ -1,0 +1,184 @@
+class FormValidator
+!!!184578.php!!!	__construct(inout arr :  = null, inout use_regex :  = false)
+
+		if ($arr == null) $arr = $_POST;
+		$this->arr = $arr;
+		$this->use_regex = $use_regex;
+		FormValidator::$currentInstance = $this;
+!!!184706.php!!!	ArrayMerge(inout arr : $arr) : void
+
+        $this->arr = array_merge($this->arr, $arr);
+!!!184834.php!!!	Validate()
+
+		$is_valid = true;
+		// Run the Pre-validator filter chain
+		if (isset($this->filter_chain["pre"])) {
+			foreach($this->filter_chain["pre"] as $field => $pre_filter) {
+				$this->arr[$field] = $this->_RunAction($field, $pre_filter);
+			}
+		}
+		// Run the validation rules
+		foreach($this->rules as $field_name=>$rule_fields) {
+			foreach($rule_fields as $expr) {
+				if($this->_RunAction($field_name, $expr) == false) {
+					// The validation failed on the field
+					$is_valid = false;
+					$this->num_of_errors += 1;
+					$this->has_errors = true;
+                    if (isset($this->titles[$field_name])) $field_trans = $this->titles[$field_name];
+                    else $field_trans = $field_name;
+					$error_message = sprintf($this->error_strings[$this->currentRunningFunction], $field_trans);
+					$this->error_list[$field_name] = $error_message;
+					$this->error_message .= sprintf($this->error_wrap, $error_message);
+				}
+			}
+		}
+
+		// Run the Post-validator filter chain
+		if (isset($this->filter_chain["post"])) {
+			foreach($this->filter_chain["post"] as $field => $post_filter) {
+				$this->arr[$field] = $this->_RunAction($field, $post_filter);
+			}
+		}
+		return $is_valid;
+!!!184962.php!!!	AddFilter(inout position : <type> = "pre", inout field : <type> = "*", inout expr : <type> = "trim")
+
+		$fields = $this->_ParseFields($field);
+		foreach($fields as $field_item)
+			$this->filter_chain[$position][$field_item] = $expr;
+
+		return $this;
+!!!185090.php!!!	AddRule(inout field : <type>, inout expr : <type>, inout title :  = "")
+
+		$fields = $this->_ParseFields($field);
+        if($title != "")
+            $this->titles[$field] = $title;
+		if(!is_array($expr)) {
+			$expr_list = explode(";", $expr);
+			foreach($expr_list as $expr_item) {
+				foreach($fields as $field_item)
+					$this->rules[$field_item][] = $expr_item;
+			}
+		} else {
+			foreach($fields as $field_item)
+				$this->rules[$field_item][] = $expr;
+		}
+		// let chaining work
+		return $this;
+!!!185218.php!!!	__call(inout method : , inout args : )
+
+		// Dynamically load validators
+		include_once "validators/defaults.php";
+
+		// check if the running instance have this function
+		if(method_exists(Sputnik::GetRunningInstance(), $method)) {
+			return call_user_func_array(array(Sputnik::GetRunningInstance(), $method), $args);
+		}
+		// check if we already have the function
+		if (function_exists($method))
+			return call_user_func_array($method, $args);
+		else {
+			// we still don't have the needed function, no panic!
+			if (is_file("validators/" . $method . ".php")) {
+				include_once "validators/" . $method . ".php";
+				if (function_exists($method)) return call_user_func_array($method, $args);
+			}
+		}
+		trigger_error("No validator was found for '$method'", E_USER_WARNING);
+		return false; // we have to return something
+!!!185346.php!!!	SetErrorString(inout func : <type>, inout err_string : <type>, inout force :  = true)
+
+		if($force == false && array_key_exists($func, $this->error_strings)) return;
+		$this->error_strings[$func] = $err_string;
+!!!185474.php!!!	SetMessage(inout func : <type>, inout err_string : <type>)
+
+		if (FormValidator::$currentInstance != null)
+			FormValidator::$currentInstance->SetErrorString($func, $err_string, false);
+!!!185602.php!!!	SetErrorWrap(inout wrap_str : <type>)
+
+		$this->error_wrap = $wrap_str;
+!!!185730.php!!!	SetTitles(inout arr : $arr) : void
+
+        $this->titles = array_merge($this->titles, $arr);
+!!!185858.php!!!	GetError(inout field : <type>) : <type>
+
+		if (isset($this->error_list[$field])) return $this->error_list[$field];
+		return false;
+!!!185986.php!!!	IsValid() : <type>
+
+		if($this->has_errors) return false;
+		return true;
+!!!186114.php!!!	GetErrorMessage() : <type>
+
+		return $this->error_message;
+!!!186242.php!!!	GetArray() : <type>
+
+		return $this->arr;
+!!!186370.php!!!	_ParseFields(inout field_string : <type>)
+
+		$field_buffer = array();
+		$wildcards = array("*" => "(?:.*?)", "?" => "(?:.{1})", "+" => "(?:.+?)");
+		//$regex_wildcard = array("(?:.*?)", "(?:.{1})", "(?:.+?)");
+		// we don't want to use regular expressions by default
+		$field_final = $field_string;
+		if ($this->use_regex == false)
+			$field_final = strtr($field_string, $wildcards);
+        $matches = 0;
+		foreach($this->arr as $key=>$value) {
+			if(($match = preg_match("/^$field_final$/i", $key))) $field_buffer[] = $key;
+            $matches += $match;
+		}
+        if($matches == 0) $field_buffer[] = $field_string;
+		return $field_buffer;
+!!!186498.php!!!	_RunAction(inout field : <type>, inout expr : <type>) : <type>
+
+        if (!isset($this->arr[$field])) {
+            // set the field to empty value, so the error string could be
+            // printed out
+            $this->arr[$field] = "";
+        }
+		$param_array = array($this->arr[$field]);
+		if (is_array($expr)) {
+			// Easy .. we have an array we can call
+			$func_array = array_slice($expr, 0, 2);
+			$this->currentRunningFunction = $func_array[1];
+			if (count($expr) > 2) $param_array = array_merge($param_array,array_slice($expr, 2));
+			return call_user_func_array($func_array, $param_array);
+		}
+		// Parse the expression
+		// check for parameters
+		if(($ps_index = strpos($expr, "[")) !== false) {
+			$pe_index = strpos($expr, "]", $ps_index);
+			$func_name = substr($expr, 0, $ps_index);
+			$this->currentRunningFunction = $func_name;
+			$parameter_string = substr($expr, $ps_index+1, $pe_index-$ps_index-1);
+			$param_array = array_merge($param_array, explode(",", $parameter_string));
+		} else {
+			$func_name = $expr;
+			$this->currentRunningFunction = $func_name;
+		}
+		if (function_exists($func_name)) {
+			// No need to dynamically load function
+			return call_user_func_array($func_name, $param_array);
+		} else {
+			// Load function from our own library
+			return call_user_func_array(array($this, $func_name), $param_array);
+		}
+
+!!!186626.php!!!	RepostAll()
+
+		$instance = Sputnik::GetRunningInstance();
+		$instance->session->SetFlashdata("repost_validator", serialize($_POST));
+!!!186754.php!!!	RenderRepost(inout arr_name :  = "post")
+
+		$instance = Sputnik::GetRunningInstance();
+		if (!$instance->session->GetFlashdata("repost_validator")) return;
+		$repost_data = unserialize($instance->session->GetFlashdata("repost_validator"));
+        $instance->view->{$arr_name} = $repost_data;
+!!!186882.php!!!	required(inout str : )
+
+		if ($str == "") {
+			$this->SetErrorString("required", "The field %s is required!", false);
+			return false;
+		}
+		return true;

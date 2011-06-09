@@ -1,37 +1,41 @@
 <?php
 
-/**
- * A basic DB connection class returning
- * resultset objects following an iterator pattern
- * @author d11wtq
- */
 
+require_once "DbAdapter.php";
 require_once "DbResult.php";
 require_once "DbRow.php";
 require_once 'QueryBuilder.php';
 require_once "config/config.php";
 
 class Db {
+
+	private $db_adapter = null;
 	/**
 	 * The database connection resource
 	 * @var resource db
 	 */
 	private $conn;
+
 	/**
 	 * The database name itself
 	 * @var string database
 	 */
 	private $db;
+
 	/**
 	 * An instance of a singleton
 	 * @var object DB
 	 */
-	private static $instance = null;
+	private static $instance = false;
 
+
+	private $disable = false;
 	private $is_prepared = false;
 	private $prep_vars = array();
 
 	private $last_query = "";
+
+	private $count_query = 0;
 
 	/**
 	 * Constructor
@@ -40,9 +44,14 @@ class Db {
 	 * @param string password
 	 * @param string db name
 	 */
-	public function __construct($host, $user, $pass, $db=false) {
-		$this->ConnectTo($host, $user, $pass);
-		if ($this->conn && $db) $this->SelectDatabase($db);
+	public function __construct($host, $user, $pass, $db=false, $db_adapter=null) {
+		global $config;
+		if(!$db_adapter)
+			$this->db_adapter = DbAdapter::factory($config["db_adapter"]);
+		else
+			$this->db_adapter = $db_adapter;
+		$this->conn = $this->db_adapter->Connect($host, $user, $pass);
+		if ($this->conn && $db) $this->db_adapter->SwitchDb($db);
 	}
 
 	public function  __set($name,  $value) {
@@ -52,54 +61,32 @@ class Db {
 
 
 	public function __destruct() {
-		$this->Disconnect();
+		$this->db_adapter->Disconnect();
+	}
+
+	public function Disable($set_disable=true) {
+		$this->disable = $set_disable;
 	}
 
 	/**
-	 * Used for retreiving an instance of a singleton if wanted
-	 * @deprecated since version 3.0 in favor for GetInstance
-	 * @return object DB
+	 * @static
+	 * @return null|object
 	 */
-	/*public static function getInstance($host=null, $user=null, $pass=null, $db=null) {
-		return Db::GetInstance($host, $user, $pass, $db);
-	}*/
-
-	/**
-	 * Used for retreiving an instance of a singleton if wanted
-	 * @global <type> $config
-	 * @param <type> $host
-	 * @param <type> $user
-	 * @param <type> $pass
-	 * @param <type> $db
-	 * @return <type> 
-	 */
-	public static function GetInstance($host=null, $user=null, $pass=null, $db=null) {
+	public static function GetInstance() {
 		global $config;
-		if (self::$instance === null) {
-			if ($host == null)
+		if (self::$instance === false) {
 				self::$instance = new Db($config["db_connect"], $config["db_username"], $config["db_password"], $config["db_dbname"]);
-			else
-				self::$instance = new Db($host, $user, $pass, $db);
 		}
 		return self::$instance;
 	}
 
-	/**
-	 * Connect to database (stored internally)
-	 * @param string server
-	 * @param string username
-	 * @param string password
-	 */
-	public function ConnectTo($host, $user, $pass) {
-		$this->conn = mysql_connect($host, $user, $pass) or die("Csatlakozási hiba: " . mysql_error());
-		//$this->Switch_Utf8();
-	}
+
 	/**
 	 * Change databases
 	 * @param string database
 	 */
 	public function SelectDatabase($db) {
-		@mysql_select_db($db, $this->conn);
+		$this->db_adapter->SwitchDb($db);
 		$this->db = $db;
 	}
 
@@ -108,7 +95,7 @@ class Db {
 	 * @param string database
 	 */
 	public function Switch_Utf8() {
-		mysql_query("SET CHARACTER SET utf8");
+		$this->db_adapter->Query("SET CHARACTER SET utf8");
 	}
 
 	/**
@@ -118,6 +105,7 @@ class Db {
 	public function GetDbName() {
 		return $this->db;
 	}
+	
 	/**
 	 * Check if the connection is successful
 	 * @return boolean
@@ -125,19 +113,7 @@ class Db {
 	public function IsConnected() {
 		return is_resource($this->conn);
 	}
-	/**
-	 * Close the connection
-	 */
-	public function Disconnect() {
-		@mysql_close($this->conn);
-	}
-	/**
-	 * Fetch the last error
-	 * @return string error
-	 */
-	public function GetError() {
-		return mysql_error($this->conn);
-	}
+
 
 	/**
 	 *
@@ -148,7 +124,7 @@ class Db {
 		//print_r($groups);
 		$val = $this->prep_vars[$groups[1]];
 		if (get_magic_quotes_gpc()) $val = stripslashes($val);
-		$val = mysql_real_escape_string($val);
+		$val = $this->db_adapter->EscapeString($val);
 		if (empty($val)) $val = "";
 		return "'". $val ."'";
 	}
@@ -167,17 +143,20 @@ class Db {
 	}
 
 	/**
-	 * Run a query against the database and return
-	 * a resultset iterator object
+	 * Run a query against the database and return a DbResult object
 	 * @return object DbResult
 	 */
 	public function Query($query, $send_in_utf8 = false) {
+		global $config;
 		if($query instanceof QueryBuilder)
 			$query = $query->Render();
 		
 		$uselimit = false;
-		// Engedélyezzük az SQL_CALC_FOUND_ROWS -t ha van benne LIMIT rész
+
+		
 		$tokens = explode(' ', strtolower($query));
+		$query_can_cache = ($tokens[0] == "select" && in_array("rand", $tokens)) ? true : false; // only cache select queries
+		
 		if (in_array("limit", $tokens) && $tokens[0] == "select") {
 			$query = str_replace("select", "select sql_calc_found_rows", strtolower($query));
 			$uselimit = true;
@@ -189,9 +168,19 @@ class Db {
 		
 		if ($this->is_prepared) $query = $this->PrepareQuery($query);
 		$this->last_query = $query;
-		$result = mysql_query($query, $this->conn) or
-			   trigger_error("SQL Hiba: " . mysql_error() . "<br /><b>" . $query . "</b>", E_USER_ERROR);
 
+		// check query cache
+		if($config["db_is_cached"] && $query_can_cache) {
+			$cache = Cache::Factory($config["db_cache_adapter"]);
+			if(($val = $cache->Get(md5($query))) !== false) {
+				return $val; // return cached DbResult
+			}
+		}
+
+		$result = $this->db_adapter->Query($query, $this->conn) or
+			   trigger_error("SQL Hiba: " . $this->db_adapter->GetError() . "<br /><b>" . $query . "</b>", E_USER_ERROR);
+
+		$this->count_query++;
 		if ($this->is_prepared) {
 			$this->prep_vars = array();
 			$this->is_prepared = false;
@@ -199,11 +188,22 @@ class Db {
 		if (count($tokens) > 0) {
 			if (!in_array(trim($tokens[0]), array('update', 'delete', 'insert', 'replace'))) {
 				//$insert = true;
-				return new DbResult($result, $this->conn, $insert, $uselimit);
+				$result = new DbResult($result, $this->conn, $insert, $uselimit);
+				if($config["db_is_cached"] && $query_can_cache) {
+					// $cache is already defined
+					$cache->Set(md5($query), $result);
+				}
+				return $result;
 			} elseif(trim($tokens[0]) == "insert")
-				return mysql_insert_id($this->conn);
+				if($config["db_is_cached"] && $query_can_cache) {
+					$cache->Clean();
+				}
+				return $this->db_adapter->GetInsertedId();
 		}
-		return mysql_affected_rows($this->conn);
+		if($config["db_is_cached"] && $query_can_cache) {
+			$cache->Clean();
+		}
+		return $this->db_adapter->GetAffectedRows();
 	}
 
 
@@ -212,6 +212,10 @@ class Db {
 	 */
 	public function DumpLastQuery() {
 		echo $this->last_query;
+	}
+
+	public function GetQueryCount() {
+		return $this->count_query;
 	}
 
 	/**
@@ -226,7 +230,7 @@ class Db {
 		$count = 0;
 		foreach($row as $key => $field) {
 			if (get_magic_quotes_gpc()) $value = stripslashes($value);
-			$value = mysql_real_escape_string($value);
+			$value = $this->db_adapter->EscapeString($value);
 			if ($count > 0) {
 				$field_list .= ", `$key`";
 				$value_list .= ", '$field'";
@@ -254,7 +258,7 @@ class Db {
 		$count = 0;
 		foreach($row as $key => $field) {
 			if (get_magic_quotes_gpc()) $value = stripslashes($value);
-			$value = mysql_real_escape_string($value);
+			$value = $this->db_adapter->EscapeString($value);
 			if ($count > 0) {
 				$field_list .= ", `$key`";
 				$value_list .= ", '$field'";
@@ -295,11 +299,11 @@ class Db {
 			$where = $id;
 
 		if ($where != null) {
-			// Adtunk meg teljes Where t�bl�t!
+
 			$w_count = 0;
 			$where_list = "";
 			foreach($where as $key => $value) {
-				$value = mysql_real_escape_string($value);
+				$value = $this->db_adapter->EscapeString($value);
 				if ($w_count > 0) {
 					$where_list .= "AND `$key`='$value'";
 				} else {
@@ -333,7 +337,7 @@ class Db {
 			$row = new DbRow(array("id" => $row));
 
 		foreach($row as $key => $value) {
-			$value = mysql_escape_string($value);
+			$value = $this->db_adapter->EscapeString($value);
 			if ($count > 0) {
 				$set_list .= " $op `$key`='$value'";
 			} else {
@@ -352,15 +356,7 @@ class Db {
 	 * @return string info
 	 */
 	public function ServerInfo() {
-		return mysql_get_server_info($this->conn);
-	}
-
-	/**
-	 * Get details about the current system status
-	 * @return array details
-	 */
-	public function Status() {
-		return explode('  ', mysql_stat($this->conn));
+		return $this->db_adapter->Info();
 	}
 
 	/**
@@ -369,7 +365,7 @@ class Db {
 	 * @return <type>
 	 */
 	public function Escape($string) {
-		return mysql_real_escape_string($string, $this->conn);
+		return $this->db_adapter->EscapeString($string, $this->conn);
 	}
 }
 ?>

@@ -1,0 +1,69 @@
+class Controller
+!!!175618.php!!!	__construct()
+
+		
+		$this->view = new Renderable();
+		$this->db = Db::getInstance();
+		$this->session = Sessions::getInstance();
+		$this->uri_helper = new URIHelper();
+!!!175746.php!!!	GetURIPart(inout index : )
+
+		return $this->uri_helper->uri_array[$this->uri_helper->path_length+$index];
+!!!175874.php!!!	GetRequest()
+
+		return Request::getInstance();
+!!!176002.php!!!	LoadPlugin(inout name : $name, inout args : $args = array()) : plugin
+
+		return PluginLoader::LoadPlugin($name, $this, $args);
+!!!176130.php!!!	GetSession() : session
+
+		return Sessions::getInstance();
+!!!176258.php!!!	Forward(inout method : $method = "", inout action : $action = "main")
+
+		
+        global $config;
+		$parameters_index = 1; //calc in class
+		$action_buffer = $this->GetURIPart($parameters_index);
+		if (method_exists($this, $action_buffer)) {
+			$action = $action_buffer;
+			$parameters_index+=1;
+		}
+
+		if (!method_exists($this, $action)) {
+			// error 404
+			trigger_error("There is no '$action' in '$this'!", E_USER_ERROR);
+		}
+
+		$classReflect = new ReflectionClass($this);
+		$classActionMethod = $classReflect->getMethod($action);
+
+		if ($classActionMethod->isPublic() != true)
+			trigger_error("'$action' is not public!", E_USER_ERROR);
+		
+		$parameters = array();
+		if ($classActionMethod->getNumberOfParameters() > 0) {
+			$actionParameters = $classActionMethod->getParameters();
+			$paramCounter = 0;
+			
+			foreach($actionParameters as $param) {
+				$val = $this->GetURIPart($paramCounter+$parameters_index);
+				$parameters[] = $val;
+				$paramCounter++;
+			}
+		}
+
+
+		// Call the _autorun method if it exists
+		if (method_exists($this, "_autorun"))
+			$this->_autorun();
+
+        if(method_exists($this, "_authenticate")) {
+            // authentikáció szükséges
+            $ret = $this->_authenticate($_POST[$config["form_username"]], $_POST[$config["form_password"]], $action);
+            if($ret == false) {
+                //$this->Forward($method, $action); // addig ne engedjük tovább, amíg nem jelentkezett be
+                return;
+            }
+        }
+		
+		call_user_func_array(array($this, $action), $parameters);

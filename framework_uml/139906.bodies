@@ -1,0 +1,42 @@
+class DbRow
+!!!182530.php!!!	__construct(inout arr :  = null)
+
+		if ($arr != null) {
+			// megadtunk neki t�mb�t
+			foreach($arr as $key=>$value) {
+				$this->fields[$key] = $value;
+			}
+		}
+!!!182658.php!!!	__get(inout n : )
+
+		if (isset($this->fields[$n])) {
+			return $this->fields[$n];
+		}
+!!!182786.php!!!	__set(inout n : , inout value : )
+
+		$this->fields[$n] = $value;
+!!!182914.php!!!	SetFields(inout fields : )
+
+		$this->fields = $fields;
+!!!183042.php!!!	GetFields()
+
+		return $this->fields;
+!!!183170.php!!!	rewind()
+
+		reset($this->fields);
+!!!183298.php!!!	current()
+
+		$row = current($this->fields);
+		return $row;
+!!!183426.php!!!	key()
+
+		$key = key($this->fields);
+		return $key;
+!!!183554.php!!!	next()
+
+		$next = next($this->fields);
+		return $next;
+!!!183682.php!!!	valid()
+
+		$var = $this->current() !== false;
+		return $var;

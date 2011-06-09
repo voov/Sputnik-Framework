@@ -1,0 +1,18 @@
+class TableJoin
+!!!195970.php!!!	__construct(inout tbl_name : )
+		$this->tbl_name = $tbl_name;
+		return $this;
+!!!196098.php!!!	Left()
+		$this->joins[] = "LEFT";
+		return $this;
+!!!196226.php!!!	Right()
+		$this->joins[] = "RIGHT";
+		return $this;
+!!!196354.php!!!	InnerJoin(inout tbl_name : , inout on : )
+		$this->joins[] = "INNER JOIN $tbl_name ON $on";
+		return $this;
+!!!196482.php!!!	OuterJoin(inout tbl_name : , inout on : )
+		$this->joins[] = "OUTER JOIN $tbl_name ON $on";
+		return $this;
+!!!196610.php!!!	__toString()
+		return "$this->tbl_name " . implode(" ", $this->joins);

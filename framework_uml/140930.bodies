@@ -1,0 +1,109 @@
+class HtmlBuilder
+!!!188162.php!!!	__construct(inout elem_name :  = "")
+
+		if($elem_name != "") $this->elem($elem_name);
+		$this->self_closers = array('input','img','hr','br','meta','link');
+!!!188290.php!!!	HtmlBuilder(inout elem_name : )
+
+		return new HtmlBuilder($elem_name);
+!!!188418.php!!!	elem(inout type : , inout set_value :  = "")
+
+		$this->clear();
+		$this->type = strtolower($type);
+		$this->set_value = $set_value;
+
+		return $this;
+!!!188546.php!!!	get(inout attribute : )
+
+		return $this->attributes[$attribute];
+!!!188674.php!!!	attr(inout attribute : , inout value :  = '')
+
+		if(!is_array($attribute)) {
+			$this->attributes[$attribute] = $value;
+		}
+		else {
+			$this->attributes = array_merge($this->attributes,$attribute);
+		}
+
+		return $this;
+!!!188802.php!!!	value(inout val : , inout set_value :  = "")
+
+		if ($this->type == "input" || $this->type == "option")
+			$this->attr("value", $val);
+		else
+			$this->innerHTML = $val;
+		$this->set_value = $set_value;
+		return $this;
+!!!188930.php!!!	disabled(inout disabled :  = true)
+
+		if ($disabled == true) $this->attr("disabled", "disabled");
+		else $this->remove("disabled");
+		return $this;
+!!!189058.php!!!	html(inout text : )
+
+		return $this->innerHTML($text);
+!!!189186.php!!!	innerHTML(inout text : )
+
+		$this->innerHTML = $text;
+		return $this;
+!!!189314.php!!!	__call(inout method : , inout args : )
+
+		if (!method_exists($this, $method)) {
+			$this->attr($method, $args[0]);
+			return $this;
+		}
+		return false;
+!!!189442.php!!!	remove(inout att : )
+
+		if(isset($this->attributes[$att])) {
+			unset($this->attributes[$att]);
+		}
+!!!189570.php!!!	clear()
+
+		$this->attributes = array();
+!!!189698.php!!!	inject(inout object : )
+
+		if(@get_class($object) == __class__) {
+			$this->attributes['text'].= $object->build();
+		}
+!!!189826.php!!!	build()
+
+		//start
+		$build = '<'.$this->type;
+
+		if (empty($this->innerHTML)) $this->innerHTML = $this->attributes['text'];
+
+		// check for selected values
+		if(!is_array($this->set_value)) $this->set_value = array($this->set_value);
+		foreach($this->set_value as $set_value) {
+			if(in_array($set_value, $this->attributes)) {
+				if ($this->type == "option") $this->attr("selected", "selected");
+				if ($this->type == "input") $this->attr("checked", "checked");
+			}
+		}
+
+		//add attributes
+		if(count($this->attributes)) {
+			foreach($this->attributes as $key=>$value) {
+				if($key != 'text') {
+					$build.= ' '.$key.'="'.$value.'"';
+				}
+			}
+		}
+
+		//closing
+		if(!in_array($this->type,$this->self_closers)) {
+			$build.= '>'. $this->innerHTML .'</'.$this->type.'>';
+		}
+		else {
+			$build.= ' />' . $this->innerHTML;
+		}
+
+		//return it
+		return $build;
+!!!189954.php!!!	render()
+
+		echo $this->build();
+!!!190082.php!!!	__toString()
+
+		return $this->build();

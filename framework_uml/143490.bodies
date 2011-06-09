@@ -1,0 +1,11 @@
+class UserAgent
+!!!204546.php!!!	__construct()
+
+		$this->user_string = $_SERVER["HTTP_USER_AGENT"];
+		$this->data = array();
+!!!204674.php!!!	GetData(inout data_name : , inout subt_array : )
+
+		foreach($subt_array as $subt_key => $subt) {
+			if (strpos($this->user_string, $subt_key) === TRUE)
+				$this->data[$data_name] = $subt;
+		}

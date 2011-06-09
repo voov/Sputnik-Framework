@@ -1,0 +1,20 @@
+class DbMySQLAdapter
+!!!204802.php!!!	Info()
+
+		// TODO: Implement Info() method.
+!!!204930.php!!!	EscapeString(inout string : )
+
+		// TODO: Implement EscapeString() method.
+		return mysql_real_escape_string($string);
+!!!205058.php!!!	Query(inout query_string : )
+
+		// TODO: Implement Query() method.
+!!!205186.php!!!	SwitchDb(inout db : )
+
+		// TODO: Implement SwitchDb() method.
+!!!205314.php!!!	Disconnect()
+
+		// TODO: Implement Disconnect() method.
+!!!205442.php!!!	Connect(inout server : , inout username : , inout password : )
+
+		return mysql_connect($server, $username, $password);

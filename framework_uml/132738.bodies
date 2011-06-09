@@ -1,0 +1,52 @@
+class QuerybuilderPlugin
+!!!166274.php!!!	__construct()
+
+		$this->query = array();
+!!!166402.php!!!	SetBaseObject(inout base : )
+
+		$this->baseObject =& $base;
+!!!166530.php!!!	OnLoad()
+
+		$this->query = array();
+		$this->baseObject->querybuilder = $this;
+!!!166658.php!!!	AddWhere()
+
+		if (count($this->query) != 0) return $this;
+		$this->query[] = "WHERE";
+		return $this;
+!!!166786.php!!!	AddQueryIf(inout var : , inout query : )
+
+		if (isset($var) && $var != "") {
+			return $this->AddQuery($query);
+		}
+!!!166914.php!!!	AddQuery(inout query : )
+
+	   $this->query[] = $query;
+	   $this->endsWithNonQuery = false;
+	   return $this;
+!!!167042.php!!!	AddAnd()
+
+		if (count($this->query) < 2 || $this->endsWithNonQuery == true) return $this;
+		$this->endsWithNonQuery = true;
+		$this->query[] = "AND";
+		return $this;
+!!!167170.php!!!	AddOr()
+
+		if (count($this->query) < 2 || $this->endsWithNonQuery == true) return $this;
+		$this->endsWithNonQuery = true;
+		$this->query[] = "OR";
+		return $this;
+!!!167298.php!!!	ClearQuery()
+
+		$this->query = array();
+!!!167426.php!!!	__toString()
+
+	    //print_r($this->query);
+		if($this->endsWithNonQuery == true) {
+			$this->query = array_slice($this->query, 0, -1);
+			$this->endsWithNonQuery = false;
+		}
+		
+		if ($this->query[0] == "WHERE" && count($this->query) == 1) return "";
+		$buffer = implode(" ", $this->query);
+		return $buffer;

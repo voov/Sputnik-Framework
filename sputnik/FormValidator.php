@@ -63,7 +63,7 @@ class FormValidator {
 					$this->has_errors = true;
                     if (isset($this->titles[$field_name])) $field_trans = $this->titles[$field_name];
                     else $field_trans = $field_name;
-					$error_message = sprintf($this->error_strings[$this->currentRunningFunction], $field_trans);
+					$error_message = Localization::_($this->error_strings[$this->currentRunningFunction], $field_trans);
 					$this->error_list[$field_name] = $error_message;
 					$this->error_message .= sprintf($this->error_wrap, $error_message);
 				}
@@ -297,7 +297,7 @@ class FormValidator {
 
 	public function required($str) {
 		if ($str == "") {
-			$this->SetErrorString("required", "The field %s is required!", false);
+			$this->SetErrorString("required", "The field '<b>%s</b>' is required!", false);
 			return false;
 		}
 		return true;

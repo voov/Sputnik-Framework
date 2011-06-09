@@ -1,0 +1,61 @@
+class Sessions
+!!!200834.php!!!	__construct()
+
+		global $config;
+		require_once "session_adapters/" . $config["session_adapter"] . ".php";
+		
+		$this->session_adapter = new $config["session_adapter"]();
+		//error_log(print_r($_SESSION, true));
+		// clear all flash data!
+		$this->ClearFlashdata();
+		$this->MarkFlashdata();
+!!!200962.php!!!	ClearFlashdata()
+
+		foreach($this->session_adapter->GetSessions() as $session_key=>$session_value) {
+			if(strpos($session_key, "!_flash:") !== false) $this->session_adapter->Clear($session_key);
+		}
+!!!201090.php!!!	MarkFlashdata()
+
+		foreach($this->session_adapter->GetSessions() as $session_key=>$session_value) {
+			if(preg_match('/^_flash:(.+)/', $session_key, $regs)) {
+				$value = $this->session_adapter->Get($session_key);
+				$this->session_adapter->Clear($session_key);
+				$this->session_adapter->Set("!_flash:" . $regs[1], $value);
+			}
+		}
+!!!201218.php!!!	__get(inout var : $var)
+
+		$value = $this->session_adapter->Get($var);
+		if ($value != null)
+			return $value;
+		else
+			return false;
+!!!201346.php!!!	__set(inout var : $var, inout val : $val)
+
+		$this->session_adapter->Set($var, $val);
+!!!201474.php!!!	__isset(inout var : $var) : bool
+
+		return $this->session_adapter->Is_set($var);
+!!!201602.php!!!	ClearSession(inout name : )
+
+		$this->session_adapter->Clear($name);
+!!!201730.php!!!	SetFlashdata(inout var : , inout value : )
+
+		$this->session_adapter->Set("_flash:" . $var, $value);
+!!!201858.php!!!	GetFlashdata(inout var : )
+
+		$value = $this->session_adapter->Get("!_flash:" . $var);
+		if (!empty($value)) {
+			return $value;
+		} else {
+			return false;
+		}
+!!!201986.php!!!	GetSessions()
+
+        return $this->session_adapter->GetSessions();
+!!!202114.php!!!	getInstance()
+
+		if (!Sessions::$instance) {
+			Sessions::$instance = new Sessions;
+		}
+		return Sessions::$instance;

@@ -1,0 +1,104 @@
+format 76
+"helpers" // sputnik::sputnik::helpers
+  revision 1
+  modified_by 2 "user"
+  // class settings
+  //class diagram settings
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  //use case diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default class_drawing_mode default shadow default show_stereotype_properties default
+  //sequence diagram settings
+  show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
+  //collaboration diagram settings
+  show_full_operations_definition default show_hierarchical_rank default write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+  //object diagram settings
+   write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+  //component diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  //deployment diagram settings
+  package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  //state diagram settings
+  package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  //activity diagram settings
+  package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+  show_infonote default drawing_language default show_stereotype_properties default
+  
+  deploymentview 135298 "helpers"
+    //deployment diagram settings
+    package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+    draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+    artifact 142850 "array_nsearch"
+      stereotype "source"
+      php_src "<?php
+
+function array_nsearch($needle, array $haystack) {
+	$it = new IteratorIterator(new ArrayIterator($haystack));
+	foreach($it as $key => $val) {
+		if(strcasecmp($val,$needle) === 0) {
+			return $key;
+		}
+	}
+	return false;
+}
+
+
+?>"
+      associated_classes
+      end
+    end
+
+    artifact 142978 "is_utf8"
+      stereotype "source"
+      php_src "<?php
+
+
+function is_utf8($str) {
+	$c=0;
+	$b=0;
+	$bits=0;
+	$len=strlen($str);
+	for($i=0; $i<$len; $i++) {
+		$c=ord($str[$i]);
+		if($c > 128) {
+			if(($c >= 254)) return false;
+			elseif($c >= 252) $bits=6;
+			elseif($c >= 248) $bits=5;
+			elseif($c >= 240) $bits=4;
+			elseif($c >= 224) $bits=3;
+			elseif($c >= 192) $bits=2;
+			else return false;
+			if(($i+$bits) > $len) return false;
+			while($bits > 1) {
+				$i++;
+				$b=ord($str[$i]);
+				if($b < 128 || $b > 191) return false;
+				$bits--;
+			}
+		}
+	}
+	return true;
+}
+
+?>"
+      associated_classes
+      end
+    end
+
+    artifact 143106 "log_debug"
+      stereotype "source"
+      php_src "<?php
+
+function log_debug($str) {
+	global $config;
+	
+}
+
+?>"
+      associated_classes
+      end
+    end
+  end
+end

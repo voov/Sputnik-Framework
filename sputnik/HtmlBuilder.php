@@ -1,4 +1,4 @@
-<?
+<?php
 /* creates an html element, like in js */
 class HtmlBuilder {
 	/* vars */

@@ -1,0 +1,26 @@
+class RelativeDatePlugin
+!!!167554.php!!!	__construct()
+		$config = array(
+			"MINUTE_TO" => "perc múlva",
+			"MINUTE_AGO" => "perce",
+			"HOUR_TO" => "óra múlva",
+			"HOUR_AGO" => "órája",
+			"DAY_TO" => "nap múlva",
+			"DAY_AGO" => "napja",
+			"WEEK_TO" => "hét múlva",
+			"WEEK_AGO" => "hete"
+		);
+!!!167682.php!!!	SetConfig(inout config : )
+		$this->config = array_merge($this->config, $config);
+!!!167810.php!!!	SetBaseObject(inout base : )
+		$this->baseObject =& $base;
+!!!167938.php!!!	OnLoad()
+		// ez a fajta értékátadás nem működik Sputnik 3-ban!
+		//$this->baseObject->relativedate = $this;
+!!!168066.php!!!	ConvertDate(inout date : )
+		$this->dateTime = strtotime($date);
+		$delta = time() - $this->dateTime;
+		if ($delta > 2419200) return date("Y-m-d H:i", $this->dateTime);
+		
+!!!168194.php!!!	__toString()
+		return "";

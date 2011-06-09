@@ -10,32 +10,40 @@ class Renderable {
 	private $template_file;
 	private $template_dir;
 
-	function  __construct($template="") {
+	function  __construct($basepath="") {
 		global $config;
 
-		//echo nl2br(print_r(debug_backtrace(), true));
-		//echo "construct";
 		$this->_variables = array();
 		$this->_renderables = array();
-		$this->template_dir = $config["view_template"];
-		if($template != "") {
-			$this->template_file = $this->GetFilename($template);
-		}
+		$this->template_dir = $basepath . $config["view_template"];
 	}
 
-
+	public function ImageCache($fname, $cachable=true) {
+		return new ImageCache($fname, $cachable);
+	}
 
 	private function GetFilename($template_name) {
 		$file = $this->template_dir . "/" . $template_name;
 		if (strpos($file, ".") === FALSE) {
 			// Find the extension
-
 			$extensions = array("php", "html", "htm");
 			foreach($extensions as $ext) {
-				if (is_file($file . "." . $ext)) $file .=  "." . $ext;
+				if (is_file($file . "." . $ext)) {
+					$file .=  "." . $ext;
+					break; // Use the first available
+				}
 			}
 		}
 		return $file;
+	}
+
+	/**
+	 * Set the active template directory
+	 * @param  $dir
+	 * @return void
+	 */
+	public function SetTemplateDirectory($dir) {
+		$this->template_dir = $dir;
 	}
 
 	/**
@@ -103,23 +111,23 @@ class Renderable {
 	 * @return <type>
 	 */
 	public function Fetch($template="") {
-		if($template != "") {
-			$this->template_file = $this->GetFilename($template);
-		}
-		return $this->Render();
+		return $this->Render($template);
 	}
 
-		/**
-		 *
-		 * @param <type> $fname
-		 * @param <type> $size
-		 * @param <type> $crop
-		 */
+	/**
+	 *
+	 * @param <type> $fname
+	 * @param <type> $size
+	 * @param <type> $crop
+	 */
 	public function GetImageCache($fname, $size, $crop=false) {
 		global $config;
 		if($config["enable_imagecache"] == true) {
-			$ic = new ImageCache();
-			return $ic->GetImageFromCache($fname, $size, $size, $crop);
+			$ic = new ImageCache($fname, true);
+			$ic->ResizeImage($size, $size, true);
+			if($crop) $ic->CropCenter($size);
+
+			return $ic->SaveToCache()->GetFilename();
 		} else {
 			return $fname;
 		}
@@ -134,10 +142,11 @@ class Renderable {
 	 *
 	 * @return <type>
 	 */
-	public function Render($template="") {
+	private function Render($template="") {
 		if($template != "") {
 			$this->template_file = $this->GetFilename($template);
 		}
+		Hooks::GetInstance()->CallHookAtPoint("pre_render", array($template));
 		ob_start();
 		// first extract all renderables to sandbox
 		extract($this->_renderables);
@@ -154,6 +163,10 @@ class Renderable {
 		include $this->template_file;
 		$output = ob_get_contents();
 		ob_end_clean();
+		$ret = Hooks::GetInstance()->CallHookAtPoint("post_render", array($template, $output));
+		if($ret != null) {
+			return $ret;
+		}
 		return $output;
 	}
 }

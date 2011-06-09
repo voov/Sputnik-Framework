@@ -7,12 +7,19 @@ $config["is_production"] = false;
 $config["plugin_directory"] = "plugins/";
 $config["app_directory"] = "apps/";
 $config["error_directory"] = "errors/";
+$config["module_directory"] = "modules/";
+$config["lang_directory"] = "lang/";
+$config["namedparam_char"] = ":";
+
 
 // Adatbázis beállításai
 $config["db_username"] = "username";
 $config["db_password"] = "password";
 $config["db_connect"] = "localhost";
-$config["db_dbname"] = "username";
+$config["db_dbname"] = "database";
+$config["db_adapter"] = "DbMySQLAdapter";
+$config["db_is_cached"] = true;
+$config["db_cache_adapter"] = "MemCacheServer";
 
 // Log beállításai
 $config["log_directory"] = "/home/users/username/logs";
@@ -56,6 +63,7 @@ $config["smtp_password"][0] = "smtp_password";
 $config["session_adapter"] = "SessionDefaultAdapter";
 $config["session_table"] = "sessions";
 $config["session_auth_user"] = true;
+$config["session_key"] = "";
 
 
 ?>

@@ -37,9 +37,8 @@ class Helper {
 		// First look in Sputnik own helper lib
 		$include = "helpers/$method.php";
 		if(!is_file($include)) $include = "../" . $include; // step back one dir
-
-		if (!function_exists($method) && is_file($include)) {
-			include_once($include);
+		if (is_file($include)) {
+			include_once $include;
 			return call_user_func_array($method, $args);
 		}
 		return false;

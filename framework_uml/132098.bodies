@@ -1,0 +1,23 @@
+class CyclePlugin
+!!!161538.php!!!	__construct()
+
+        $this->_args = func_get_args();
+        $this->_key = -1;
+!!!161666.php!!!	SetBaseObject(inout base : )
+
+		$this->baseObject =& $base;
+!!!161794.php!!!	OnLoad()
+
+		$this->baseObject->cycle = $this;	
+!!!161922.php!!!	AddCycles()
+
+        $this->_args = func_get_args();
+        $this->_key = -1;		
+!!!162050.php!!!	LastString()
+
+		return $this->_args[$this->_key];
+!!!162178.php!!!	__toString()
+
+        return (string) isset($this->_args[$this->_key += 1]) ?
+            $this->_args[$this->_key] :
+            $this->_args[$this->_key = 0] ;
